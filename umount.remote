@@ -1,0 +1,56 @@
+#!/bin/sh
+###############################################################################
+# umount.remote - A script to unmount cloud remotes for use with Plex
+###############################################################################
+# CONFIGURATION
+###############################################################################
+# shellcheck source=config
+
+########## CONFIGURATION ##########
+. "/cloud-storage/scripts/config"
+###################################
+
+###############################################################################
+# FUNCTIONS
+###############################################################################
+
+umount_cloud () {
+	if [ "$use_gdrive" = 1 ]; then
+		echo "[ $(date ${date_format}) ] Unmounting decrypted cloud mountpoint -> ${cloud_decrypt_dir}"
+		fusermount -uz "${cloud_decrypt_dir}"
+		echo "[ $(date ${date_format}) ] Unmounting cloud mountpoint -> ${cloud_encrypt_dir}"
+		fusermount -uz "${cloud_encrypt_dir}"
+	fi
+}
+
+umount_union () {
+	echo "[ $(date ${date_format}) ] Unmounting Plex library mountpoint -> ${local_media_dir}"
+	fusermount -uz "$local_media_dir"
+}
+
+umount_cache () {
+	echo "[ $(date ${date_format}) ] Unmounting local media cache -> ${cached_media_dir}"
+	fusermount -uz "$cached_media_dir"
+}
+
+###############################################################################
+case "$1" in
+        cloud)
+                umount_cloud
+        ;;
+        union)
+                umount_union
+        ;;
+        cache)
+                umount_cache
+        ;;
+        all)
+                umount_cloud
+                umount_union
+                umount_cache
+        ;;
+	*)
+		echo "usage: umount.remote all|cloud|union|cache"
+	;;
+esac
+

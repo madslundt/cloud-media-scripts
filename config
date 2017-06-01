@@ -1,0 +1,71 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+###############################################################################
+# DIRECTORIES
+###############################################################################
+media_dir="/cloud-storage"                              # This folder
+
+# Cloud directories
+cloud_encrypt_dir="${media_dir}/.cloud-encrypt"         # Is created by this script
+cloud_decrypt_dir="${media_dir}/.cloud-decrypt"         # Is created by this script
+
+# Local directory
+local_decrypt_dir="${media_dir}/.local-decrypt/Media"   # Needs to be created
+
+# Cache directories
+cache_dir="${media_dir}/.cache"                         # Is created by this script
+local_cache_dir="${cache_dir}/media"                    # Is created by this script
+cached_media_dir="${media_dir}/mediacache"              # Is created by this script
+
+# Media directory (FINAL)
+local_media_dir="${media_dir}/media"                    # Is created by this script
+
+###############################################################################
+# CLOUD CONFIG
+###############################################################################
+use_gdrive=1
+
+###############################################################################
+# UNION-FS
+###############################################################################
+ufs_dir="${media_dir}/unionfs"
+ufs_bin="${ufs_dir}/unionfs"
+
+ufs_allow_other=1
+
+###############################################################################
+# PLEXDRIVE
+###############################################################################
+plexdrive_dir="${media_dir}/plexdrive"
+plexdrive_bin="${plexdrive_dir}/plexdrive-linux-amd64"
+
+plexdrive_temp_folder="${local_media_dir}"
+plexdrive_options="--temp ${plexdrive_temp_folder} -o allow_other"
+
+###############################################################################
+# RCLONE
+###############################################################################
+rclone_dir="${media_dir}/rclone"
+rclone_bin="${rclone_dir}/rclone"
+
+rclone_cfg="${rclone_dir}/rclone.conf"
+rclone_options="--read-only --allow-non-empty --allow-other --buffer-size 500M"
+
+# Rclone endpoints
+rclone_cloud_endpoint="gd-crypt:"
+rclone_local_endpoint="local-crypt:"
+
+###############################################################################
+# SCANNER CONFIG
+###############################################################################
+movie_category="2"
+movie_directory="storage/movies"
+
+tv_category="3"
+tv_directory="storage/tv"
+
+###############################################################################
+# MISC. CONFIG
+###############################################################################
+date_format="+%F@%T"
+remove_files_older_than=60         # In days

@@ -1,0 +1,4 @@
+@reboot /cloud-storage/scripts/mount.remote all &>> /cloud-storage/logs/mount.log
+@hourly /cloud-storage/scripts/cloudupload &>> /cloud-storage/logs/cloudupdates.log
+@daily /cloud-storage/scripts/makecache &>/dev/null
+@daily /cloud-storage/scripts/rmlocal &>> /cloud-storage/logs/nukedupes.log

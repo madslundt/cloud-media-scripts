@@ -1,0 +1,23 @@
+#!/bin/sh
+# shellcheck source=config
+########## CONFIGURATION ##########
+. "/cloud-storage/scripts/config"
+###################################
+
+if [ ! -d "${local_cache_dir}" ]; then
+	mkdir -p "${local_cache_dir}"
+fi
+
+echo "################# Building Directories ################"
+find "${local_media_dir}" -type d |
+while read -r dir; do
+	cache_directory="$(readlink -f "${dir}" | sed -e "s@${local_media_dir}@${local_cache_dir}@")"
+	mkdir "$cache_directory"
+done
+
+echo "################ Creatingi File Cache ################"
+find "${local_media_dir}" -type f |
+while read -r file; do
+	cache_file="$(readlink -f "${file}" | sed -e "s@${local_media_dir}@${local_cache_dir}@")"
+	touch "$cache_file"
+done
