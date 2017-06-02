@@ -9,6 +9,36 @@ This also means if you loose your encryption keys you can't read your media.
 
 To unmount run `./umount.remote all`
 
+```
+Remember to check https://github.com/dweidenfeld/plexdrive/releases for newer versions
+And https://downloads.rclone.org/
+
+
+---------SETUP RCLONE----------
+
+# RUN THIS AFTER
+1. Now run rclone with the command:
+    ./${rclone_bin} --config=${rclone_cfg}
+2. You need to setup following:
+   - Google Drive remote named '${rclone_cloud_endpoint}'
+   - Crypt for your remote '${rclone_cloud_endpoint}' named '${rclone_local_endpoint}'
+   - Crypt for your local directory named '${cloud_encrypt_dir}'
+
+
+--------SETUP PLEXDRIVE--------
+
+1. Now run plexdrive with the command:
+    ./${plexdrive_bin} --config ${plexdrive_dir}
+2. Cancel plexdrive by pressing CTRL+C
+3. Run plexdrive with screen by running the following commands:
+    screen -dmS plexdrive ${plexdrive_bin} --config ${plexdrive_dir}
+    screen -RD plexdrive
+
+
+Remember to check https://github.com/dweidenfeld/plexdrive/releases for newer versions
+And https://downloads.rclone.org/
+```
+
 # Cron
 My suggestions for cronjobs is in the file `cron`.
 These should be inserted into `crontab -e`.
