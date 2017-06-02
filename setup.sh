@@ -3,6 +3,16 @@
 ########## CONFIGURATION ##########
 . "/cloud-storage/scripts/config"
 ###################################
+########## DOWNLOADS ##########
+# Rclone
+_rclone_url="https://downloads.rclone.org/rclone-current-linux-amd64.zip"
+_rclone_zip="rclone-current-linux-amd64.zip"
+_rclone_dir="rclone-v1.36-linux-amd64"
+
+# Plexdrive
+_plexdrive_url="https://github.com/dweidenfeld/plexdrive/releases/download/3.0.0/plexdrive-linux-amd64"
+_plexdrive_bin="plexdrive-linux-amd64"
+###################################
 
 apt-get update
 apt-get install unionfs-fuse -y
@@ -13,40 +23,35 @@ apt-get install screen -y
 if [ ! -d "${rclone_dir}" ]; then
     mkdir "${rclone_dir}"
 fi
-wget https://downloads.rclone.org/rclone-current-linux-amd64.zip
-unzip rclone-current-linux-amd64.zip
-cp -r rclone-v1.36-linux-amd64/* "${rclone_dir}"
-rm -rf rclone-current-linux-amd64.zip
-rm -rf rclone-v1.36-linux-amd64
+wget "${_rclone_url}"
+unzip "${_rclone_zip}"
+cp -r "${_rclone_dir}/*" "${rclone_dir}"
+rm -rf "${_rclone_zip}"
+rm -rf "${_rclone_dir}"
 
-# Remember to check https://github.com/dweidenfeld/plexdrive/releases for newer versions
+
 if [ ! -d "${plexdrive_dir}" ]; then
     mkdir "${plexdrive_dir}"
 fi
-wget https://github.com/dweidenfeld/plexdrive/releases/download/3.0.0/plexdrive-linux-amd64
-mv plexdrive-linux-amd64 "${plexdrive_dir}"
+wget "${_plexdrive_url}"
+mv "${_plexdrive_bin}" "${plexdrive_dir}"
 
-echo "\n\n\nRemember to check https://github.com/dweidenfeld/plexdrive/releases for newer versions"
-echo "And https://downloads.rclone.org/"
 
-echo "\n\n---------SETUP RCLONE----------\n"
+echo "\n\n--------- SETUP RCLONE ----------\n"
 
-# RUN THIS AFTER
 echo "1. Now run rclone with the command:"
-echo "\t ./${rclone_bin} --config=${rclone_cfg}"
+echo "\t${rclone_bin} --config=${rclone_cfg}"
 echo "2. You need to setup following:"
-echo "   - Google Drive remote named '${rclone_cloud_endpoint}'"
-echo "   - Crypt for your remote '${rclone_cloud_endpoint}' named '${rclone_local_endpoint}'"
-echo "   - Crypt for your local directory named '${cloud_encrypt_dir}'"
+echo "\t- Google Drive remote"
+echo "\t- Crypt for your Google Drive remote named '${rclone_cloud_endpoint%?}'"
+echo "\t- Crypt for your local directory ('${cloud_encrypt_dir}') named '${rclone_local_endpoint%?}'"
 
-echo "\n\n--------SETUP PLEXDRIVE--------\n"
+
+echo "\n\n-------- SETUP PLEXDRIVE --------\n"
 
 echo "1. Now run plexdrive with the command:"
-echo "\t ./${plexdrive_bin} --config ${plexdrive_dir}"
+echo "\t${plexdrive_bin} --config ${plexdrive_dir}"
 echo "2. Cancel plexdrive by pressing CTRL+C"
 echo "3. Run plexdrive with screen by running the following commands:"
 echo "\tscreen -dmS plexdrive ${plexdrive_bin} --config ${plexdrive_dir}"
 echo "\tscreen -RD plexdrive"
-
-echo "\n\n\nRemember to check https://github.com/dweidenfeld/plexdrive/releases for newer versions"
-echo "And https://downloads.rclone.org/"

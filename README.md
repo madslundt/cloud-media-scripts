@@ -1,5 +1,7 @@
-These scripts are created to have your media synced between your cloud- and local store. Everytime media is uploaded to the cloud it is always encrypted before hitting the cloud.
+These scripts are created to have your media synced between your cloud- and local store. All media is always encrypted before being uploaded.
 This also means if you loose your encryption keys you can't read your media.
+
+**Plexdrive version 3.0.0 and Rclone version 1.36 is used.**
 
 # Getting started
 1. Change `config` to match your settings.
@@ -9,37 +11,27 @@ This also means if you loose your encryption keys you can't read your media.
 
 To unmount run `./umount.remote all`
 
-```
-Remember to check https://github.com/dweidenfeld/plexdrive/releases for newer versions
-And https://downloads.rclone.org/
+To read more about Rclone configuration go to their docs by [clicking here](https://rclone.org/docs/).
+
+## Setup
+### Rclone setup
+Most of the configuration to set up is done through Rclone. Read their documentation [here](https://rclone.org/docs/).
+
+3 configurations are needed to:
+ - Connect to cloud.
+ - Crypt for cloud.
+ - Crypt for local.
+
+Start by setting up your Google Drive and add Google Drive API credentials ([Drive](https://rclone.org/drive/)).
+
+Next step is to setup encryption for your cloud ([Crypt](https://rclone.org/crypt/)).
+
+Last step is to setup decryption for your local media (same docs as for encryption).
 
 
----------SETUP RCLONE----------
+_Good idea to backup your Rclone configuration and Plexdrive configuration and cache for easier setup next time._
 
-# RUN THIS AFTER
-1. Now run rclone with the command:
-    ./${rclone_bin} --config=${rclone_cfg}
-2. You need to setup following:
-   - Google Drive remote named '${rclone_cloud_endpoint}'
-   - Crypt for your remote '${rclone_cloud_endpoint}' named '${rclone_local_endpoint}'
-   - Crypt for your local directory named '${cloud_encrypt_dir}'
-
-
---------SETUP PLEXDRIVE--------
-
-1. Now run plexdrive with the command:
-    ./${plexdrive_bin} --config ${plexdrive_dir}
-2. Cancel plexdrive by pressing CTRL+C
-3. Run plexdrive with screen by running the following commands:
-    screen -dmS plexdrive ${plexdrive_bin} --config ${plexdrive_dir}
-    screen -RD plexdrive
-
-
-Remember to check https://github.com/dweidenfeld/plexdrive/releases for newer versions
-And https://downloads.rclone.org/
-```
-
-# Cron
+## Cron
 My suggestions for cronjobs is in the file `cron`.
 These should be inserted into `crontab -e`.
 
@@ -82,4 +74,4 @@ Local media is mounted with Read/Write permissions.
 The reason for these permissions are that if you write to the local folder (`local_media_dir`) it will write it will not try to write it directly to your cloud folder, but instead to your local media (`local_decrypt_dir`). Later this will be encrypted and uploaded to the cloud by Rclone.
 
 # Thanks to
-Gesis for the original scripts: `git://git.gesis.pw:/nimbostratus.git`
+ - Gesis for the original scripts: `git://git.gesis.pw:/nimbostratus.git`

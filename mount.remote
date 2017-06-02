@@ -27,7 +27,7 @@ mount_gdrive () {
 	# Mount GD if not already mounted.
 	if ! mountpoint -q "$cloud_encrypt_dir" ; then
 		echo "[ $(date ${date_format}) ] Mounting Google Drive mountpoint: ${cloud_encrypt_dir}"
-		screen -dmS plexdrive "$plexdrive_bin" --config "${plexdrive_dir}" "${plexdrive_options}" "${cloud_encrypt_dir}"
+		screen -dmS plexdrive "$plexdrive_bin" --config="${plexdrive_dir}" "${plexdrive_options}" "${cloud_encrypt_dir}"
 	else
 		echo "[ $(date ${date_format}) ] Google Drive mountpoint: ${cloud_encrypt_dir} already mounted."
 	fi

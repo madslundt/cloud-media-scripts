@@ -40,7 +40,7 @@ plexdrive_dir="${media_dir}/plexdrive"
 plexdrive_bin="${plexdrive_dir}/plexdrive-linux-amd64"
 
 plexdrive_temp_folder="${local_media_dir}"
-plexdrive_options="--temp ${plexdrive_temp_folder} -o allow_other"
+plexdrive_options="--temp=${plexdrive_temp_folder} -o allow_other --clear-chunk-max-size=100G --clear-chunk-age=24h --chunk-size=10M"
 
 ###############################################################################
 # RCLONE
@@ -49,7 +49,7 @@ rclone_dir="${media_dir}/rclone"
 rclone_bin="${rclone_dir}/rclone"
 
 rclone_cfg="${rclone_dir}/rclone.conf"
-rclone_options="--read-only --allow-non-empty --allow-other --buffer-size 500M"
+rclone_options="--read-only --allow-non-empty --allow-other --buffer-size 500M --max-read-ahead 30G --checkers 16"
 
 # Rclone endpoints
 rclone_cloud_endpoint="gd-crypt:"
