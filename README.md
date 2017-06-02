@@ -11,8 +11,6 @@ This also means if you loose your encryption keys you can't read your media.
 
 To unmount run `./umount.remote all`
 
-To read more about Rclone configuration go to their docs [here](https://rclone.org/docs/).
-
 ## Setup
 ### Rclone setup
 Most of the configuration to set up is done through Rclone. Read their documentation [here](https://rclone.org/docs/).
