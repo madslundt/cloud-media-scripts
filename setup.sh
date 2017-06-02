@@ -45,7 +45,7 @@ echo "1. Now run plexdrive with the command:"
 echo "\t ./${plexdrive_bin} --config ${plexdrive_dir}"
 echo "2. Cancel plexdrive by pressing CTRL+C"
 echo "3. Run plexdrive with screen by running the following commands:"
-echo "\tscreen -dmS plexdrive ${plexdrive_bin} --config ${plexdrive_dir}'"
+echo "\tscreen -dmS plexdrive ${plexdrive_bin} --config ${plexdrive_dir}"
 echo "\tscreen -RD plexdrive"
 
 echo "\n\n\nRemember to check https://github.com/dweidenfeld/plexdrive/releases for newer versions"
