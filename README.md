@@ -56,6 +56,8 @@ The local folder (`local_decrypt_dir`) and cloud folder (`cloud_decrypt_dir`) is
 Everytime new media wants to be added it should be added to the `local_media_dir` or directly to the `local_decrypt_dir`.
 Keep in mind that if it is written and read from `local_decrypt_dir` it will sooner or later be removed from this folder depending on the `remove_files_older_than` setting. This is only removed from `local_decrypt_dir` and would still appear in `local_media_dir` because it would still be accessable in the cloud.
 
+![UML diagram](uml_diagram.png)
+
 ## Plexdrive
 Plexdrive is used to mount Google Drive to a local folder (`cloud_encrypt_dir`).
 
