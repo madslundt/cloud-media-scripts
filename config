@@ -39,7 +39,7 @@ ufs_allow_other=1
 plexdrive_dir="${media_dir}/plexdrive"
 plexdrive_bin="${plexdrive_dir}/plexdrive-linux-amd64"
 
-plexdrive_temp_folder="${local_media_dir}"
+plexdrive_temp_folder="${media_dir}/.local-decrypt/plexdrive"
 plexdrive_options="--temp=${plexdrive_temp_folder} -o allow_other --clear-chunk-max-size=100G --clear-chunk-age=24h --chunk-size=10M"
 
 ###############################################################################

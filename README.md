@@ -42,7 +42,7 @@ These should be inserted into `crontab -e`.
 At the moment `makecache` has not been tested and `scanlibraries` is not probable configured.
 _These might be removed in the future if Plex works fine without them and without increasing API hits drastically._
 
-# How does it work?
+# How it works?
 Following services are used to sync, encrypt/decrypt and mount media:
  - Plexdrive
  - Rclone
@@ -73,6 +73,11 @@ UnionFS is used to mount both cloud and local media to a local folder (`local_me
  - Local media is mounted with Read/Write permissions.
 
 The reason for these permissions are that when writing to the local folder (`local_media_dir`) it will not try to write it directly to the cloud folder, but instead to the local media (`local_decrypt_dir`). Later this will be encrypted and uploaded to the cloud by Rclone.
+
+# My setup
+My setup with this is quite simple.
+
+I've an Intel NUC with only 128GB ssd. This is connected to a 4TB extern hard drive that contains `local_decrypt_dir` and `plexdrive_temp_folder`.
 
 # Thanks to
  - Gesis for the original scripts: `git://git.gesis.pw:/nimbostratus.git`
