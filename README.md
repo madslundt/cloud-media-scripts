@@ -1,7 +1,7 @@
 These scripts are created to have your media synced between your cloud- and local store. All media is always encrypted before being uploaded.
 This also means if you loose your encryption keys you can't read your media.
 
-**Plexdrive version 3.0.0 and Rclone version 1.36 is used.**
+**Plexdrive version 3.0.0 and Rclone version 1.36 is used.** This is all taken care of by `setup.sh`.
 
 # Getting started
 1. Change `config` to match your settings.
@@ -26,6 +26,8 @@ Next step is to setup encryption for your cloud ([Crypt](https://rclone.org/cryp
 
 Last step is to setup decryption for your local media (same docs as for encryption).
 
+View my example for an rclone configuration [here](rclone.conf).
+
 
 _Good idea to backup your Rclone configuration and Plexdrive configuration and cache for easier setup next time._
 
@@ -34,9 +36,9 @@ My suggestions for cronjobs is in the file `cron`.
 These should be inserted into `crontab -e`.
 
  - Cron is set up to mount at boot.
- - Uploaded to cloud hourly.
+ - Upload to cloud hourly.
  - Create cache daily (ignore this for now).
- - Check to remove local content daily (this only remove files older than `remove_files_older_than`).
+ - Check to remove local content daily (this only remove files days older than `remove_files_older_than`).
 
 ## OBS
 At the moment `makecache` has not been tested and `scanlibraries` is not probable configured.
