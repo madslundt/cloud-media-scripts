@@ -1,7 +1,7 @@
 These scripts are created to have your media synced between your cloud- and local store. All media is always encrypted before being uploaded.
 This also means if you loose your encryption keys you can't read your media.
 
-**Plexdrive version 3.0.0 and Rclone version 1.36 is used.** This is all taken care of by `setup.sh`.
+**Plexdrive version 4.0.0 and Rclone version 1.36 is used.** This is all taken care of by `setup.sh`.
 
 # Getting started
 1. Change `config` to match your settings.
@@ -63,6 +63,8 @@ Keep in mind that if it is written and read from `local_decrypt_dir` it will soo
 ## Plexdrive
 Plexdrive is used to mount Google Drive to a local folder (`cloud_encrypt_dir`).
 
+Plexdrive version 4.0.0 requires a running MongoDB server. This is not included in the scripts but can either be installed from .deb packages or in a Docker container.
+
 ## Rclone
 Rclone is used to encrypt, decrypt and upload files to the cloud.
 Rclone is used to mount and decrypt Plexdrive to a different folder (`cloud_decrypt_dir`).
@@ -83,3 +85,5 @@ I've an Intel NUC with only 128GB ssd. This is connected to a 4TB extern hard dr
 
 # Thanks to
  - Gesis for the original scripts: `git://git.gesis.pw:/nimbostratus.git`
+ - Plexdrive for the software: `https://github.com/dweidenfeld/plexdrive`
+ - Rclone for the software: `https://rclone.org/`

@@ -10,7 +10,7 @@ _rclone_zip="rclone-current-linux-amd64.zip"
 _rclone_dir="rclone-v1.36-linux-amd64"
 
 # Plexdrive
-_plexdrive_url="https://github.com/dweidenfeld/plexdrive/releases/download/3.0.0/plexdrive-linux-amd64"
+_plexdrive_url="https://github.com/dweidenfeld/plexdrive/releases/download/4.0.0/plexdrive-linux-amd64"
 _plexdrive_bin="plexdrive-linux-amd64"
 ###################################
 
@@ -49,8 +49,13 @@ echo "\t- Crypt for your local directory ('${cloud_encrypt_dir}') named '${rclon
 
 echo "\n\n-------- SETUP PLEXDRIVE --------\n"
 
+mongo="--mongo-database=\"${mongo_database}\" --mongo-host=\"${mongo_host}\""
+if [ ! -z "${mongo_user}" -a "${mongo_user}" != " " ]; then
+    mongo = "${mongo} --mongo-user=\"${mongo_user}\" --mongo-password=\"${mongo_password}\""
+fi
+
 echo "1. Now run plexdrive with the command:"
-echo "\t${plexdrive_bin} --config ${plexdrive_dir}"
+echo "\t${plexdrive_bin} --config ${plexdrive_dir} ${mongo}"
 echo "2. Cancel plexdrive by pressing CTRL+C"
 echo "3. Run plexdrive with screen by running the following commands:"
 echo "\tscreen -dmS plexdrive ${plexdrive_bin} --config ${plexdrive_dir}"
