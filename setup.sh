@@ -41,6 +41,10 @@ if [ ! -d "${local_decrypt_dir}" ]; then
     mkdir -p "${local_decrypt_dir}"
 fi
 
+if [ ! -d "${plexdrive_temp_folder}" ]; then
+    mkdir -p "${plexdrive_temp_folder}"
+fi
+
 
 echo "\n\n--------- SETUP RCLONE ----------\n"
 
