@@ -55,8 +55,8 @@ Cloud is mounted to a local folder (`cloud_encrypt_dir`). This folder is then de
 A local folder (`local_decrypt_dir`) is created to contain local media.
 The local folder (`local_decrypt_dir`) and cloud folder (`cloud_decrypt_dir`) is then mounted to a third folder (`local_media_dir`) with certain permissions - local folder with Read/Write permissions and cloud folder with Read-only permissions.
 
-Everytime new media wants to be added it should be added to the `local_media_dir` or directly to the `local_decrypt_dir`.
-Keep in mind that if it is written and read from `local_decrypt_dir` it will sooner or later be removed from this folder depending on the `remove_files_older_than` setting. This is only removed from `local_decrypt_dir` and would still appear in `local_media_dir` because it would still be accessable in the cloud.
+Everytime new media is retrieved it needs be added to the `local_media_dir` or directly to the `local_decrypt_dir`.
+Keep in mind that if it is written and read from `local_decrypt_dir` it will sooner or later be removed from this folder depending on the `remove_files_older_than` setting. This is only removed from `local_decrypt_dir` and will still appear in `local_media_dir` because it is still be accessable from the cloud.
 
 ![UML diagram](uml_diagram.png)
 

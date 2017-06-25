@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ########## CONFIGURATION ##########
-. "/cloud-storage/config"
+. "./config"
 ###################################
 ########## DOWNLOADS ##########
 # Rclone
@@ -35,6 +35,11 @@ if [ ! -d "${plexdrive_dir}" ]; then
 fi
 wget "${_plexdrive_url}"
 mv "${_plexdrive_bin}" "${plexdrive_dir}/"
+
+
+if [ ! -d "${local_decrypt_dir}" ]; then
+    mkdir -p "${local_decrypt_dir}"
+fi
 
 
 echo "\n\n--------- SETUP RCLONE ----------\n"

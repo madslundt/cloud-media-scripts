@@ -6,19 +6,19 @@
 media_dir="/cloud-storage"                              # This folder
 
 # Cloud directories
-cloud_encrypt_dir="${media_dir}/.cloud-encrypt"         # Is created by this script
-cloud_decrypt_dir="${media_dir}/.cloud-decrypt"         # Is created by this script
+cloud_encrypt_dir="${media_dir}/.cloud-encrypt"
+cloud_decrypt_dir="${media_dir}/.cloud-decrypt"
 
 # Local directory
-local_decrypt_dir="${media_dir}/.local-decrypt/Media"   # Needs to be created
+local_decrypt_dir="${media_dir}/.local-decrypt/Media"
 
 # Cache directories
-cache_dir="${media_dir}/.cache"                         # Is created by this script
-local_cache_dir="${cache_dir}/media"                    # Is created by this script
-cached_media_dir="${media_dir}/mediacache"              # Is created by this script
+cache_dir="${media_dir}/.cache"
+local_cache_dir="${cache_dir}/media"
+cached_media_dir="${media_dir}/mediacache"
 
 # Media directory (FINAL)
-local_media_dir="${media_dir}/media"                    # Is created by this script
+local_media_dir="${media_dir}/media"
 
 ###############################################################################
 # CLOUD CONFIG
