@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ########## CONFIGURATION ##########
-. "/cloud-storage/scripts/config"
+. "/cloud-storage/config"
 ###################################
 ########## DOWNLOADS ##########
 # Rclone
@@ -25,7 +25,7 @@ if [ ! -d "${rclone_dir}" ]; then
 fi
 wget "${_rclone_url}"
 unzip "${_rclone_zip}"
-cp -r "${_rclone_dir}/*" "${rclone_dir}"
+mv "${_rclone_dir}/*" "${rclone_dir}/"
 rm -rf "${_rclone_zip}"
 rm -rf "${_rclone_dir}"
 
@@ -34,13 +34,13 @@ if [ ! -d "${plexdrive_dir}" ]; then
     mkdir "${plexdrive_dir}"
 fi
 wget "${_plexdrive_url}"
-mv "${_plexdrive_bin}" "${plexdrive_dir}"
+mv "${_plexdrive_bin}" "${plexdrive_dir}/"
 
 
 echo "\n\n--------- SETUP RCLONE ----------\n"
 
 echo "1. Now run rclone with the command:"
-echo "\t${rclone_bin} --config=${rclone_cfg}"
+echo "\t${rclone_bin} --config=${rclone_cfg} config"
 echo "2. You need to setup following:"
 echo "\t- Google Drive remote"
 echo "\t- Crypt for your Google Drive remote named '${rclone_cloud_endpoint%?}'"
@@ -51,12 +51,13 @@ echo "\n\n-------- SETUP PLEXDRIVE --------\n"
 
 mongo="--mongo-database=\"${mongo_database}\" --mongo-host=\"${mongo_host}\""
 if [ ! -z "${mongo_user}" -a "${mongo_user}" != " " ]; then
-    mongo = "${mongo} --mongo-user=\"${mongo_user}\" --mongo-password=\"${mongo_password}\""
+    mongo="${mongo} --mongo-user=\"${mongo_user}\" --mongo-password=\"${mongo_password}\""
 fi
 
 echo "1. Now run plexdrive with the command:"
-echo "\t${plexdrive_bin} --config ${plexdrive_dir} ${mongo}"
-echo "2. Cancel plexdrive by pressing CTRL+C"
-echo "3. Run plexdrive with screen by running the following commands:"
-echo "\tscreen -dmS plexdrive ${plexdrive_bin} --config ${plexdrive_dir}"
+echo "\t${plexdrive_bin} --config=\"${plexdrive_dir}\" ${mongo} ${cloud_encrypt_dir}"
+echo "2. Enter authorization"
+echo "3. Cancel plexdrive by pressing CTRL+C"
+echo "4. Run plexdrive with screen by running the following commands:"
+echo "\tscreen -dmS plexdrive ${plexdrive_bin} --config=\"${plexdrive_dir}\" ${mongo} ${cloud_encrypt_dir}"
 echo "\tscreen -RD plexdrive"
