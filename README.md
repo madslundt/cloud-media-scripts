@@ -6,10 +6,19 @@ This also means if you loose your encryption keys you can't read your media.
 # Getting started
 1. Change `config` to match your settings.
 2. Change configuration in each file to point to config.
-3. Run `sudo sh setup.sh` and follow the instructions.
+3. Run `sudo sh setup.sh` and follow the instructions*.
 4. Run `./mount.remote all` to mount plexdrive and decrypt by using rclone.
 
 To unmount run `./umount.remote all`
+
+* If this doesn't work download the files:
+ - (Rclone)[https://downloads.rclone.org/rclone-current-linux-amd64.zip]
+ - (Plexdrive)[https://github.com/dweidenfeld/plexdrive/releases/download/4.0.0/plexdrive-linux-amd64]
+
+Unzip Rclone to the rclone directory and Plexdrive to the plexdrive directory. After having placed the rclone into the rclone directory run the rclone bin with the parameters `--config="rclone.conf" config` and create the needed configurations.
+
+Next is to run plexdrive bin with the parameters `--config="config.json" <CLOUD_ENCRYPT_DIR>` (add mongo configurations if needed).
+
 
 ## Setup
 ### Rclone setup
@@ -65,10 +74,14 @@ Plexdrive is used to mount Google Drive to a local folder (`cloud_encrypt_dir`).
 
 Plexdrive version 4.0.0 requires a running MongoDB server. This is not included in the scripts but can either be installed from .deb packages or in a Docker container.
 
+Plexdrive create two files: `config.json` and `token.json`. This is used to get access to Google Drive. These can either be set up via Plexdrive or by using the templates located in the [plexdrive directory](plexdrive/) (just copy the files and name them `config.json` and `token.json`).
+
 ## Rclone
 Rclone is used to encrypt, decrypt and upload files to the cloud.
 Rclone is used to mount and decrypt Plexdrive to a different folder (`cloud_decrypt_dir`).
 Rclone encrypts and uploads from a local folder (`local_decrypt_dir`) to the cloud.
+
+Rclone creates a config file: `config.json`. This is used to get access to Google Drive and encryption/decryption keys. This can either be set up via Rclone or by using the templates located in the [rclone directory](rclone/) (just copy the file and name it `rclone.conf`).
 
 ## UnionFS
 UnionFS is used to mount both cloud and local media to a local folder (`local_media_dir`).
