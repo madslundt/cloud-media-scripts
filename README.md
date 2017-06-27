@@ -25,7 +25,7 @@ Most of the configuration to set up is done through Rclone. Read their documenta
  - Crypt for cloud.
  - Crypt for local.
 
-View my example for an rclone configuration [here](rclone.template.conf).
+View my example for an rclone configuration [here](rclone/rclone.template.conf).
 
 
 _Good idea to backup your Rclone configuration and Plexdrive configuration and cache for easier setup next time._
