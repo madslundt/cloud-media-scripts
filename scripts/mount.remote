@@ -25,8 +25,8 @@ mount_gdrive () {
 	fi
 
 	# Make sure Plexdrive temp folder exists.
-	if [ ! -d "${plexdrive_temp_folder}" ]; then
-		mkdir -p "${plexdrive_temp_folder}"
+	if [ ! -d "${plexdrive_temp_dir}" ]; then
+		mkdir -p "${plexdrive_temp_dir}"
 	fi
 
 	mongo="--mongo-database=${mongo_database} --mongo-host=${mongo_host}"
@@ -106,27 +106,7 @@ mount_help () {
 
 ###############################################################################
 
-case "$1" in
-	google|gdrive|gd)
-		mount_gdrive
-	;;
-	union)
-		mount_union
-	;;
-	cache)
-		mount_cache
-	;;
-	local)
-		mount_local_media
-	;;
-	all)
-		mount_gdrive
-		mount_local_media
-		mount_union
-		mount_cache
-	;;
-	*)
-		mount_help
-	;;
-esac
-
+mount_gdrive
+mount_local_media
+mount_union
+# mount_cache

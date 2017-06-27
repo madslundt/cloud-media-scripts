@@ -7,17 +7,13 @@ This also means if you loose your encryption keys you can't read your media.
 1. Change `config` to match your settings.
 2. Change configuration in each file to point to config.
 3. Run `sudo sh setup.sh` and follow the instructions*.
-4. Run `./mount.remote all` to mount plexdrive and decrypt by using rclone.
+4. Run `./mount.remote` to mount plexdrive and decrypt by using rclone.
 
-To unmount run `./umount.remote all`
+To unmount run `./umount.remote`
 
-* If this doesn't work download the files:
+*If this doesn't work download the files:
  - [Rclone](https://downloads.rclone.org/rclone-current-linux-amd64.zip)
  - [Plexdrive](https://github.com/dweidenfeld/plexdrive/releases/download/4.0.0/plexdrive-linux-amd64)
-
-Unzip Rclone to the rclone directory and Plexdrive to the plexdrive directory. After having placed the rclone into the rclone directory run the rclone bin with the parameters `--config="rclone.conf" config` and create the needed configurations.
-
-Next is to run plexdrive bin with the parameters `--config="config.json" <CLOUD_ENCRYPT_DIR>` (add mongo configurations if needed).
 
 
 ## Setup
@@ -29,13 +25,7 @@ Most of the configuration to set up is done through Rclone. Read their documenta
  - Crypt for cloud.
  - Crypt for local.
 
-Start by setting up your Google Drive and add Google Drive API credentials ([Drive](https://rclone.org/drive/)).
-
-Next step is to setup encryption for your cloud ([Crypt](https://rclone.org/crypt/)).
-
-Last step is to setup decryption for your local media (same docs as for encryption).
-
-View my example for an rclone configuration [here](rclone.conf).
+View my example for an rclone configuration [here](rclone.template.conf).
 
 
 _Good idea to backup your Rclone configuration and Plexdrive configuration and cache for easier setup next time._
@@ -46,18 +36,24 @@ These should be inserted into `crontab -e`.
 
  - Cron is set up to mount at boot.
  - Upload to cloud hourly.
- - Create cache daily (ignore this for now).
  - Check to remove local content daily (this only remove files days older than `remove_files_older_than`).
 
 ## OBS
 At the moment `makecache` has not been tested and `scanlibraries` is not probable configured.
 _These might be removed in the future if Plex works fine without them and without increasing API hits drastically._
 
-# How it works?
+# How this works?
 Following services are used to sync, encrypt/decrypt and mount media:
  - Plexdrive
  - Rclone
  - UnionFS
+
+This gives us a total of 5 directories (8 if we count caching too, but ignore this for now):
+ - Cloud encrypt dir: Cloud data encrypted (Mounted with Plexdrive)
+ - Cloud decrypt dir: Cloud data decrypted (Mounted with Rclone)
+ - Local decrypt dir: Local data decrypted
+ - Plexdrive temp dir: Local Plexdrive temporary files
+ - Local media dir: Union of decrypted cloud data and local data (Mounted with Union-FS)
 
 Cloud is mounted to a local folder (`cloud_encrypt_dir`). This folder is then decrypted and mounted to a local folder (`cloud_decrypt_dir`).
 
@@ -94,7 +90,7 @@ The reason for these permissions are that when writing to the local folder (`loc
 # My setup
 My setup with this is quite simple.
 
-I've an Intel NUC with only 128GB ssd. This is connected to a 4TB extern hard drive that contains `local_decrypt_dir` and `plexdrive_temp_folder`.
+I've an Intel NUC with only 128GB ssd. This is connected to a 4TB extern hard drive that contains `local_decrypt_dir` and `plexdrive_temp_dir`.
 
 # Thanks to
  - Gesis for the original scripts: `git://git.gesis.pw:/nimbostratus.git`

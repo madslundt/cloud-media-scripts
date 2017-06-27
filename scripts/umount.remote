@@ -34,23 +34,7 @@ umount_cache () {
 }
 
 ###############################################################################
-case "$1" in
-        cloud)
-                umount_cloud
-        ;;
-        union)
-                umount_union
-        ;;
-        cache)
-                umount_cache
-        ;;
-        all)
-                umount_cloud
-                umount_union
-                umount_cache
-        ;;
-	*)
-		echo "usage: umount.remote all|cloud|union|cache"
-	;;
-esac
 
+umount_cloud
+umount_union
+# umount_cache

@@ -41,8 +41,8 @@ if [ ! -d "${local_decrypt_dir}" ]; then
     mkdir -p "${local_decrypt_dir}"
 fi
 
-if [ ! -d "${plexdrive_temp_folder}" ]; then
-    mkdir -p "${plexdrive_temp_folder}"
+if [ ! -d "${plexdrive_temp_dir}" ]; then
+    mkdir -p "${plexdrive_temp_dir}"
 fi
 
 
@@ -58,15 +58,14 @@ echo "\t- Crypt for your local directory ('${cloud_encrypt_dir}') named '${rclon
 
 echo "\n\n-------- SETUP PLEXDRIVE --------\n"
 
-mongo="--mongo-database=\"${mongo_database}\" --mongo-host=\"${mongo_host}\""
+mongo="--mongo-database=${mongo_database} --mongo-host=${mongo_host}"
 if [ ! -z "${mongo_user}" -a "${mongo_user}" != " " ]; then
-    mongo="${mongo} --mongo-user=\"${mongo_user}\" --mongo-password=\"${mongo_password}\""
+    mongo="${mongo} --mongo-user=${mongo_user} --mongo-password=${mongo_password}"
 fi
 
 echo "1. Now run plexdrive with the command:"
-echo "\t${plexdrive_bin} --config=\"${plexdrive_dir}\" ${mongo} ${cloud_encrypt_dir}"
+echo "\t${plexdrive_bin} --config=${plexdrive_dir} ${mongo} ${cloud_encrypt_dir}"
 echo "2. Enter authorization"
 echo "3. Cancel plexdrive by pressing CTRL+C"
-echo "4. Run plexdrive with screen by running the following commands:"
-echo "\tscreen -dmS plexdrive ${plexdrive_bin} --config=\"${plexdrive_dir}\" ${mongo} ${cloud_encrypt_dir}"
-echo "\tscreen -RD plexdrive"
+echo "4. Run plexdrive with screen by running the following command:"
+echo "\tscreen -dmS plexdrive ${plexdrive_bin} --config=${plexdrive_dir} ${mongo} ${plexdrive_options} ${cloud_encrypt_dir}"

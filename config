@@ -3,7 +3,7 @@
 ###############################################################################
 # DIRECTORIES
 ###############################################################################
-media_dir="/cloud-storage"                              # This folder
+media_dir="/cloud-storage"
 
 # Cloud directories
 cloud_encrypt_dir="${media_dir}/.cloud-encrypt"
@@ -11,8 +11,9 @@ cloud_decrypt_dir="${media_dir}/.cloud-decrypt"
 
 # Local directory
 local_decrypt_dir="${media_dir}/.local-decrypt/Media"
+plexdrive_temp_dir="${media_dir}/.local-decrypt/plexdrive"
 
-# Cache directories
+# Cache directories (IGNORE this for now)
 cache_dir="${media_dir}/.cache"
 local_cache_dir="${cache_dir}/media"
 cached_media_dir="${media_dir}/mediacache"
@@ -44,8 +45,7 @@ mongo_host="localhost"
 mongo_user=""
 mongo_password=""
 
-plexdrive_temp_folder="${media_dir}/.local-decrypt/plexdrive"
-plexdrive_options="--temp=${plexdrive_temp_folder} -o allow_other --clear-chunk-max-size=100G --clear-chunk-age=24h --chunk-size=10M"
+plexdrive_options="--temp=${plexdrive_temp_dir} -o allow_other --clear-chunk-max-size=100G --clear-chunk-age=24h --chunk-size=10M"
 
 ###############################################################################
 # RCLONE
