@@ -1,3 +1,4 @@
 plexdrive/config.json
 plexdrive/token.json
 rclone/rclone.conf
+logs/
