@@ -21,18 +21,14 @@ cached_media_dir="${media_dir}/mediacache"
 # Media directory (FINAL)
 local_media_dir="${media_dir}/media"
 
-###############################################################################
-# CLOUD CONFIG
-###############################################################################
-use_gdrive=1
 
 ###############################################################################
 # UNION-FS
 ###############################################################################
-ufs_dir="${media_dir}/unionfs"
-ufs_bin="${ufs_dir}/unionfs"
+ufs_bin="/usr/bin/unionfs"
 
 ufs_options="-o cow,allow_other,direct_io,nonempty,auto_cache,sync_read"
+
 
 ###############################################################################
 # PLEXDRIVE
@@ -47,6 +43,7 @@ mongo_password=""
 
 plexdrive_options="--temp=${plexdrive_temp_dir} -o allow_other --clear-chunk-max-size=100G --clear-chunk-age=24h --chunk-size=10M"
 
+
 ###############################################################################
 # RCLONE
 ###############################################################################
@@ -60,14 +57,16 @@ rclone_options="--read-only --allow-non-empty --allow-other --buffer-size 500M -
 rclone_cloud_endpoint="gd-crypt:"
 rclone_local_endpoint="local-crypt:"
 
+
 ###############################################################################
-# SCANNER CONFIG
+# SCANNER CONFIG (IGNORE this for now)
 ###############################################################################
 movie_category="2"
 movie_directory="storage/movies"
 
 tv_category="3"
 tv_directory="storage/tv"
+
 
 ###############################################################################
 # MISC. CONFIG

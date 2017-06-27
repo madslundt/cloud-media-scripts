@@ -41,10 +41,8 @@ find "${local_decrypt_dir}" -type f |
 		done
 
 		# Copy file to remote destination[s], retaining path
-		if [ "$use_gdrive" = 1 ]; then
-			echo "[ $(date ${date_format}) ] Transfering file -> ${n} to Google Drive."
-			"${rclone_bin}" copy --config="${rclone_cfg}" "$n" "${rclone_cloud_endpoint}:${destpath}" >/dev/null 2>&1
-		fi
+		echo "[ $(date ${date_format}) ] Transfering file -> ${n} to Google Drive."
+		"${rclone_bin}" copy --config="${rclone_cfg}" "$n" "${rclone_cloud_endpoint}:${destpath}" >/dev/null 2>&1
 	done
 
 # success!

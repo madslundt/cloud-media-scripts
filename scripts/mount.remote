@@ -15,10 +15,6 @@
 # FUNCTIONS
 ###############################################################################
 mount_gdrive () {
-	if [ "$use_gdrive" = 0 ]; then
-		return 3
-	fi
-
 	# Make sure GD mountpoint exists.
 	if [ ! -d "${cloud_encrypt_dir}" ]; then
 		mkdir -p "${cloud_encrypt_dir}"
@@ -67,11 +63,8 @@ mount_union () {
 	# Mount plex media directory if not already mounted.
 	if ! mountpoint -q "${local_media_dir}"; then
 		echo "[ $(date ${date_format}) ] Mounting Plex library mountpoint: ${local_media_dir}"
-		if [ "$use_gdrive" = 1 ]; then
-			ufs_mounts=":${cloud_decrypt_dir}=RO"
-		fi
 
-		ufs_mounts="${local_decrypt_dir}=RW${ufs_mounts}"
+		ufs_mounts="${local_decrypt_dir}=RW:${cloud_decrypt_dir}=RO"
 
 		"${ufs_bin}" $ufs_options "${ufs_mounts}" "${local_media_dir}"
 	else

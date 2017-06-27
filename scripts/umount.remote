@@ -15,12 +15,10 @@
 ###############################################################################
 
 umount_cloud () {
-	if [ "$use_gdrive" = 1 ]; then
-		echo "[ $(date ${date_format}) ] Unmounting decrypted cloud mountpoint -> ${cloud_decrypt_dir}"
-		fusermount -uz "${cloud_decrypt_dir}"
-		echo "[ $(date ${date_format}) ] Unmounting cloud mountpoint -> ${cloud_encrypt_dir}"
-		fusermount -uz "${cloud_encrypt_dir}"
-	fi
+	echo "[ $(date ${date_format}) ] Unmounting decrypted cloud mountpoint -> ${cloud_decrypt_dir}"
+	fusermount -uz "${cloud_decrypt_dir}"
+	echo "[ $(date ${date_format}) ] Unmounting cloud mountpoint -> ${cloud_encrypt_dir}"
+	fusermount -uz "${cloud_encrypt_dir}"
 }
 
 umount_union () {
