@@ -12,8 +12,8 @@ This also means if you loose your encryption keys you can't read your media.
 To unmount run `./umount.remote all`
 
 * If this doesn't work download the files:
- - (Rclone)[https://downloads.rclone.org/rclone-current-linux-amd64.zip]
- - (Plexdrive)[https://github.com/dweidenfeld/plexdrive/releases/download/4.0.0/plexdrive-linux-amd64]
+ - [Rclone](https://downloads.rclone.org/rclone-current-linux-amd64.zip)
+ - [Plexdrive](https://github.com/dweidenfeld/plexdrive/releases/download/4.0.0/plexdrive-linux-amd64)
 
 Unzip Rclone to the rclone directory and Plexdrive to the plexdrive directory. After having placed the rclone into the rclone directory run the rclone bin with the parameters `--config="rclone.conf" config` and create the needed configurations.
 
