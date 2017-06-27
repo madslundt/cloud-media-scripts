@@ -25,8 +25,9 @@ Most of the configuration to set up is done through Rclone. Read their documenta
  - Crypt for cloud.
  - Crypt for local.
 
-View my example for an rclone configuration [here](rclone/rclone.template.conf).
+This is done through the rclone config command.
 
+View my example for an rclone configuration [here](rclone/rclone.template.conf).
 
 _Good idea to backup your Rclone configuration and Plexdrive configuration and cache for easier setup next time._
 
@@ -37,10 +38,6 @@ These should be inserted into `crontab -e`.
  - Cron is set up to mount at boot.
  - Upload to cloud hourly.
  - Check to remove local content daily (this only remove files days older than `remove_files_older_than`).
-
-## OBS
-At the moment `makecache` has not been tested and `scanlibraries` is not probable configured.
-_These might be removed in the future if Plex works fine without them and without increasing API hits drastically._
 
 # How this works?
 Following services are used to sync, encrypt/decrypt and mount media:
@@ -70,7 +67,7 @@ Plexdrive is used to mount Google Drive to a local folder (`cloud_encrypt_dir`).
 
 Plexdrive version 4.0.0 requires a running MongoDB server. This is not included in the scripts but can either be installed from .deb packages or in a Docker container.
 
-Plexdrive create two files: `config.json` and `token.json`. This is used to get access to Google Drive. These can either be set up via Plexdrive or by using the templates located in the [plexdrive directory](plexdrive/) (just copy the files and name them `config.json` and `token.json`).
+Plexdrive create two files: `config.json` and `token.json`. This is used to get access to Google Drive. These can either be set up via Plexdrive or by using the templates located in the [plexdrive directory](plexdrive/) (copy the files, name them `config.json` and `token.json` and insert your Google API details).
 
 ## Rclone
 Rclone is used to encrypt, decrypt and upload files to the cloud.
