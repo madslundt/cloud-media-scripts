@@ -21,7 +21,7 @@ mount_gdrive () {
 
 	# Make sure GD mountpoint exists.
 	if [ ! -d "${cloud_encrypt_dir}" ]; then
-		mkdir "${cloud_encrypt_dir}"
+		mkdir -p "${cloud_encrypt_dir}"
 	fi
 
 	# Make sure Plexdrive temp folder exists.
@@ -37,7 +37,7 @@ mount_gdrive () {
 	# Mount GD if not already mounted.
 	if ! mountpoint -q "$cloud_encrypt_dir" ; then
 		echo "[ $(date ${date_format}) ] Mounting Google Drive mountpoint: ${cloud_encrypt_dir}"
-		screen -dmS plexdrive "$plexdrive_bin" --config="${plexdrive_dir}" ${mongo} "${plexdrive_options}" "${cloud_encrypt_dir}"
+		screen -dmS plexdrive "$plexdrive_bin" --config="${plexdrive_dir}" $mongo $plexdrive_options "${cloud_encrypt_dir}"
 	else
 		echo "[ $(date ${date_format}) ] Google Drive mountpoint: ${cloud_encrypt_dir} already mounted."
 	fi
@@ -46,12 +46,12 @@ mount_gdrive () {
 mount_local_media () {
 	# Make sure decrypted GD directory exists.
 	if [ ! -d "${cloud_decrypt_dir}" ]; then
-		mkdir "${cloud_decrypt_dir}"
+		mkdir -p "${cloud_decrypt_dir}"
 	fi
 
 	if ! mountpoint -q "$cloud_decrypt_dir"; then
 		echo "[ $(date ${date_format}) ] Mounting decrypted Google Drive: ${cloud_decrypt_dir}"
-		"${rclone_bin}" mount --config="${rclone_cfg}" "${rclone_options}" "${rclone_local_endpoint}" "${cloud_decrypt_dir}" >/dev/null 2>&1
+		"${rclone_bin}" mount --config="${rclone_cfg}" $rclone_options "${rclone_local_endpoint}" "${cloud_decrypt_dir}" >/dev/null 2>&1
 	else
 		echo "[ $(date ${date_format}) ] Decrypted Google Drive mountpoint: ${cloud_decrypt_dir} already mounted."
 	fi
@@ -60,7 +60,7 @@ mount_local_media () {
 mount_union () {
 	# Make sure combined plex media directory exists.
 	if [ ! -d "${local_media_dir}" ]; then
-		mkdir "${local_media_dir}"
+		mkdir -p "${local_media_dir}"
 	fi
 
 
@@ -70,13 +70,10 @@ mount_union () {
 		if [ "$use_gdrive" = 1 ]; then
 			ufs_mounts=":${cloud_decrypt_dir}=RO"
 		fi
-		if [ "$ufs_allow_other" = 1 ]; then
-			ufs_options=",allow_other"
-		fi
 
 		ufs_mounts="${local_decrypt_dir}=RW${ufs_mounts}"
 
-		"${ufs_bin}" -o "cow${ufs_options}" "${ufs_mounts}" "${local_media_dir}"
+		"${ufs_bin}" $ufs_options "${ufs_mounts}" "${local_media_dir}"
 	else
 		echo "[ $(date ${date_format}) ] Plex library mountpoint: ${local_media_dir} already mounted."
 	fi
@@ -96,11 +93,7 @@ mount_cache () {
 	if ! mountpoint -q "${cached_media_dir}"; then
 		echo "[ $(date ${date_format}) ] Mounting local file cache: ${cached_media_dir}"
 
-		if [ "$ufs_allow_other" = 1 ]; then
-			ufs_options=",allow_other"
-		fi
-
-		"${ufs_bin}" -o "cow${ufs_options}" "${local_cache_dir}=RO:${local_media_dir}=RW" "${cached_media_dir}"
+		"${ufs_bin}" $ufs_options "${local_cache_dir}=RO:${local_media_dir}=RW" "${cached_media_dir}"
 
 	else
 		echo "[ $(date ${date_format}) ] Local file cache: ${cached_media_dir} already mounted."

@@ -31,7 +31,7 @@ use_gdrive=1
 ufs_dir="${media_dir}/unionfs"
 ufs_bin="${ufs_dir}/unionfs"
 
-ufs_allow_other=1
+ufs_options="-o cow,allow_other,direct_io,nonempty,auto_cache,sync_read"
 
 ###############################################################################
 # PLEXDRIVE
