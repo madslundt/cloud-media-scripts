@@ -29,9 +29,9 @@ mount_gdrive () {
 		mkdir -p "${plexdrive_temp_folder}"
 	fi
 
-	mongo="--mongo-database=\"${mongo_database}\" --mongo-host=\"${mongo_host}\""
+	mongo="--mongo-database=${mongo_database} --mongo-host=${mongo_host}"
 	if [ ! -z "${mongo_user}" -a "${mongo_user}" != " " ]; then
-		mongo = "${mongo} --mongo-user=\"${mongo_user}\" --mongo-password=\"${mongo_password}\""
+		mongo="${mongo} --mongo-user=${mongo_user} --mongo-password=${mongo_password}"
 	fi
 
 	# Mount GD if not already mounted.
@@ -127,8 +127,8 @@ case "$1" in
 		mount_local_media
 	;;
 	all)
-		mount_local_media
 		mount_gdrive
+		mount_local_media
 		mount_union
 		mount_cache
 	;;
