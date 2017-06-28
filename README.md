@@ -37,7 +37,7 @@ These should be inserted into `crontab -e`.
 
  - Cron is set up to mount at boot.
  - Upload to cloud hourly.
- - Check to remove local content daily (this only remove files days older than `remove_files_older_than`).
+ - Check to remove local content daily (this only remove files older than `remove_files_older_than`).
 
 # How this works?
 Following services are used to sync, encrypt/decrypt and mount media:
