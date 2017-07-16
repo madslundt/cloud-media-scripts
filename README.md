@@ -15,7 +15,7 @@ There is a setup file, `setup.sh`, to install the necessary stuff automatically.
 
 To unmount run `./umount.remote`
 
-*If this doesn't work, follow the manual setup instructions [here](/#manually).
+*If this doesn't work, follow the manual setup instructions [here](#manually).
 
 
 ## Setup
