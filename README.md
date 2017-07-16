@@ -1,7 +1,11 @@
 These scripts are created to have your media synced between your cloud- and local store. All media is always encrypted before being uploaded.
 This also means if you loose your encryption keys you can't read your media.
 
-**Plexdrive version 4.0.0 and Rclone version 1.36 is used.** This is all taken care of by `setup.sh`.
+**Plexdrive version 4.0.0 and Rclone version 1.36 is used.** 
+
+There is a setup file, `setup.sh`, to install the necessary stuff automatically. This has only been tested on Ubuntu 16.04+.
+
+
 
 # Getting started
 1. Change `config` to match your settings.
@@ -11,12 +15,11 @@ This also means if you loose your encryption keys you can't read your media.
 
 To unmount run `./umount.remote`
 
-*If this doesn't work download the files:
- - [Rclone](https://downloads.rclone.org/rclone-current-linux-amd64.zip)
- - [Plexdrive](https://github.com/dweidenfeld/plexdrive/releases/download/4.0.0/plexdrive-linux-amd64)
+*If this doesn't work, follow the manual setup instructions [here](/#manually).
 
 
 ## Setup
+
 ### Rclone setup
 Most of the configuration to set up is done through Rclone. Read their documentation [here](https://rclone.org/docs/).
 
@@ -30,6 +33,22 @@ This is done through the rclone config command.
 View my example for an rclone configuration [here](rclone/rclone.template.conf).
 
 _Good idea to backup your Rclone configuration and Plexdrive configuration and cache for easier setup next time._
+
+### Manually
+To install the necessary stuff manually do the following:
+1. Install unionfs-fuse.
+2. Install bc.
+3. Install GNU screen.
+4. Install [Rclone 1.36](https://downloads.rclone.org/rclone-current-linux-amd64.zip).
+5. Install [Plexdrive 4.0.0](https://github.com/dweidenfeld/plexdrive/releases/download/4.0.0/plexdrive-linux-amd64).
+6. Create the folders pointing, in the config file, to `local_decrypt_dir` and `plexdrive_temp_dir`.
+7. Run rclone bin, installed in step 4, with the parameter `--config=RCLONE_CFG config` where `RCLONE_CFG` is the variable set in the config file.
+8. Set up Google Drive remote, Crypt for Google Drive remove (rclone_cloud_endpoint) and crypt for local directory (rclone_local_endpoint).
+9. Run plexdrive bin, installed in step 5, with the parameters `--config=PLEXDRIVE_DIR --mongo-database=MONGO_DATABASE --mongo-host=MONGO_HOST --mongo-user=MONGO_USER --mongo-password=MONGO_PASSWORD`. Remember to match the parameters with the variables in the config file.
+10. Enter authorization to your Google Drive.
+11. Cancel Plexdrive by pressing CTRL+C.
+Run PlexDrive with GNU screen: `screen -dmS plexdrive PLEXDRIVE_BIN --config=PLEXDRIVE_DIR --mongo-database=MONGO_DATABASE --mongo-host=MONGO_HOST --mongo-user=MONGO_USER --mongo-password=MONGO_PASSWORD PLEXDRIVE_OPTIONS CLOUD_ENCRYPT_DIR`.
+12. Exit screen session by pressing CTRL+A then D.
 
 ## Cron
 My suggestions for cronjobs is in the file `cron`.
