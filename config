@@ -11,11 +11,14 @@ cloud_decrypt_dir="${media_dir}/.cloud-decrypt"
 
 # Local directory
 local_decrypt_dir="${media_dir}/.local-decrypt/Media"
-plexdrive_temp_dir="${media_dir}/.local-decrypt/plexdrive"
-
+plexdrive_temp_dir="${media_dir}/.local-decrypt/plexdrive"​
+16
 # Cache directories (IGNORE this for now)
+17
 cache_dir="${media_dir}/.cache"
+18
 local_cache_dir="${cache_dir}/media"
+19
 cached_media_dir="${media_dir}/mediacache"
 
 # Media directory (FINAL)
@@ -56,16 +59,6 @@ rclone_options="--read-only --allow-non-empty --allow-other --buffer-size 500M -
 # Rclone endpoints
 rclone_cloud_endpoint="gd-crypt:"
 rclone_local_endpoint="local-crypt:"
-
-
-###############################################################################
-# SCANNER CONFIG (IGNORE this for now)
-###############################################################################
-movie_category="2"
-movie_directory="storage/movies"
-
-tv_category="3"
-tv_directory="storage/tv"
 
 
 ###############################################################################
