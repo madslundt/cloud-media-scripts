@@ -72,34 +72,8 @@ mount_union () {
 	fi
 }
 
-mount_cache () {
-	# Make sure cache directory exists. If not, create it.
-	if [ ! -d "${cached_media_dir}" ]; then
-		mkdir -p "${cached_media_dir}"
-	fi
-
-	if [ ! -d "${local_cache_dir}" ]; then
-		mkdir -p "${local_cache_dir}"
-	fi
-
-	# Mount cache directory if not already mounted.
-	if ! mountpoint -q "${cached_media_dir}"; then
-		echo "[ $(date ${date_format}) ] Mounting local file cache: ${cached_media_dir}"
-
-		"${ufs_bin}" $ufs_options "${local_cache_dir}=RO:${local_media_dir}=RW" "${cached_media_dir}"
-
-	else
-		echo "[ $(date ${date_format}) ] Local file cache: ${cached_media_dir} already mounted."
-	fi
-}
-
-mount_help () {
-	echo "$0 all|gdrive|local|union|cache"
-}
-
 ###############################################################################
 
 mount_gdrive
 mount_local_media
 mount_union
-# mount_cache
