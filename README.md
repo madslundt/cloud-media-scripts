@@ -64,7 +64,7 @@ Following services are used to sync, encrypt/decrypt and mount media:
  - Rclone
  - UnionFS
 
-This gives us a total of 5 directories (8 if we count caching too, but ignore this for now):
+This gives us a total of 5 directories:
  - Cloud encrypt dir: Cloud data encrypted (Mounted with Plexdrive)
  - Cloud decrypt dir: Cloud data decrypted (Mounted with Rclone)
  - Local decrypt dir: Local data decrypted
