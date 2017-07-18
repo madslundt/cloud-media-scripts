@@ -26,13 +26,7 @@ umount_union () {
 	fusermount -uz "$local_media_dir"
 }
 
-umount_cache () {
-	echo "[ $(date ${date_format}) ] Unmounting local media cache -> ${cached_media_dir}"
-	fusermount -uz "$cached_media_dir"
-}
-
 ###############################################################################
 
 umount_cloud
 umount_union
-# umount_cache
