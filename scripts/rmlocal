@@ -48,7 +48,7 @@ find "${local_decrypt_dir}" -type f -mtime +"${remove_files_older_than}" |
 		# Check that all MD5SUMs match, and if so, delete local copies.
 		if [ "$cloud_checksum" = "$local_checksum" ]; then
 			echo "[ $(date ${date_format}) ] Removing -> ${n}"
-			echo rm -f "$n"
+			rm -f "$n"
 		else
 			echo "[ $(date ${date_format}) ] File -> ${n} not synced."
 		fi
