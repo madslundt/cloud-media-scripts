@@ -16,7 +16,6 @@ _plexdrive_bin="plexdrive-linux-amd64"
 
 apt-get update
 apt-get install unionfs-fuse -y
-apt-get install encfs -y
 apt-get install bc -y
 apt-get install screen -y
 
