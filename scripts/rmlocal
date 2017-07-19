@@ -17,7 +17,7 @@ if pidof -o %PPID -x "$(basename "$0")"; then
 fi
 
 # Generate file list and iterate through it...
-find "${local_decrypt_dir}" -type f -mtime +"${remove_files_older_than}" |
+find "${local_decrypt_dir}" -type f -mtime +$remove_files_older_than |
 	while read -r n; do
 
 		# Find the pathname relative to the root of your remote and store filename
