@@ -9,17 +9,9 @@ media_dir="/cloud-storage"
 cloud_encrypt_dir="${media_dir}/.cloud-encrypt"
 cloud_decrypt_dir="${media_dir}/.cloud-decrypt"
 
-# Local directory
-local_decrypt_dir="${media_dir}/.local-decrypt/Media"
-plexdrive_temp_dir="${media_dir}/.local-decrypt/plexdrive"​
-
-# Cache directories (IGNORE this for now)
-
-cache_dir="${media_dir}/.cache"
-
-local_cache_dir="${cache_dir}/media"
-
-cached_media_dir="${media_dir}/mediacache"
+# Local director
+local_decrypt_dir="${media_dir}/.local-decrypt/media"
+plexdrive_temp_dir="${media_dir}/.local-decrypt/plexdrive"
 
 # Media directory (FINAL)
 local_media_dir="${media_dir}/media"
