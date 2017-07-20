@@ -1,3 +1,3 @@
 @reboot ./scripts/mount.remote &>> ./logs/mount.log
-@hourly ./scripts/cloudupload &>> ./logs/cloudupdates.log
-@daily ./scripts/rmlocal &>> ./logs/nukedupes.log
+@daily ./scripts/cloudupload &>> ./logs/cloudupdates.log
+@monthly ./scripts/rmlocal &>> ./logs/nukedupes.log
