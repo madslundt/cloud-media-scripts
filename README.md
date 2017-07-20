@@ -55,8 +55,10 @@ My suggestions for cronjobs is in the file `cron`.
 These should be inserted into `crontab -e`.
 
  - Cron is set up to mount at boot.
- - Upload to cloud hourly.
- - Check to remove local content daily (this only remove files older than `remove_files_older_than`).
+ - Upload to cloud daily.
+ - Check to remove local content monthly (this only remove files older than `remove_files_older_than`).
+ 
+_If you have a small local disk you may change upload to hourly and remove local content to daily or weekly._
 
 # How this works?
 Following services are used to sync, encrypt/decrypt and mount media:
