@@ -12,13 +12,13 @@ cloud_decrypt_dir="${media_dir}/.cloud-decrypt"
 # Local directory
 local_decrypt_dir="${media_dir}/.local-decrypt/Media"
 plexdrive_temp_dir="${media_dir}/.local-decrypt/plexdrive"​
-16
+
 # Cache directories (IGNORE this for now)
-17
+
 cache_dir="${media_dir}/.cache"
-18
+
 local_cache_dir="${cache_dir}/media"
-19
+
 cached_media_dir="${media_dir}/mediacache"
 
 # Media directory (FINAL)
