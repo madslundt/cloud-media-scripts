@@ -18,6 +18,8 @@ apt-get update
 apt-get install unionfs-fuse -y
 apt-get install bc -y
 apt-get install screen -y
+apt-get install unzip -y
+apt-get install fuse -y
 
 if [ ! -d "${rclone_dir}" ]; then
     mkdir "${rclone_dir}"
