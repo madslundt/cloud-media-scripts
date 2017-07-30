@@ -9,9 +9,8 @@ media_dir="/cloud-storage"
 cloud_encrypt_dir="${media_dir}/.cloud-encrypt"
 cloud_decrypt_dir="${media_dir}/.cloud-decrypt"
 
-# Local director
+# Local directory
 local_decrypt_dir="${media_dir}/.local-decrypt/media"
-plexdrive_temp_dir="${media_dir}/.local-decrypt/plexdrive"
 
 # Media directory (FINAL)
 local_media_dir="${media_dir}/media"
@@ -36,6 +35,7 @@ mongo_host="localhost"
 mongo_user=""
 mongo_password=""
 
+plexdrive_temp_dir="${media_dir}/.local-decrypt/plexdrive"
 plexdrive_options="--temp=${plexdrive_temp_dir} -o allow_other --clear-chunk-max-size=1000G --clear-chunk-age=24h --chunk-size=10M"
 
 
