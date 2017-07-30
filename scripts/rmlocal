@@ -36,7 +36,7 @@ rm_time () {
 			done
 
 			# Move file to remote destination[s], retaining path
-			echo "[ $(date ${date_format}) ] Moving file -> ${n} to Google Drive in ${destpath}."
+			echo "[ $(date ${date_format}) ] Moving file -> ${n} to Google Drive."
 			"${rclone_bin}" move --config="${rclone_cfg}" "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
 		done
 }
@@ -85,15 +85,13 @@ rm_space () {
 			echo $n
 
 			fileSize=$(du -sb "$n" | awk '{print $1}')
-			if [ -z "${fileSize}" ]; then
-					continue
-			fi
 			addedSpace="$(($addedSpace + $fileSize))"
 
 			fileSizeGb=$(($fileSize / 1000 / 1000 / 1000))
+			
 			# Move file to remote destination[s], retaining path
-			echo $fileSize
 			echo "[ $(date ${date_format}) ] Moving file -> ${n} to Google Drive. Freeing up ${fileSizeGb} GB"
+			"${rclone_bin}" move --config="${rclone_cfg}" "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
 	done
 }
 
