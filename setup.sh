@@ -5,8 +5,8 @@
 ###################################
 ########## DOWNLOADS ##########
 # Rclone
-_rclone_url="https://downloads.rclone.org/rclone-current-linux-amd64.zip"
-_rclone_zip="rclone-current-linux-amd64.zip"
+_rclone_url="https://github.com/ncw/rclone/releases/download/v1.36/rclone-v1.36-linux-amd64.zip"
+_rclone_zip="rclone-v1.36-linux-amd64.zip"
 _rclone_dir="rclone-v1.36-linux-amd64"
 
 # Plexdrive
@@ -70,3 +70,4 @@ echo "2. Enter authorization"
 echo "3. Cancel plexdrive by pressing CTRL+C"
 echo "4. Run plexdrive with screen by running the following command:"
 echo "\tscreen -dmS plexdrive ${plexdrive_bin} --config=${plexdrive_dir} ${mongo} ${plexdrive_options} ${cloud_encrypt_dir}"
+echo "Exit screen session by pressing CTRL+A then D"
