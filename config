@@ -9,7 +9,7 @@ media_dir="/cloud-storage"
 cloud_encrypt_dir="${media_dir}/.cloud-encrypt"
 cloud_decrypt_dir="${media_dir}/.cloud-decrypt"
 
-# Local director
+# Local directories
 local_decrypt_dir="${media_dir}/.local-decrypt/media"
 plexdrive_temp_dir="${media_dir}/.local-decrypt/plexdrive"
 
