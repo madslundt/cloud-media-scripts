@@ -1,7 +1,7 @@
 These scripts are created to have your media synced between your cloud- and local store. All media is always encrypted before being uploaded.
 This also means if you loose your encryption keys you can't read your media.
 
-**Plexdrive version 4.0.0 and Rclone version 1.36 is used.** 
+**Plexdrive version 4.0.0 and Rclone version 1.36 is used.**
 
 There is a setup file, `setup.sh`, to install the necessary stuff automatically. This has only been tested on Ubuntu 16.04+.
 
@@ -56,9 +56,11 @@ These should be inserted into `crontab -e`.
 
  - Cron is set up to mount at boot.
  - Upload to cloud daily.
- - Check to remove local content monthly (this only remove files older than `remove_files_older_than`).
- 
+ - Check to remove local content weekly (this only remove files depending on the option 'space' or 'time'*).
+
 _If you have a small local disk you may change upload to hourly and remove local content to daily or weekly._
+
+*_If 'space' is set it will only remove content, starting from the oldest accessed file, if media size has exceeded `remove_files_when_space_exceeds` and will only free up atleast `freeup_atleast`. If 'time' is set it will only remove files older than `remove_files_older_than`_
 
 # How this works?
 Following services are used to sync, encrypt/decrypt and mount media:

@@ -88,7 +88,7 @@ rm_space () {
 			addedSpace="$(($addedSpace + $fileSize))"
 
 			fileSizeGb=$(($fileSize / 1000 / 1000 / 1000))
-			
+
 			# Move file to remote destination[s], retaining path
 			echo "[ $(date ${date_format}) ] Moving file -> ${n} to Google Drive. Freeing up ${fileSizeGb} GB"
 			"${rclone_bin}" move --config="${rclone_cfg}" "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
@@ -101,9 +101,9 @@ if pidof -o %PPID -x "$(basename "$0")"; then
 	exit 3
 fi
 
-if [ "$remove_files_based_on" == "space"]; then
+if [ "$remove_files_based_on" = "space" ]; then
 	rm_space
-elif [ "$remove_files_based_on" == "time"]; then
+elif [ "$remove_files_based_on" = "time" ]; then
 	rm_time
 else
 	echo "[ $(date ${date_format}) ] no option to remove old files"
