@@ -30,13 +30,8 @@ ufs_options="-o cow,allow_other,direct_io,nonempty,auto_cache,sync_read"
 plexdrive_dir="${media_dir}/plexdrive"
 plexdrive_bin="${plexdrive_dir}/plexdrive-linux-amd64"
 
-mongo_database="plexdrive"
-mongo_host="localhost"
-mongo_user=""
-mongo_password=""
-
-plexdrive_temp_dir="${media_dir}/.local-decrypt/plexdrive"
-plexdrive_options="--temp=${plexdrive_temp_dir} -o allow_other --clear-chunk-max-size=1000G --clear-chunk-age=24h --chunk-size=10M"
+plexdrive_cache_file="${media_dir}/.local-decrypt/plexdrive/cache.bolt"
+plexdrive_options="--cache-file=${plexdrive_cache_file} -o allow_other --clear-chunk-max-size=1000G --clear-chunk-age=24h --chunk-size=10M"
 
 
 ###############################################################################

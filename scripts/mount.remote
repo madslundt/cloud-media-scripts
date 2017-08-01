@@ -20,20 +20,17 @@ mount_gdrive () {
 		mkdir -p "${cloud_encrypt_dir}"
 	fi
 
-	# Make sure Plexdrive temp folder exists.
-	if [ ! -d "${plexdrive_temp_dir}" ]; then
-		mkdir -p "${plexdrive_temp_dir}"
-	fi
 
-	mongo="--mongo-database=${mongo_database} --mongo-host=${mongo_host}"
-	if [ ! -z "${mongo_user}" -a "${mongo_user}" != " " ]; then
-		mongo="${mongo} --mongo-user=${mongo_user} --mongo-password=${mongo_password}"
+	# Make sure Plexdrive cache folder exists.
+	plexdrive_cache_dir=$(dirname plexdrive_cache_file)
+	if [ ! -d "${plexdrive_cache_dir}" ]; then
+		mkdir -p "${dirname plexdrive_cache_dir}"
 	fi
 
 	# Mount GD if not already mounted.
 	if ! mountpoint -q "$cloud_encrypt_dir" ; then
 		echo "[ $(date ${date_format}) ] Mounting Google Drive mountpoint: ${cloud_encrypt_dir}"
-		screen -dmS plexdrive "$plexdrive_bin" --config="${plexdrive_dir}" $mongo $plexdrive_options "${cloud_encrypt_dir}"
+		screen -dmS plexdrive "$plexdrive_bin" mount --config="${plexdrive_dir}" $plexdrive_options "${cloud_encrypt_dir}"
 	else
 		echo "[ $(date ${date_format}) ] Google Drive mountpoint: ${cloud_encrypt_dir} already mounted."
 	fi
