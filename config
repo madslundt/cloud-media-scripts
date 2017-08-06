@@ -57,4 +57,15 @@ rclone_local_endpoint="local-crypt:"
 # MISC. CONFIG
 ###############################################################################
 date_format="+%F@%T"
-remove_files_older_than=60         # In days
+
+# Select to remove media files based on 'time' or 'space'
+#remove_files_based_on="time"
+remove_files_based_on="space"
+
+
+# Remove media files based on 'time'
+remove_files_older_than=60 # In days
+
+# Remove media files based on 'space'
+remove_files_when_space_exceeds=2500 # In Gigabytes
+freeup_atleast=1000  # In Gigabytes
