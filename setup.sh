@@ -5,8 +5,8 @@
 ###################################
 ########## DOWNLOADS ##########
 # Rclone
-_rclone_url="https://downloads.rclone.org/rclone-current-linux-amd64.zip"
-_rclone_zip="rclone-current-linux-amd64.zip"
+_rclone_url="https://github.com/ncw/rclone/releases/download/v1.36/rclone-v1.36-linux-amd64.zip"
+_rclone_zip="rclone-v1.36-linux-amd64.zip"
 _rclone_dir="rclone-v1.36-linux-amd64"
 
 # Plexdrive
