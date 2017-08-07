@@ -1,10 +1,11 @@
 These scripts are created to have your media synced between your cloud- and local store. All media is always encrypted before being uploaded.
 This also means if you loose your encryption keys you can't read your media.
 
-**Plexdrive version 4.0.0 and Rclone version 1.36 is used.** 
+**Plexdrive version 4.0.0 and Rclone version 1.36 is used.**
 
 There is a setup file, `setup.sh`, to install the necessary stuff automatically. This has only been tested on Ubuntu 16.04+.
 
+The config right now is configured to have atleast 1 TB for caching and a decent internet connection. If you have a smaller drive or just want to optimize it [click here](#optimize-configuration).
 
 
 # Getting started
@@ -56,9 +57,11 @@ These should be inserted into `crontab -e`.
 
  - Cron is set up to mount at boot.
  - Upload to cloud daily.
- - Check to remove local content monthly (this only remove files older than `remove_files_older_than`).
- 
+ - Check to remove local content weekly (this only remove files depending on the option 'space' or 'time'*).
+
 _If you have a small local disk you may change upload to hourly and remove local content to daily or weekly._
+
+*_If 'space' is set it will only remove content, starting from the oldest accessed file, if media size has exceeded `remove_files_when_space_exceeds` and will only free up atleast `freeup_atleast`. If 'time' is set it will only remove files older than `remove_files_older_than`_
 
 # How this works?
 Following services are used to sync, encrypt/decrypt and mount media:
@@ -109,6 +112,27 @@ The reason for these permissions are that when writing to the local folder (`loc
 My setup with this is quite simple.
 
 I've an Intel NUC with only 128GB ssd. This is connected to a 4TB extern hard drive that contains `local_decrypt_dir` and `plexdrive_temp_dir`.
+
+# Optimize configuration
+## Space
+Right now the config is set for atleast 1 TB drive.
+
+To use these scripts on a smaller drive, make these changes to the config:
+
+Plexdrive
+ - clear-chunk-max-size the allowed space for plexdrive cache.
+ - clear-chunk-age clears cache after some time (this is only used when clear-chunk-max-size is removed).
+
+Misc. config
+ - remove_files_based_on can either be time or space.
+    - Time will remove the files after `remove_files_older_than` days ONLY if the files are uploaded to the cloud.
+    - Space will remove the files, starting from the oldest, when space exceeds `remove_files_when_space_exceeds` and free up atleast `freeup_atleast` GB ONLY if the files are uploaded to the cloud.
+
+## Internet connection
+Depending on your internet connection, you can optimize when plexdrive download chunks.
+
+Plexdrive
+ - chunk-size the higher it goes the faster internet connection you must have
 
 # Thanks to
  - Gesis for the original scripts: `git://git.gesis.pw:/nimbostratus.git`
