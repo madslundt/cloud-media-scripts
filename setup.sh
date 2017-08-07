@@ -26,7 +26,8 @@ if [ ! -d "${rclone_dir}" ]; then
 fi
 wget "${_rclone_url}"
 unzip "${_rclone_zip}"
-mv "${_rclone_dir}/*" "${rclone_dir}/"
+chmod a+x "${_rclone_dir}/rclone"
+cp -rf "${_rclone_dir}/*" "${rclone_dir}/"
 rm -rf "${_rclone_zip}"
 rm -rf "${_rclone_dir}"
 
@@ -35,7 +36,9 @@ if [ ! -d "${plexdrive_dir}" ]; then
     mkdir "${plexdrive_dir}"
 fi
 wget "${_plexdrive_url}"
-mv "${_plexdrive_bin}" "${plexdrive_dir}/"
+chmod a+x "${_plexdrive_bin}"
+cp -rf "${_plexdrive_bin}" "${plexdrive_dir}/"
+rm -rf "${_plexdrive_bin}"
 
 
 if [ ! -d "${local_decrypt_dir}" ]; then
