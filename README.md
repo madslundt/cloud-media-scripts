@@ -7,7 +7,7 @@ There is a setup file, `setup.sh`, to install the necessary stuff automatically.
 
 The config right now is configured to have atleast 1 TB for caching and a decent internet connection. If you have a smaller drive or just want to optimize it [click here](#optimize-configuration).
 
-[Docker image WIP](https://github.com/madslundt/docker-cloud-media-scripts)
+### I've created another repository with this included in a docker image. Check it out [here](https://github.com/madslundt/docker-cloud-media-scripts)
 
 # Getting started
 1. Change `config` to match your settings.
