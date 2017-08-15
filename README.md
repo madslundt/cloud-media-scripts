@@ -25,12 +25,32 @@ To unmount run `./umount.remote`
 ### Rclone setup
 Most of the configuration to set up is done through Rclone. Read their documentation [here](https://rclone.org/docs/).
 
-3 configurations are needed to:
- - Connect to cloud.
- - Crypt for cloud.
- - Crypt for local.
+3 remotes are needed:
+ - Endpoint to your cloud storage.
+	- Create new remote [**Press N**]
+	- Give it a name (*default in config gd*)
+	- Choose Google Drive [**Press 7**]
+	- If you have a client id paste it here or leave it blank
+	- Choose headless machine [**Press N**]
+	- Open the url in your browser and enter the verification code
+ - Encryption and decryption for your cloud storage.
+	- Create new remote [**Press N**]
+	- Give it the same name as the variable `rclone_cloud_endpoint` specified in the config but without colon (:) (*default in config gd-crypt*)
+	- Choose Encrypt/Decrypt a remote [**Press 5**]
+	- Enter the name of the endpoint created in cloud-storage appended with a colon (:) and the subfolder on your cloud. Example `gd:/Media` or just `gd:` if you have your files in root in the cloud.
+	- Choose how to encrypt filenames. I prefer option 2 Encrypt the filenames
+	- Choose to either generate your own or random password. I prefer to enter my own.
+	- Choose to enter pass phrase for the salt or leave it blank. I prefer to enter my own.
+ - Encryption and decryption for your local storage.
+	- Create new remote [**Press N**]
+	- Give it the same name as specified in the environment variable `rclone_local_endpoint` but without colon (:) (*default in config local-crypt*)
+	- Choose Encrypt/Decrypt a remote [**Press 5**]
+	- Enter the encrypted folder specified as `cloud_encrypt_dir` in config. If you are using subdirectory on Google Drive append it to it. Example /.cloud-encrypt/Media
+	- Choose the same filename encrypted as you did with the cloud storage.
+	- Enter the same password as you did with the cloud storage.
+	- Enter the same pass phrase as you did with the cloud storage.
 
-This is done through the rclone config command.
+Rclone documentation if needed [click here](https://rclone.org/docs/)
 
 View my example for an rclone configuration [here](rclone/rclone.template.conf).
 
