@@ -53,7 +53,7 @@ fi
 echo "\n\n--------- SETUP RCLONE ----------\n"
 
 echo "1. Now run rclone with the command:"
-echo "\t${rclone_bin} --config=${rclone_cfg} config"
+echo "\t${rclone_bin} --config=${rclone_config} config"
 echo "2. You need to setup following:"
 echo "\t- Google Drive remote"
 echo "\t- Crypt for your Google Drive remote named '${rclone_cloud_endpoint%?}'"

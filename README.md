@@ -64,7 +64,7 @@ To install the necessary stuff manually do the following:
 4. Install [Rclone 1.36](https://downloads.rclone.org/rclone-current-linux-amd64.zip).
 5. Install [Plexdrive 4.0.0](https://github.com/dweidenfeld/plexdrive/releases/download/4.0.0/plexdrive-linux-amd64).
 6. Create the folders pointing, in the config file, to `local_decrypt_dir` and `plexdrive_temp_dir`.
-7. Run rclone bin, installed in step 4, with the parameter `--config=RCLONE_CFG config` where `RCLONE_CFG` is the variable set in the config file.
+7. Run rclone bin, installed in step 4, with the parameter `--config=RCLONE_CONFIG config` where `RCLONE_CONFIG` is the variable set in the config file.
 8. Set up Google Drive remote, Crypt for Google Drive remove (rclone_cloud_endpoint) and crypt for local directory (rclone_local_endpoint).
 9. Run plexdrive bin, installed in step 5, with the parameters `--config=PLEXDRIVE_DIR --mongo-database=MONGO_DATABASE --mongo-host=MONGO_HOST --mongo-user=MONGO_USER --mongo-password=MONGO_PASSWORD`. Remember to match the parameters with the variables in the config file.
 10. Enter authorization to your Google Drive.
