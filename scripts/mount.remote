@@ -47,7 +47,7 @@ mount_local_media () {
 
 	if ! mountpoint -q "$cloud_decrypt_dir"; then
 		echo "[ $(date ${date_format}) ] Mounting decrypted Google Drive: ${cloud_decrypt_dir}"
-		setsid "${rclone_bin}" mount $rclone_mount_options "${rclone_local_endpoint}" "${cloud_decrypt_dir}" &>/dev/null 2>&1
+		"${rclone_bin}" mount $rclone_mount_options "${rclone_local_endpoint}" "${cloud_decrypt_dir}" &>/dev/null 2>&1
 	else
 		echo "[ $(date ${date_format}) ] Decrypted Google Drive mountpoint: ${cloud_decrypt_dir} already mounted."
 	fi
