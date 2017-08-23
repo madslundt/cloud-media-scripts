@@ -46,7 +46,7 @@ rclone_dir="${media_dir}/rclone"
 rclone_bin="${rclone_dir}/rclone"
 
 rclone_config="${rclone_dir}/rclone.conf"
-rclone_options="${rclone_config} --buffer-size 500M --checkers 16"
+rclone_options="--config=${rclone_config} --buffer-size 500M --checkers 16"
 rclone_mount_options="${rclone_options} --read-only --allow-non-empty --allow-other --max-read-ahead 30G"
 
 # Rclone endpoints
