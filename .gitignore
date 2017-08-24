@@ -1,4 +1,9 @@
-plexdrive/config.json
-plexdrive/token.json
-rclone/rclone.conf
+plexdrive/*
+rclone/*
+!plexdrive/config.template.json
+!plexdrive/token.template.json
+!rclone/rclone.template.conf
 logs/
+.cloud-decrypt/
+.cloud-encrypt/
+.local-decrypt/
