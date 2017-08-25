@@ -17,6 +17,10 @@ plexdrive_temp_dir="${media_dir}/.local-decrypt/plexdrive"​
 local_media_dir="${media_dir}/media"
 
 
+# Encrypt media (0 means no encryption)
+encrypt_media=1
+
+
 ###############################################################################
 # UNION-FS
 ###############################################################################

@@ -15,9 +15,14 @@
 # FUNCTIONS
 ###############################################################################
 mount_gdrive () {
+	cloud_dir="${cloud_encrypt_dir}"
+	if [ "$encrypt_media" -eq "0" ]; then
+		cloud_dir="${cloud_decrypt_dir}"
+	fi
+
 	# Make sure GD mountpoint exists.
-	if [ ! -d "${cloud_encrypt_dir}" ]; then
-		mkdir -p "${cloud_encrypt_dir}"
+	if [ ! -d "${cloud_dir}" ]; then
+		mkdir -p "${cloud_dir}"
 	fi
 
 	# Make sure Plexdrive temp folder exists.
@@ -31,11 +36,11 @@ mount_gdrive () {
 	fi
 
 	# Mount GD if not already mounted.
-	if ! mountpoint -q "$cloud_encrypt_dir" ; then
-		echo "[ $(date ${date_format}) ] Mounting Google Drive mountpoint: ${cloud_encrypt_dir}"
-		screen -dmS plexdrive "$plexdrive_bin" --config="${plexdrive_dir}" $mongo $plexdrive_options "${cloud_encrypt_dir}"
+	if ! mountpoint -q "$cloud_dir" ; then
+		echo "[ $(date ${date_format}) ] Mounting Google Drive mountpoint: ${cloud_dir}"
+		screen -dmS plexdrive "$plexdrive_bin" --config="${plexdrive_dir}" $mongo $plexdrive_options "${cloud_dir}"
 	else
-		echo "[ $(date ${date_format}) ] Google Drive mountpoint: ${cloud_encrypt_dir} already mounted."
+		echo "[ $(date ${date_format}) ] Google Drive mountpoint: ${cloud_dir} already mounted."
 	fi
 }
 
@@ -75,5 +80,7 @@ mount_union () {
 ###############################################################################
 
 mount_gdrive
-mount_local_media
+if [ "$encrypt_media" -eq "1" ]; then
+	mount_local_media
+fi
 mount_union
