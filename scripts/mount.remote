@@ -80,7 +80,7 @@ mount_union () {
 ###############################################################################
 
 mount_gdrive
-if [ "$encrypt_media" -eq "1" ]; then
+if [ "$encrypt_media" != "0" ]; then
 	mount_local_media
 fi
 mount_union
