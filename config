@@ -40,7 +40,7 @@ mongo_host="localhost"
 mongo_user=""
 mongo_password=""
 
-plexdrive_options="--temp=${plexdrive_temp_dir} -o allow_other --clear-chunk-max-size=1000G --clear-chunk-age=24h --chunk-size=10M"
+plexdrive_options="--temp=${plexdrive_temp_dir} -o allow_other --clear-chunk-max-size=300G --clear-chunk-age=24h --chunk-size=10M"
 
 
 ###############################################################################
@@ -72,5 +72,5 @@ remove_files_based_on="space"
 remove_files_older_than=60 # In days
 
 # Remove media files based on 'space'
-remove_files_when_space_exceeds=2500 # In Gigabytes
-freeup_atleast=1000  # In Gigabytes
+remove_files_when_space_exceeds=500 # In Gigabytes
+freeup_atleast=300  # In Gigabytes
