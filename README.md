@@ -1,7 +1,7 @@
 These scripts are created to have your media synced between your cloud- and local store. All media is always encrypted before being uploaded.
 This also means if you loose your encryption keys you can't read your media.
 
-**Plexdrive version 4.0.0 and Rclone version 1.36 is used.**
+**Plexdrive version 4.0.0 and Rclone version 1.37 is used.**
 
 There is a setup file, `setup.sh`, to install the necessary stuff automatically. This has only been tested on Ubuntu 16.04+.
 
@@ -61,7 +61,7 @@ To install the necessary stuff manually do the following:
 1. Install unionfs-fuse.
 2. Install bc.
 3. Install GNU screen.
-4. Install [Rclone 1.36](https://downloads.rclone.org/rclone-current-linux-amd64.zip).
+4. Install [Rclone 1.37](https://github.com/ncw/rclone/releases/download/v1.37/rclone-v1.37-linux-amd64).
 5. Install [Plexdrive 4.0.0](https://github.com/dweidenfeld/plexdrive/releases/download/4.0.0/plexdrive-linux-amd64).
 6. Create the folders pointing, in the config file, to `local_decrypt_dir` and `plexdrive_temp_dir`.
 7. Run rclone bin, installed in step 4, with the parameter `--config=RCLONE_CONFIG config` where `RCLONE_CONFIG` is the variable set in the config file.

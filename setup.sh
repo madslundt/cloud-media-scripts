@@ -5,13 +5,13 @@
 ###################################
 ########## DOWNLOADS ##########
 # Rclone
-_rclone_url="https://github.com/ncw/rclone/releases/download/v1.36/rclone-v1.36-linux-amd64.zip"
-_rclone_zip="rclone-v1.36-linux-amd64.zip"
-_rclone_dir="rclone-v1.36-linux-amd64"
+_rclone_release="rclone-v1.37-linux-amd64"
+_rclone_zip="${_rclone_release}.zip"
+_rclone_url="https://github.com/ncw/rclone/releases/download/v1.37/${_rclone_zip}"
 
 # Plexdrive
-_plexdrive_url="https://github.com/dweidenfeld/plexdrive/releases/download/4.0.0/plexdrive-linux-amd64"
 _plexdrive_bin="plexdrive-linux-amd64"
+_plexdrive_url="https://github.com/dweidenfeld/plexdrive/releases/download/4.0.0/${_plexdrive_bin}"
 ###################################
 
 apt-get update
@@ -21,15 +21,15 @@ apt-get install screen -y
 apt-get install unzip -y
 apt-get install fuse -y
 
-if [ ! -d "${rclone_dir}" ]; then
-    mkdir "${rclone_dir}"
+if [ ! -d "${_rclone_release}" ]; then
+    mkdir "${_rclone_release}"
 fi
 wget "${_rclone_url}"
 unzip "${_rclone_zip}"
-chmod a+x "${_rclone_dir}/rclone"
-cp -rf "${_rclone_dir}/*" "${rclone_dir}/"
+chmod a+x "${_rclone_release}/rclone"
+cp -rf "${_rclone_release}/*" "${_rclone_release}/"
 rm -rf "${_rclone_zip}"
-rm -rf "${_rclone_dir}"
+rm -rf "${_rclone_release}"
 
 
 if [ ! -d "${plexdrive_dir}" ]; then
