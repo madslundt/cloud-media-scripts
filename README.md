@@ -11,7 +11,7 @@ The config right now is configured to have atleast 1 TB for caching and a decent
 
 # Getting started
 1. Change `config` to match your settings.
-2. Change configuration in each file to point to config.
+2. Change paths in each file to point to config.
 3. Run `sudo sh setup.sh` and follow the instructions*.
 4. Run `./mount.remote` to mount plexdrive and decrypt by using rclone.
 
@@ -83,6 +83,8 @@ These should be inserted into `crontab -e`.
 _If you have a small local disk you may change upload to hourly and remove local content to daily or weekly._
 
 *_If 'space' is set it will only remove content, starting from the oldest accessed file, if media size has exceeded `remove_files_when_space_exceeds` and will only free up atleast `freeup_atleast`. If 'time' is set it will only remove files older than `remove_files_older_than`_
+
+OBS: `mountcheck` is used to check if mount is up. I've had some problems where either Plexdrive or Rclone stops the mount. `mountcheck` will make sure to mount your stuff again if something like this happens. Remember to change the paths inside `mountcheck`.
 
 # How this works?
 Following services are used to sync, encrypt/decrypt and mount media:
