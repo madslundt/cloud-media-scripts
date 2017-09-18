@@ -63,7 +63,8 @@ rclone_local_endpoint="local-crypt:"
 ###############################################################################
 date_format="+%F@%T"
 
-# Select to remove media files based on 'time' or 'space'
+# Select to remove media files based on 'time', 'space' or 'instant'
+#remove_files_based_on="instant"
 #remove_files_based_on="time"
 remove_files_based_on="space"
 

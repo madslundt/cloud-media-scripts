@@ -78,11 +78,13 @@ These should be inserted into `crontab -e`.
 
  - Cron is set up to mount at boot.
  - Upload to cloud daily.
- - Check to remove local content weekly (this only remove files depending on the option 'space' or 'time'*).
+ - Check to remove local content weekly (this only remove files depending on the option 'space', 'time' or 'instant'*).
 
 _If you have a small local disk you may change upload to hourly and remove local content to daily or weekly._
 
-*_If 'space' is set it will only remove content, starting from the oldest accessed file, if media size has exceeded `remove_files_when_space_exceeds` and will only free up atleast `freeup_atleast`. If 'time' is set it will only remove files older than `remove_files_older_than`_
+*_If 'space' is set it will only remove content, starting from the oldest accessed file, if media size has exceeded `remove_files_when_space_exceeds` and will only free up atleast `freeup_atleast`. If 'time' is set it will only remove files older than `remove_files_older_than`. If 'instant' is set it will remove all files when running._
+
+*Media is never deleted locally before being uploaded successfully to the cloud.*
 
 OBS: `mountcheck` is used to check if mount is up. I've had some problems where either Plexdrive or Rclone stops the mount. `mountcheck` will make sure to mount your stuff again if something like this happens. Remember to change the paths inside `mountcheck`.
 
@@ -153,6 +155,7 @@ Misc. config
  - remove_files_based_on can either be time or space.
     - Time will remove the files after `remove_files_older_than` days ONLY if the files are uploaded to the cloud.
     - Space will remove the files, starting from the oldest, when space exceeds `remove_files_when_space_exceeds` and free up atleast `freeup_atleast` GB ONLY if the files are uploaded to the cloud.
+	- Instant will remove all the files ONLY if the files are uploaded to the cloud.
 
 ## Internet connection
 Depending on your internet connection, you can optimize when plexdrive download chunks.
