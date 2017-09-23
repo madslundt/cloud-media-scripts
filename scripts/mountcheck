@@ -8,6 +8,4 @@ if [ -z "$(ls -A ${cloud_decrypt_dir})" ]; then
         echo "Mount"
         sh mount.remote
         echo "Mounted successfully"
-else
-        echo "Mount already running"
 fi
