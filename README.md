@@ -11,7 +11,7 @@ The config right now is configured to have atleast 1 TB for caching and a decent
 
 # Getting started
 1. Change `config` to match your settings.
-2. Change paths in each file to point to config.
+2. Change paths to config in all script files.
 3. Run `sudo sh setup.sh` and follow the instructions*.
 4. Run `./mount.remote` to mount plexdrive and decrypt by using rclone.
 
