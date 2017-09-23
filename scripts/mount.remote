@@ -37,6 +37,19 @@ mount_gdrive () {
 
 	# Mount GD if not already mounted.
 	if ! mountpoint -q "$cloud_dir" ; then
+		sleep 5
+		count=5
+		while [ $(ps -ef | grep "mongo" | grep -v "grep" | wc -l) == "0" ]
+		do
+			echo "Waiting for Mongodb ..."
+			sleep 5
+			count=$(($count - 1))
+			if [ "$count" == "0" ]; then
+				echo "Can not connect to Mongodb. Please make sure Mongodb is running before mounting"
+				exit 02
+			fi
+		done
+
 		echo "[ $(date ${date_format}) ] Mounting Google Drive mountpoint: ${cloud_dir}"
 		screen -dmS plexdrive "$plexdrive_bin" --config="${plexdrive_dir}" $mongo $plexdrive_options "${cloud_dir}"
 	else
@@ -51,6 +64,13 @@ mount_local_media () {
 	fi
 
 	if ! mountpoint -q "$cloud_decrypt_dir"; then
+		sleep 5
+		while [ -z "$(ls -A ${cloud_encrypt_dir})" ]
+		do
+			echo "Waiting for mount ${cloud_encrypt_dir} ..."
+			sleep 30
+		done
+		
 		echo "[ $(date ${date_format}) ] Mounting decrypted Google Drive: ${cloud_decrypt_dir}"
 		"${rclone_bin}" mount $rclone_mount_options "${rclone_local_endpoint}" "${cloud_decrypt_dir}" &>/dev/null 2>&1
 	else
@@ -64,9 +84,15 @@ mount_union () {
 		mkdir -p "${local_media_dir}"
 	fi
 
-
 	# Mount plex media directory if not already mounted.
 	if ! mountpoint -q "${local_media_dir}"; then
+		sleep 5
+		while [ -z "$(ls -A ${cloud_decrypt_dir})" ]
+		do
+			echo "Waiting for mount ${cloud_decrypt_dir} ..."
+			sleep 30
+		done
+		
 		echo "[ $(date ${date_format}) ] Mounting Plex library mountpoint: ${local_media_dir}"
 
 		ufs_mounts="${local_decrypt_dir}=RW:${cloud_decrypt_dir}=RO"
