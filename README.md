@@ -9,7 +9,11 @@ The config right now is configured to have atleast 1 TB for caching and a decent
 
 ### I've created another repository with this included in a docker image. Check it out [here](https://github.com/madslundt/docker-cloud-media-scripts)
 
-# Getting started
+# Easy install
+
+```bash <(curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INSTALL)```
+
+# Installation without easy install
 1. Change `config` to match your settings.
 2. Change paths to config in all script files.
 3. Run `sudo sh setup.sh` and follow the instructions*.
