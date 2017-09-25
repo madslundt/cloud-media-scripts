@@ -3,7 +3,7 @@
 ###############################################################################
 # DIRECTORIES
 ###############################################################################
-media_dir="/cloud-storage"
+media_dir="INSERT_ROOT_DIR"
 
 # Cloud directories
 cloud_encrypt_dir="${media_dir}/.cloud-encrypt"

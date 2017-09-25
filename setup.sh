@@ -28,7 +28,7 @@ fi
 wget "${_rclone_url}"
 unzip "${_rclone_zip}"
 chmod a+x "${_rclone_release}/rclone"
-cp -rf "${_rclone_release}/*" "${rclone_dir}/"
+cp -rf "${_rclone_release}/"* "${rclone_dir}/"
 rm -rf "${_rclone_zip}"
 rm -rf "${_rclone_release}"
 

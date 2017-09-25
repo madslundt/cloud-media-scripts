@@ -1,15 +1,27 @@
 #!/bin/bash
 
+if [ -d "${cloud-media-scripts}" ]; then
+    echo "cloud-media-scripts looks like it is already installed. Remove it or rename the folder to install it again"
+    exit 02
+fi
+
 wget "https://github.com/madslundt/cloud-media-scripts/archive/master.zip"
 unzip master.zip
 rm -rf master.zip
 mv cloud-media-scripts-master cloud-media-scripts
 
+mypwd=$(pwd)
+mypwd="${mypwd}/cloud-media-scripts"
 
-sed -i 's/INSERT_CONFIG_FILE/$((realpath cloud-media-scripts/config))/g' cloud-media-scripts/scripts/*
-sed -i 's/media_dir=\"/cloud-storage\"/$((pwd/cloud-media-scripts))}/g' cloud-media-scripts/config
-sed -i 's/umount.remote/$((realpath cloud-media-scripts/scripts/umount.remote))}/g' cloud-media-scripts/scripts/mountcheck
-sed -i 's/mount.remote/$((realpath cloud-media-scripts/scripts/mount.remote))}/g' cloud-media-scripts/scripts/mountcheck
+sed -i "s|INSERT_CONFIG_FILE|${mypwd}/config|g" "${mypwd}/scripts/"*
+sed -i "s|INSERT_ROOT_DIR|$mypwd|g" "${mypwd}/config"
+sed -i "s|umount.remote|${mypwd}/scripts/umount.remote|g" "${mypwd}/scripts/mountcheck"
+sed -i "s|mount.remote|${mypwd}/scripts/mount.remote|g" "${mypwd}/scripts/mountcheck"
 
-echo "Cloud-media-scripts has been installed successfully".
-echo "Edit the config file [$((realpath cloud-media-scripts/config))] and run setup.sh [sh $((realpath cloud-media-scripts/setup.sh))]"
+echo "Cloud-media-scripts has been installed successfully!".
+echo "Edit config file [${$mypwd}/config}] and run setup.sh [sh ${mypwd}/setup.sh]"
+
+
+if [ -d "cloud-media-scripts" ]; then
+    echo "cloud-media-scripts looks like it is already installed. Remove it or rename the folder to install it again"
+fi
