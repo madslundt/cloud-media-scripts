@@ -20,8 +20,3 @@ sed -i "s|mount.remote|${mypwd}/scripts/mount.remote|g" "${mypwd}/scripts/mountc
 
 echo "Cloud-media-scripts has been installed successfully!".
 echo "Edit config file [${$mypwd}/config] and run setup.sh [sh ${mypwd}/setup.sh]"
-
-
-if [ -d "cloud-media-scripts" ]; then
-    echo "cloud-media-scripts looks like it is already installed. Remove it or rename the folder to install it again"
-fi
