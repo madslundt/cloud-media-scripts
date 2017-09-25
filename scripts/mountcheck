@@ -1,5 +1,5 @@
 #!/bin/bash
-. "../config"
+. "INSERT_CONFIG_FILE"
 
 if [ -z "$(ls -A ${cloud_decrypt_dir})" ]; then
         echo "Unmount"

@@ -7,7 +7,7 @@
 # shellcheck source=config
 
 ########## CONFIGURATION ##########
-. "../config"
+. "INSERT_CONFIG_FILE"
 ###################################
 
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ########## CONFIGURATION ##########
-. "./config"
+. "INSERT_CONFIG_FILE"
 ###################################
 ########## DOWNLOADS ##########
 # Rclone
@@ -20,9 +20,10 @@ apt-get install bc -y
 apt-get install screen -y
 apt-get install unzip -y
 apt-get install fuse -y
+apt-get install golang -y
 
 if [ ! -d "${rclone_dir}" ]; then
-    mkdir "${rclone_dir}"
+    mkdir -p "${rclone_dir}"
 fi
 wget "${_rclone_url}"
 unzip "${_rclone_zip}"
@@ -33,7 +34,7 @@ rm -rf "${_rclone_release}"
 
 
 if [ ! -d "${plexdrive_dir}" ]; then
-    mkdir "${plexdrive_dir}"
+    mkdir -p "${plexdrive_dir}"
 fi
 wget "${_plexdrive_url}"
 chmod a+x "${_plexdrive_bin}"
@@ -54,10 +55,15 @@ echo "\n\n--------- SETUP RCLONE ----------\n"
 
 echo "1. Now run rclone with the command:"
 echo "\t${rclone_bin} --config=${rclone_config} config"
-echo "2. You need to setup following:"
-echo "\t- Google Drive remote"
-echo "\t- Crypt for your Google Drive remote named '${rclone_cloud_endpoint%?}'"
-echo "\t- Crypt for your local directory ('${cloud_encrypt_dir}') named '${rclone_local_endpoint%?}'"
+
+if [ "$encrypt_media" -eq "0" ]; then
+    echo "2. You need to setup 1 endpoint to Google Drive remote. This is only used to upload media to your Google Drive account"
+else
+    echo "2. You need to setup 3 endpoints:"
+    echo "\t- Google Drive remote"
+    echo "\t- Crypt for your Google Drive remote named '${rclone_cloud_endpoint%?}'"
+    echo "\t- Crypt for your local directory ('${cloud_encrypt_dir}') named '${rclone_local_endpoint%?}'"
+fi
 
 
 echo "\n\n-------- SETUP PLEXDRIVE --------\n"
@@ -71,5 +77,8 @@ echo "1. Now run plexdrive with the command:"
 echo "\t${plexdrive_bin} --config=${plexdrive_dir} ${mongo} ${cloud_encrypt_dir}"
 echo "2. Enter authorization"
 echo "3. Cancel plexdrive by pressing CTRL+C"
-echo "4. Run plexdrive with screen by running the following command:"
-echo "\tscreen -dmS plexdrive ${plexdrive_bin} --config=${plexdrive_dir} ${mongo} ${plexdrive_options} ${cloud_encrypt_dir}"
+
+echo "\n\n"
+
+echo "Start mount by running the mount.remote [${media_dir}/scripts/mount.remote]"
+echo "This can take a while because Plexdrive begins to cache your files"
