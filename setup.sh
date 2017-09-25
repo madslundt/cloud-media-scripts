@@ -21,13 +21,13 @@ apt-get install screen -y
 apt-get install unzip -y
 apt-get install fuse -y
 
-if [ ! -d "${_rclone_release}" ]; then
-    mkdir "${_rclone_release}"
+if [ ! -d "${rclone_dir}" ]; then
+    mkdir "${rclone_dir}"
 fi
 wget "${_rclone_url}"
 unzip "${_rclone_zip}"
 chmod a+x "${_rclone_release}/rclone"
-cp -rf "${_rclone_release}/*" "${_rclone_release}/"
+cp -rf "${_rclone_release}/*" "${rclone_dir}/"
 rm -rf "${_rclone_zip}"
 rm -rf "${_rclone_release}"
 
