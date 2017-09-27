@@ -19,4 +19,4 @@ sed -i "s|umount.remote|${mypwd}/scripts/umount.remote|g" "${mypwd}/scripts/moun
 sed -i "s|mount.remote|${mypwd}/scripts/mount.remote|g" "${mypwd}/scripts/mountcheck"
 
 echo "Cloud-media-scripts has been installed successfully!".
-echo "Edit config file [${$mypwd}/config] and run setup.sh [sh ${mypwd}/setup.sh]"
+echo "Edit config file [${mypwd}/config] and run setup.sh [sh ${mypwd}/setup.sh]"
