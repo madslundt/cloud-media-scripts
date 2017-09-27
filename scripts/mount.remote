@@ -1,6 +1,6 @@
 #!/bin/sh
 ###############################################################################
-# mount.remote - A script to mount GDrive remote for use with Plex
+# mount.remote - A script to mount GDrive remote and local storage
 ###############################################################################
 # CONFIGURATION
 ###############################################################################
@@ -70,9 +70,9 @@ mount_local_media () {
 			echo "Waiting for mount ${cloud_encrypt_dir} ..."
 			sleep 30
 		done
-		
+
 		echo "[ $(date ${date_format}) ] Mounting decrypted Google Drive: ${cloud_decrypt_dir}"
-		"${rclone_bin}" mount $rclone_mount_options "${rclone_local_endpoint}" "${cloud_decrypt_dir}" &>/dev/null 2>&1
+		"${rclone_bin}" mount --config="${rclone_config}" $rclone_mount_options "${rclone_local_endpoint}" "${cloud_decrypt_dir}" &>/dev/null 2>&1
 	else
 		echo "[ $(date ${date_format}) ] Decrypted Google Drive mountpoint: ${cloud_decrypt_dir} already mounted."
 	fi
@@ -92,14 +92,14 @@ mount_union () {
 			echo "Waiting for mount ${cloud_decrypt_dir} ..."
 			sleep 30
 		done
-		
-		echo "[ $(date ${date_format}) ] Mounting Plex library mountpoint: ${local_media_dir}"
+
+		echo "[ $(date ${date_format}) ] Mounting final library mountpoint: ${local_media_dir}"
 
 		ufs_mounts="${local_decrypt_dir}=RW:${cloud_decrypt_dir}=RO"
 
 		"${ufs_bin}" $ufs_options "${ufs_mounts}" "${local_media_dir}"
 	else
-		echo "[ $(date ${date_format}) ] Plex library mountpoint: ${local_media_dir} already mounted."
+		echo "[ $(date ${date_format}) ] Final library mountpoint: ${local_media_dir} already mounted."
 	fi
 }
 

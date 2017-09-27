@@ -37,7 +37,7 @@ rm_time () {
 
 			# Move file to remote destination[s], retaining path
 			echo "[ $(date ${date_format}) ] Moving file -> ${n} to Google Drive."
-			"${rclone_bin}" move $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
+			"${rclone_bin}" move --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
 		done
 
 	find "${local_decrypt_dir}" -mindepth 1 -type d -empty -delete
@@ -71,7 +71,7 @@ rm_instant () {
 
 			# Move file to remote destination[s], retaining path
 			echo "[ $(date ${date_format}) ] Moving file -> ${n} to Google Drive."
-			"${rclone_bin}" move $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
+			"${rclone_bin}" move --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
 		done
 
 	find "${local_decrypt_dir}" -mindepth 1 -type d -empty -delete
@@ -125,7 +125,7 @@ rm_space () {
 
 			# Move file to remote destination[s], retaining path
 			echo "[ $(date ${date_format}) ] Moving file -> ${n} to Google Drive. Freeing up ${fileSizeGb} GB"
-			"${rclone_bin}" move $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
+			"${rclone_bin}" move --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
 		done
 
 	find "${local_decrypt_dir}" -mindepth 1 -type d -empty -delete

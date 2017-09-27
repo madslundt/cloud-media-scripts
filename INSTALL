@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -d "${cloud-media-scripts}" ]; then
+if [ -d "${cloud-media-scripts}" || -f "config" ]; then
     echo "cloud-media-scripts looks like it is already installed. Remove it or rename the folder to install it again"
     exit 02
 fi
