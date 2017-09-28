@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ########## CONFIGURATION ##########
-. "/home/mads/Documents/test/cloud-media-scripts/config"
+. "INSERT_CONFIG_FILE"
 ###################################
 ########## DOWNLOADS ##########
 # Rclone
@@ -76,9 +76,9 @@ if [ "${rcloneSetup,,}" == "y"  ]; then
     cp "${rclone_dir}/rclone.template.conf" "${rclone_config}"
     printf "\t+ Google Drive credentials are needed within Rclone. This must be added to the Rclone remote 'gd'\n"
     if [ "$encrypt_media" != "0" ]; then
-        sed -i "s|<GOOGLE_DRIVE_MEDIA_DIRECTORY>|$google_drive_media_directory|g" "${rclone_config}"
-        sed -i "s|[gd-crypt]|${rclone_cloud_endpoint%?}|g" "${rclone_config}"
-        sed -i "s|<ENCRYPTED_FOLDER>|$cloud_encrypt_dir|g" "${rclone_config}"
+        sed -i "s|<GOOGLE_DRIVE_MEDIA_DIRECTORY>|${google_drive_media_directory}|g" "${rclone_config}"
+        sed -i "s|\[gd-crypt\]|\[${rclone_cloud_endpoint%?}\]|g" "${rclone_config}"
+        sed -i "s|<ENCRYPTED_FOLDER>|${cloud_encrypt_dir}|g" "${rclone_config}"
         printf "\t+ Password and a salt are needed within Rclone when using encryption. This must be added to the Rclone remote '${rclone_cloud_endpoint%?}' and '${rclone_local_endpoint%?}'\n"
     fi
     printf "\nWhen this is done exit rclone config by pressing 'Q'\n"
