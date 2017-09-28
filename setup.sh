@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ########## CONFIGURATION ##########
 . "INSERT_CONFIG_FILE"
