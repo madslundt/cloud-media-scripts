@@ -24,9 +24,9 @@ rm -rf cloud-media-scripts-master
 
 sed -i "s|INSERT_CONFIG_FILE|${mypwd}/config|g" "${mypwd}/scripts/"*
 sed -i "s|INSERT_CONFIG_FILE|${mypwd}/config|g" "${mypwd}/setup.sh"
-sed -i "s|INSERT_ROOT_DIR|$mypwd|g" "${mypwd}/config"
-sed -i "s|umount.remote|${mypwd}/scripts/umount.remote|g" "${mypwd}/scripts/mountcheck"
-sed -i "s|mount.remote|${mypwd}/scripts/mount.remote|g" "${mypwd}/scripts/mountcheck"
+sed -i "s|INSERT_ROOT_DIR|${mypwd}|g" "${mypwd}/config"
+sed -i "s|sh mount.remote|sh ${mypwd}/scripts/mount.remote|g" "${mypwd}/scripts/mountcheck"
+sed -i "s|sh umount.remote|sh ${mypwd}/scripts/umount.remote|g" "${mypwd}/scripts/mountcheck"
 
 echo ""
 echo ""
