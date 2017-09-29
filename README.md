@@ -173,7 +173,9 @@ Depending on your internet connection, you can optimize when plexdrive download 
 Plexdrive
  - chunk-size the higher it goes the faster internet connection you must have
 
-# Thanks to
- - Gesis for the original scripts: `git://git.gesis.pw:/nimbostratus.git`
- - Plexdrive for the software: `https://github.com/dweidenfeld/plexdrive`
- - Rclone for the software: `https://rclone.org/`
+
+If you want to support the project or just buy me a beer I accept Paypal and bitcoins.
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/madslundt)
+
+BitCoin address: 18fXu7Ty9RB4prZCpD8CDD1AyhHaRS1ef3
