@@ -13,6 +13,12 @@ The config right now is configured to have atleast 1 TB for caching and a decent
 
 ```bash <(curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INSTALL)```
 
+By default this will place cloud-media-scripts in the directory `./cloud-media-scripts`. An extra argument can be added
+
+```bash <(curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INSTALL) [PATH]```
+
+unzip is needed to extract the scripts when using easy install
+
 # Installation without easy install
 1. Change `config` to match your settings.
 2. Change paths to config in all script files.
