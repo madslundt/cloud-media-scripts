@@ -1,17 +1,24 @@
 #!/bin/bash
 
-if [ -d "${cloud-media-scripts}" || -f "config" ]; then
-    echo "cloud-media-scripts looks like it is already installed. Remove it or rename the folder to install it again"
+path=${1:-cloud-media-scripts}
+
+if [[ $path == /* ]]; then
+    mypwd="${path}"
+else
+    mypwd="$(pwd)/${path}"
+fi
+
+mypwd="${mypwd%/}"
+
+if [ -e "${mypwd}/config" ]; then
+    echo "cloud-media-scripts looks like it is already installed. Remove it or choose a different path"
     exit 02
 fi
 
 wget "https://github.com/madslundt/cloud-media-scripts/archive/master.zip"
 unzip master.zip
 rm -rf master.zip
-mv cloud-media-scripts-master cloud-media-scripts
-
-mypwd=$(pwd)
-mypwd="${mypwd}/cloud-media-scripts"
+mv cloud-media-scripts-master "${mypwd}"
 
 sed -i "s|INSERT_CONFIG_FILE|${mypwd}/config|g" "${mypwd}/scripts/"*
 sed -i "s|INSERT_CONFIG_FILE|${mypwd}/config|g" "${mypwd}/setup.sh"
