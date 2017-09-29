@@ -13,7 +13,7 @@ The config right now is configured to have atleast 1 TB for caching and a decent
 
 ```bash <(curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INSTALL)```
 
-By default this will place cloud-media-scripts in the directory `./cloud-media-scripts`. An extra argument can be added
+By default this will place cloud-media-scripts in the directory `./cloud-media-scripts`. An extra argument can be added to change this
 
 ```bash <(curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INSTALL) [PATH]```
 
