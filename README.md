@@ -10,14 +10,13 @@ The config right now is configured to have atleast 1 TB for caching and a decent
 ### I've created another repository with this included in a docker image. Check it out [here](https://github.com/madslundt/docker-cloud-media-scripts)
 
 # Easy install
+unzip and curl is needed to run easy install.
 
 ```bash <( curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INSTALL )```
 
 By default this will place cloud-media-scripts in the directory `./cloud-media-scripts`. An extra argument can be added to change this
 
 ```bash <( curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INSTALL ) [PATH]```
-
-unzip is needed to extract the scripts when using easy install
 
 # Installation without easy install
 1. Change `config` to match your settings.
