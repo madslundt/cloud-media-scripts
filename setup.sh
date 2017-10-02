@@ -65,6 +65,7 @@ else
     rcloneInstallText="Do you want to set up Rclone now"
 fi
 
+rcloneSetup=""
 while [ "${rcloneSetup,,}" != "n"  ] && [ "${rcloneSetup,,}" != "y"  ]
 do
     read -e -p "${rcloneInstallText} [Y/n]? " -i "y" rcloneSetup
@@ -87,13 +88,14 @@ if [ "${rcloneSetup,,}" == "y"  ]; then
 fi
 
 if [ ! -f "${plexdrive_dir}/token.json" ]; then
+    plexdriveSetup=""
     while [ "${plexdriveSetup,,}" != "n"  ] && [ "${plexdriveSetup,,}" != "y"  ]
     do
         read -e -p "Do you want to set up Plexdrive now [Y/n]? " -i "y" plexdriveSetup
     done
-    printf "======PLEXDRIVE======\n\n"
 
     if [ "${plexdriveSetup,,}" == "y"  ]; then
+        printf "======PLEXDRIVE======\n\n"
         mongo="--mongo-database=${mongo_database} --mongo-host=${mongo_host}"
         if [ ! -z "${mongo_user}" -a "${mongo_user}" != " " ]; then
             mongo="${mongo} --mongo-user=${mongo_user} --mongo-password=${mongo_password}"
@@ -107,6 +109,7 @@ else
 fi
 
 printf "\n\n"
+mountStart=""
 while [ "${mountStart,,}" != "n"  ] && [ "${mountStart,,}" != "y"  ]
 do
     read -e -p "Do you want to start mounting now [Y/n]? " -i "y" mountStart
