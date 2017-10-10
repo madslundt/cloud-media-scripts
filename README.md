@@ -10,7 +10,7 @@ The config right now is configured to have atleast 1 TB for caching and a decent
 ### I've created another repository with this included in a docker image. Check it out [here](https://github.com/madslundt/docker-cloud-media-scripts)
 
 # Easy install
-unzip and curl is needed to run easy install.
+unzip, curl and bash is needed to run easy install.
 
 ```bash <( curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INSTALL )```
 
