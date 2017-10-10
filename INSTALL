@@ -34,4 +34,4 @@ sed -i "s|scripts/|${mypwd}/scripts/|g" "${mypwd}/cron"
 echo ""
 echo ""
 echo "Cloud-media-scripts has been installed successfully!".
-echo "Edit config file [${mypwd}/config] and run setup.sh [sh ${mypwd}/setup.sh]"
+echo "Edit config file [${mypwd}/config] and run setup.sh [bash ${mypwd}/setup.sh]"
