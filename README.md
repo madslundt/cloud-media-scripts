@@ -88,6 +88,7 @@ These should be inserted into `crontab -e`.
  - Cron is set up to mount at boot.
  - Upload to cloud daily.
  - Check to remove local content weekly (this only remove files depending on the option 'space', 'time' or 'instant'*).
+ - Check every hour if mount folder is up and if not it will unmount and remount (this checks if files exist in mount folder and does not check if rclone or plexdrive service is running)
 
 _If you have a small local disk you may change upload to hourly and remove local content to daily or weekly._
 
