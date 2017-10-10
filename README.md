@@ -18,6 +18,18 @@ By default this will place cloud-media-scripts in the directory `./cloud-media-s
 
 ```bash <( curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INSTALL ) [PATH]```
 
+# Content
+* [Installation without easy install](#installation-without-easy-install)
+  * [Setup](#setup)
+  * [Cron](#cron)
+* [How this works?](#how-this-works)
+  * [Plexdrive](#plexdrive)
+  * [Rclone](#rclone)
+  * [UnionFS](#unionfs)
+* [My setup](#my-setup)
+* [Optimize configuration](#optimize-configuration)
+* [Donate](#donate)
+
 # Installation without easy install
 1. Change `config` to match your settings.
 2. Change paths to config in all script files.
@@ -173,9 +185,11 @@ Depending on your internet connection, you can optimize when plexdrive download 
 Plexdrive
  - chunk-size the higher it goes the faster internet connection you must have
 
-
+# Donate
 If you want to support the project or just buy me a beer I accept Paypal and bitcoins.
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/madslundt)
 
 BitCoin address: 18fXu7Ty9RB4prZCpD8CDD1AyhHaRS1ef3
+
+![bitcoin](https://i.imgur.com/vlzF8Ep.png)
