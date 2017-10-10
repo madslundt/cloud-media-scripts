@@ -3,9 +3,9 @@
 
 if [ -z "$(ls -A ${cloud_decrypt_dir})" ]; then
         echo "Unmount"
-        sh umount.remote
+        bash umount.remote
         echo "Unmounted successfully"
         echo "Mount"
-        sh mount.remote
+        bash mount.remote
         echo "Mounted successfully"
 fi
