@@ -49,6 +49,8 @@ else
     printf "Rclone and Plexdrive are already installed.\n\n"
 fi
 
+chmod a+x "${media_dir}/scripts/*"
+
 if [ ! -d "${local_decrypt_dir}" ]; then
     mkdir -p "${local_decrypt_dir}"
 fi
@@ -117,7 +119,7 @@ done
 
 if [ "${mountStart,,}" == "y"  ]; then
     printf "\nThis may take a while because Plexdrive needs to cache your files\n"
-    ${media_dir}/scripts/mount.remote
+    bash ${media_dir}/scripts/mount.remote
     echo "Mount is up and running"
 else
     printf "\nStart mount later by running the mount.remote [${media_dir}/scripts/mount.remote]\n"
