@@ -49,6 +49,7 @@ else
     printf "Rclone and Plexdrive are already installed.\n\n"
 fi
 
+sudo sed -i "s|#user_allow_other|user_allow_other|g" "/etc/fuse.conf"
 chmod a+x "${media_dir}/scripts/"*
 
 if [ ! -d "${local_decrypt_dir}" ]; then
