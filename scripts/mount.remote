@@ -46,12 +46,14 @@ mount_gdrive () {
 			count=$(($count - 1))
 			if [ "$count" == "0" ]; then
 				echo "Can not connect to Mongodb. Please make sure Mongodb is running before mounting"
+				echo "Mount failed"
 				exit 02
 			fi
 		done
 
-		echo "[ $(date ${date_format}) ] Mounting Google Drive mountpoint: ${cloud_dir}"
+		echo "[ $(date ${date_format}) ] Mounting Google Drive with Plexdrive in mountpoint: ${cloud_dir}"
 		screen -dmS plexdrive "$plexdrive_bin" --config="${plexdrive_dir}" $mongo $plexdrive_options "${cloud_dir}"
+		echo "[ $(date ${date_format}) ] Mounted successfully with Plexdrive"
 	else
 		echo "[ $(date ${date_format}) ] Google Drive mountpoint: ${cloud_dir} already mounted."
 	fi
@@ -74,12 +76,14 @@ mount_local_media () {
 			if [ "$count" == "0" ]; then
 				echo "Mount is not available. Unmounting"
 				bash umount.remote
+				echo "Mount failed"
 				exit 02
 			fi
 		done
 
-		echo "[ $(date ${date_format}) ] Mounting decrypted Google Drive: ${cloud_decrypt_dir}"
+		echo "[ $(date ${date_format}) ] Mounting decrypted Google Drive with Rclone in mountpoint: ${cloud_decrypt_dir}"
 		"${rclone_bin}" mount --config="${rclone_config}" $rclone_mount_options "${rclone_local_endpoint}" "${cloud_decrypt_dir}" &>/dev/null 2>&1
+		echo "[ $(date ${date_format}) ] Mounted successfully with Rclone"
 	else
 		echo "[ $(date ${date_format}) ] Decrypted Google Drive mountpoint: ${cloud_decrypt_dir} already mounted."
 	fi
@@ -103,24 +107,27 @@ mount_union () {
 			if [ "$count" == "0" ]; then
 				echo "Mount is not available. Unmounting"
 				bash umount.remote
+				echo "Mount failed"
 				exit 02
 			fi
 		done
 
-		echo "[ $(date ${date_format}) ] Mounting final library mountpoint: ${local_media_dir}"
+		echo "[ $(date ${date_format}) ] Mounting final library with UnionFS in mountpoint: ${local_media_dir}"
 
 		ufs_mounts="${local_decrypt_dir}=RW:${cloud_decrypt_dir}=RO"
 
 		"${ufs_bin}" $ufs_options "${ufs_mounts}" "${local_media_dir}"
+		echo "[ $(date ${date_format}) ] Mounted successfully with UnionFS"
 	else
 		echo "[ $(date ${date_format}) ] Final library mountpoint: ${local_media_dir} already mounted."
 	fi
 }
 
 ###############################################################################
-
+echo "###### Start Mount ######"
 mount_gdrive
 if [ "$encrypt_media" != "0" ]; then
 	mount_local_media
 fi
 mount_union
+echo "###### Mounted successfully ######"
