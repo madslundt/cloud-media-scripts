@@ -40,7 +40,7 @@ if [ ! -f "${plexdrive_bin}" ]; then
         mkdir -p "${plexdrive_dir}"
     fi
     wget "${_plexdrive_url}"
-    cp -rf "${media_dir}/${_plexdrive_bin}" "${plexdrive_bin}"
+    cp -rf "${_plexdrive_bin}" "${plexdrive_dir}"
     chmod a+x "${plexdrive_bin}"
     rm -rf "${media_dir}/${_plexdrive_bin}"
 
