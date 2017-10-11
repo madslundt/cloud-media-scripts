@@ -31,7 +31,7 @@ if [ ! -f "${rclone_bin}" ]; then
     unzip "${_rclone_zip}" -d "${media_dir}"
     cp -rf "${media_dir}/${_rclone_release}/"* "${rclone_dir}/"
     chmod a+x "${rclone_bin}"
-    rm -rf "${media_dir}/${_rclone_zip}"
+    rm -rf "${_rclone_zip}"
     rm -rf "${media_dir}/${_rclone_release}"
 fi
 
