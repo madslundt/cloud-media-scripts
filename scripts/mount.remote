@@ -65,10 +65,17 @@ mount_local_media () {
 
 	if ! mountpoint -q "$cloud_decrypt_dir"; then
 		sleep 5
+		count=10
 		while [ -z "$(ls -A ${cloud_encrypt_dir})" ]
 		do
 			echo "Waiting for mount ${cloud_encrypt_dir} ..."
-			sleep 30
+			sleep 10
+			count=$(($count - 1))
+			if [ "$count" == "0" ]; then
+				echo "Mount is not available. Unmounting"
+				bash umount.remote
+				exit 02
+			fi
 		done
 
 		echo "[ $(date ${date_format}) ] Mounting decrypted Google Drive: ${cloud_decrypt_dir}"
@@ -87,10 +94,17 @@ mount_union () {
 	# Mount plex media directory if not already mounted.
 	if ! mountpoint -q "${local_media_dir}"; then
 		sleep 5
+		count=10
 		while [ -z "$(ls -A ${cloud_decrypt_dir})" ]
 		do
 			echo "Waiting for mount ${cloud_decrypt_dir} ..."
-			sleep 30
+			sleep 10
+			count=$(($count - 1))
+			if [ "$count" == "0" ]; then
+				echo "Mount is not available. Unmounting"
+				bash umount.remote
+				exit 02
+			fi
 		done
 
 		echo "[ $(date ${date_format}) ] Mounting final library mountpoint: ${local_media_dir}"
