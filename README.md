@@ -33,7 +33,7 @@ By default this will place cloud-media-scripts in the directory `./cloud-media-s
 # Installation without easy install
 1. Change `config` to match your settings.
 2. Change paths to config in all script files.
-3. Run `sudo sh setup.sh` and follow the instructions*.
+3. Run `bash setup.sh` and follow the instructions*.
 4. Run `./mount.remote` to mount plexdrive and decrypt by using rclone.
 
 To unmount run `./umount.remote`
