@@ -49,7 +49,7 @@ else
     printf "Rclone and Plexdrive are already installed.\n\n"
 fi
 
-chmod a+x "${media_dir}/scripts/*"
+chmod a+x "${media_dir}/scripts/"*
 
 if [ ! -d "${local_decrypt_dir}" ]; then
     mkdir -p "${local_decrypt_dir}"
