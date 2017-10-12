@@ -74,7 +74,7 @@ mount_local_media () {
 		done
 
 		echo "[ $(date ${date_format}) ] Mounting decrypted Google Drive with Rclone in mountpoint: ${cloud_decrypt_dir}"
-		"${rclone_bin}" mount --config="${rclone_config}" $rclone_mount_options "${rclone_local_endpoint}" "${cloud_decrypt_dir}" &>/dev/null 2>&1
+		"${rclone_bin}" mount --config="${rclone_config}" $rclone_mount_options "${rclone_local_endpoint}" "${cloud_decrypt_dir}" > /dev/null 2>&1 &
 		echo "[ $(date ${date_format}) ] Mounted successfully with Rclone"
 	else
 		echo "[ $(date ${date_format}) ] Decrypted Google Drive mountpoint: ${cloud_decrypt_dir} already mounted."
