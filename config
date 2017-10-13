@@ -11,7 +11,7 @@ cloud_decrypt_dir="${media_dir}/.cloud-decrypt"
 
 # Local directory
 local_decrypt_dir="${media_dir}/.local-decrypt/Media"
-plexdrive_temp_dir="${media_dir}/.local-decrypt/plexdrive"​
+plexdrive_temp_dir="${media_dir}/.local-decrypt/plexdrive"
 
 # Media directory (FINAL)
 local_media_dir="${media_dir}/media"
