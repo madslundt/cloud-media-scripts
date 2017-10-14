@@ -133,11 +133,13 @@ rm_space () {
 
 # If script is already running; abort.
 if pidof -o %PPID -x "$(basename "$0")"; then
-	echo "[ $(date ${date_format}) ] Upload already in progress. Aborting."
+	echo "[ $(date ${date_format}) ] Rmlocal already in progress. Aborting."
 	exit 3
 fi
 
-echo "Removing files based on ${remove_files_based_on}"
+echo "[ $(date ${date_format}) ] ###### Start Removal ######"
+
+echo "[ $(date ${date_format}) ] Removing files based on ${remove_files_based_on}"
 if [ "$remove_files_based_on" = "space" ]; then
 	rm_space
 elif [ "$remove_files_based_on" = "time" ]; then
@@ -145,6 +147,7 @@ elif [ "$remove_files_based_on" = "time" ]; then
 elif [ "$remove_files_based_on" = "instant" ]; then
 	rm_instant
 else
-	echo "[ $(date ${date_format}) ] no option to remove old files"
+	echo "[ $(date ${date_format}) ] No option to remove old files. Remember to set 'remove_files_based_on' in config file"
 	exit 02
 fi
+echo "[ $(date ${date_format}) ] ###### Removal ended successfully ######"

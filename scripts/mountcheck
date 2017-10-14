@@ -2,10 +2,11 @@
 . "INSERT_CONFIG_FILE"
 
 if [ -z "$(ls -A ${cloud_decrypt_dir})" ]; then
-        echo "Unmount"
+        echo "[ $(date ${date_format}) ] Mount has dropped. Remount in progress."
+        echo "[ $(date ${date_format}) ] Unmounting..."
         bash umount.remote
-        echo "Unmounted successfully"
-        echo "Mount"
+        echo "[ $(date ${date_format}) ] Unmounted successfully"
+        echo "[ $(date ${date_format}) ] Mounting..."
         bash mount.remote
-        echo "Mounted successfully"
+        echo "[ $(date ${date_format}) ] Mounted successfully"
 fi

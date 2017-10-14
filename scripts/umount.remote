@@ -17,12 +17,12 @@
 umount_cloud () {
 	echo "[ $(date ${date_format}) ] Unmounting decrypted cloud mountpoint -> ${cloud_decrypt_dir}"
 	fusermount -uz "${cloud_decrypt_dir}"
-	echo "[ $(date ${date_format}) ] Unmounting cloud mountpoint -> ${cloud_encrypt_dir}"
+	echo "[ $(date ${date_format}) ] Unmounting encrypted cloud mountpoint -> ${cloud_encrypt_dir}"
 	fusermount -uz "${cloud_encrypt_dir}"
 }
 
 umount_union () {
-	echo "[ $(date ${date_format}) ] Unmounting Plex library mountpoint -> ${local_media_dir}"
+	echo "[ $(date ${date_format}) ] Unmounting final library mountpoint -> ${local_media_dir}"
 	fusermount -uz "$local_media_dir"
 }
 

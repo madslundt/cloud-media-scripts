@@ -14,7 +14,7 @@
 ###############################################################################
 # FUNCTIONS
 ###############################################################################
-mount_gdrive () {
+mount_plexdrive () {
 	cloud_dir="${cloud_encrypt_dir}"
 	if [ "$encrypt_media" -eq "0" ]; then
 		cloud_dir="${cloud_decrypt_dir}"
@@ -41,14 +41,15 @@ mount_gdrive () {
 		count=5
 		while [ $(ps -ef | grep "mongo" | grep -v "grep" | wc -l) == "0" ]
 		do
-			echo "Waiting for Mongodb ..."
-			sleep 5
-			count=$(($count - 1))
 			if [ "$count" == "0" ]; then
-				echo "Can not connect to Mongodb. Please make sure Mongodb is running before mounting"
-				echo "Mount failed"
+				echo "[ $(date ${date_format}) ] Could not connect to Mongodb. Please make sure Mongodb is running before mounting"
+				echo "[ $(date ${date_format}) ] Mount failed"
 				exit 02
 			fi
+
+			echo "[ $(date ${date_format}) ] Could not connect to Mongodb. Retrying in 5 seconds."
+			sleep 5
+			count=$(($count - 1))
 		done
 
 		echo "[ $(date ${date_format}) ] Mounting Google Drive with Plexdrive in mountpoint: ${cloud_dir}"
@@ -59,7 +60,7 @@ mount_gdrive () {
 	fi
 }
 
-mount_local_media () {
+mount_rclone () {
 	# Make sure decrypted GD directory exists.
 	if [ ! -d "${cloud_decrypt_dir}" ]; then
 		mkdir -p "${cloud_decrypt_dir}"
@@ -69,7 +70,7 @@ mount_local_media () {
 		sleep 5
 		while [ -z "$(ls -A ${cloud_encrypt_dir})" ]
 		do
-			echo "Waiting for mount ${cloud_encrypt_dir} ..."
+			echo "[ $(date ${date_format}) ] Cloud not find encrypted mountpoint: ${cloud_encrypt_dir}. Retrying in 10 seconds."
 			sleep 10
 		done
 
@@ -92,14 +93,13 @@ mount_union () {
 		sleep 5
 		while [ -z "$(ls -A ${cloud_decrypt_dir})" ]
 		do
-			echo "Waiting for mount ${cloud_decrypt_dir} ..."
+			echo "[ $(date ${date_format}) ] Cloud not find encrypted mountpoint: ${cloud_decrypt_dir}. Retrying in 10 seconds."
 			sleep 10
 		done
 
-		echo "[ $(date ${date_format}) ] Mounting final library with UnionFS in mountpoint: ${local_media_dir}"
-
 		ufs_mounts="${local_decrypt_dir}=RW:${cloud_decrypt_dir}=RO"
 
+		echo "[ $(date ${date_format}) ] Mounting final library with UnionFS in mountpoint: ${local_media_dir}"
 		"${ufs_bin}" $ufs_options "${ufs_mounts}" "${local_media_dir}"
 		echo "[ $(date ${date_format}) ] Mounted successfully with UnionFS"
 	else
@@ -108,10 +108,12 @@ mount_union () {
 }
 
 ###############################################################################
-echo "###### Start Mount ######"
-mount_gdrive
+echo "[ $(date ${date_format}) ] ###### Start Mount ######"
+mount_plexdrive
 if [ "$encrypt_media" != "0" ]; then
-	mount_local_media
+	mount_rclone
+else
+	echo "[ $(date ${date_format}) ] No encryption. Skipping Rclone mount."
 fi
 mount_union
-echo "###### Mounted successfully ######"
+echo "[ $(date ${date_format}) ] ###### Mounted successfully ######"
