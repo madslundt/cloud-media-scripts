@@ -25,7 +25,7 @@ This has only been tested on Ubuntu 16.04+. Please create an issue if you have a
   * [UnionFS](#unionfs)
 * [Installation without easy install](#installation-without-easy-install)
   * [Setup](#setup)
-  * [Setup cronjobs](#setup+cronjobs)
+  * [Setup cronjobs](#setup-cronjobs)
 * [My setup](#my-setup)
 * [Optimize configuration WIP](#optimize-configuration-wip)
 * [Donate](#donate)
