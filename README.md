@@ -145,18 +145,18 @@ Run PlexDrive with GNU screen: `screen -dmS plexdrive PLEXDRIVE_BIN --config=PLE
 My suggestions for cronjobs is in the file `cron`.
 These should be inserted into `crontab -e`.
 
- - Cron is set up to mount at boot.
+ - Mount at boot.
  - Upload to cloud daily.
  - Check to remove local content weekly (this only remove files depending on the option 'space', 'time' or 'instant'*).
- - Check every hour if mount folder is up and if not it will unmount and remount (this checks if files exist in mount folder and does not check if rclone or plexdrive service is running)
+ - Check every hour if mount folder is running and if not it will unmount and remount (this checks if files exist in mount folder and does not check if rclone or plexdrive service is running)
 
-_If you have a small local disk you may change upload to hourly and remove local content to daily or weekly._
+_If you have a small local disk you may change upload and remove local content to do it more often._
 
-*_If 'space' is set it will only remove content, starting from the oldest accessed file, if media size has exceeded `remove_files_when_space_exceeds` and will only free up atleast `freeup_atleast`. If 'time' is set it will only remove files older than `remove_files_older_than`. If 'instant' is set it will remove all files when running._
+*_If 'space' is set it will only remove content, starting from the oldest accessed file, if media size has exceeded `remove_files_when_space_exceeds`, and will only free up atleast `freeup_atleast`. If 'time' is set it will only remove files older than `remove_files_older_than`. If 'instant' is set it will remove all files when running._
 
 *Media is never deleted locally before being uploaded successfully to the cloud.*
 
-OBS: `mountcheck` is used to check if mount is up. I've had some problems where either Plexdrive or Rclone stops the mount. `mountcheck` will make sure to mount your stuff again if something like this happens. Remember to change the paths inside `mountcheck`.
+OBS: `mountcheck` is used to check if mount is up. I've had some problems where either Plexdrive or Rclone stops the mount. `mountcheck` will make sure to mount your stuff again if something like this happens.
 
 
 # My setup
