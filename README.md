@@ -3,8 +3,6 @@ This also means if you loose your encryption keys you can't read your media.
 
 **Plexdrive version 4.0.0 and Rclone version 1.37 is used.**
 
-There is a setup file, `setup.sh`, to install the necessary stuff automatically. This has only been tested on Ubuntu 16.04+.
-
 The config right now is configured to have atleast 1 TB for caching and a decent internet connection. If you have a smaller drive or just want to optimize it [click here](#optimize-configuration).
 
 ### I've created another repository with this included in a docker image. Check it out [here](https://github.com/madslundt/docker-cloud-media-scripts)
@@ -18,6 +16,8 @@ By default this will place cloud-media-scripts in the directory `./cloud-media-s
 
 ```bash <( curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INSTALL ) [PATH]```
 
+This has only been tested on Ubuntu 16.04+. Please create an issue if you have any problems.
+
 # Content
 * [How this works?](#how-this-works)
   * [Plexdrive](#plexdrive)
@@ -25,9 +25,9 @@ By default this will place cloud-media-scripts in the directory `./cloud-media-s
   * [UnionFS](#unionfs)
 * [Installation without easy install](#installation-without-easy-install)
   * [Setup](#setup)
-  * [Cron](#cron)
+  * [Setup cronjobs](#setup+cronjobs)
 * [My setup](#my-setup)
-* [Optimize configuration](#optimize-configuration)
+* [Optimize configuration WIP](#optimize-configuration-wip)
 * [Donate](#donate)
 
 # How this works?
@@ -38,9 +38,9 @@ Following services are used to sync, encrypt/decrypt and mount media:
 
 This gives us a total of 5 directories:
  - Cloud encrypt dir: Containing encrypted data from the cloud provider (Mounted with Plexdrive)
- - Cloud decrypt dir: Containing decrypted data by decrypting the cloud encrypt dir (Mounted with Rclone)
+ - Cloud decrypt dir: Containing decrypted data by decrypting the cloud encrypt dir (Mounted with Rclone). If encryption is turned off this will be mounted directly with Plexdrive.
  - Local decrypt dir: Containing local data stored locally on the hard drive.
- - Plexdrive temp dir: Containing temp/cache data from Plexdrive. This prevents Plexdrive from redownloading files everytime it is accessed.
+ - Plexdrive temp dir: Containing temp/cache data from Plexdrive. This prevents Plexdrive from redownloading files everytime they are accessed.
  - Local media dir: Containing all data from cloud provider and data stored locally (Mounted with Union-FS).
 
 Cloud data are mounted to a local folder (`cloud_encrypt_dir`). This folder is then decrypted and mounted to a local folder (`cloud_decrypt_dir`).
@@ -70,7 +70,7 @@ Rclone is used to encrypt, decrypt and upload files to the cloud.
 Rclone is used to mount and decrypt Plexdrive to a different folder (`cloud_decrypt_dir`).
 Rclone encrypts and uploads from a local folder (`local_decrypt_dir`) to the cloud.
 
-Rclone creates a config file: `config.json`. This is used to get access to Google Drive and encryption/decryption keys. This can either be set up via Rclone or by using the templates located in the [rclone directory](rclone/) (just copy the file and name it `rclone.conf`).
+Rclone creates a config file: `config.json`. This is used to get access to the cloud provider and encryption/decryption keys. This can either be set up via Rclone or by using the templates located in the [rclone directory](rclone/) (just copy the file and name it `rclone.conf`).
 
 ## UnionFS
 UnionFS is used to mount both cloud and local media to a local folder (`local_media_dir`).
@@ -79,24 +79,6 @@ UnionFS is used to mount both cloud and local media to a local folder (`local_me
  - Local media is mounted with Read/Write permissions.
 
 The reason for these permissions are that when writing to the local folder (`local_media_dir`) it will not try to write it directly to the cloud folder, but instead to the local media (`local_decrypt_dir`). Later this will be encrypted and uploaded to the cloud by Rclone.
-
-
-## Cron
-My suggestions for cronjobs is in the file `cron`.
-These should be inserted into `crontab -e`.
-
- - Cron is set up to mount at boot.
- - Upload to cloud daily.
- - Check to remove local content weekly (this only remove files depending on the option 'space', 'time' or 'instant'*).
- - Check every hour if mount folder is up and if not it will unmount and remount (this checks if files exist in mount folder and does not check if rclone or plexdrive service is running)
-
-_If you have a small local disk you may change upload to hourly and remove local content to daily or weekly._
-
-*_If 'space' is set it will only remove content, starting from the oldest accessed file, if media size has exceeded `remove_files_when_space_exceeds` and will only free up atleast `freeup_atleast`. If 'time' is set it will only remove files older than `remove_files_older_than`. If 'instant' is set it will remove all files when running._
-
-*Media is never deleted locally before being uploaded successfully to the cloud.*
-
-OBS: `mountcheck` is used to check if mount is up. I've had some problems where either Plexdrive or Rclone stops the mount. `mountcheck` will make sure to mount your stuff again if something like this happens. Remember to change the paths inside `mountcheck`.
 
 ## Setup
 # Installation without easy install
@@ -159,13 +141,30 @@ To install the necessary stuff manually do the following:
 Run PlexDrive with GNU screen: `screen -dmS plexdrive PLEXDRIVE_BIN --config=PLEXDRIVE_DIR --mongo-database=MONGO_DATABASE --mongo-host=MONGO_HOST --mongo-user=MONGO_USER --mongo-password=MONGO_PASSWORD PLEXDRIVE_OPTIONS CLOUD_ENCRYPT_DIR`.
 12. Exit screen session by pressing CTRL+A then D.
 
+## Setup cronjobs
+My suggestions for cronjobs is in the file `cron`.
+These should be inserted into `crontab -e`.
+
+ - Cron is set up to mount at boot.
+ - Upload to cloud daily.
+ - Check to remove local content weekly (this only remove files depending on the option 'space', 'time' or 'instant'*).
+ - Check every hour if mount folder is up and if not it will unmount and remount (this checks if files exist in mount folder and does not check if rclone or plexdrive service is running)
+
+_If you have a small local disk you may change upload to hourly and remove local content to daily or weekly._
+
+*_If 'space' is set it will only remove content, starting from the oldest accessed file, if media size has exceeded `remove_files_when_space_exceeds` and will only free up atleast `freeup_atleast`. If 'time' is set it will only remove files older than `remove_files_older_than`. If 'instant' is set it will remove all files when running._
+
+*Media is never deleted locally before being uploaded successfully to the cloud.*
+
+OBS: `mountcheck` is used to check if mount is up. I've had some problems where either Plexdrive or Rclone stops the mount. `mountcheck` will make sure to mount your stuff again if something like this happens. Remember to change the paths inside `mountcheck`.
+
 
 # My setup
 My setup with this is quite simple.
 
 I've an Intel NUC with only 128GB ssd. This is connected to a 4TB extern hard drive that contains `local_decrypt_dir` and `plexdrive_temp_dir`.
 
-# Optimize configuration
+# Optimize configuration WIP
 ## Space
 Right now the config is set for atleast 1 TB drive.
 
