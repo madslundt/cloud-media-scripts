@@ -3,7 +3,7 @@ This also means if you loose your encryption keys you can't read your media.
 
 **Plexdrive version 4.0.0 and Rclone version 1.37 is used.**
 
-The config right now is configured to have atleast 1 TB for caching and a decent internet connection. If you have a smaller drive or just want to optimize it [click here](#optimize-configuration).
+The config right now is configured to have atleast 1 TB for caching and a decent internet connection. If you have a smaller drive or just want to optimize it [click here](#optimize-configuration-wip).
 
 ### I've created another repository with this included in a docker image. Check it out [here](https://github.com/madslundt/docker-cloud-media-scripts)
 
