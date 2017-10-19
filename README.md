@@ -162,7 +162,7 @@ OBS: `mountcheck` is used to check if mount is up. I've had some problems where 
 # My setup
 My setup with this is quite simple.
 
-I've an Intel NUC with only 128GB ssd. This is connected to a 4TB extern hard drive that contains `local_decrypt_dir` and `plexdrive_temp_dir`.
+I've an Intel NUC with only 128GB ssd. This is connected to a 4TB external hard drive that contains `local_decrypt_dir` and `plexdrive_temp_dir`.
 
 # Optimize configuration WIP
 ## Space
@@ -171,20 +171,20 @@ Right now the config is set for atleast 1 TB drive.
 To use these scripts on a smaller drive, make these changes to the config:
 
 Plexdrive
- - clear-chunk-max-size the allowed space for plexdrive cache.
- - clear-chunk-age clears cache after some time (this is only used when clear-chunk-max-size is removed).
+ - `clear-chunk-max-size` the allowed space for plexdrive cache. After the space of this has exceeded, the older blocks will be overwritten.
+ - `clear-chunk-age` the expiration of plexdrive cache. After expiration the blocks will be deleted (this is only used when clear-chunk-max-size is removed).
 
 Misc. config
- - remove_files_based_on can either be time or space.
+ - remove_files_based_on can either be time, space or instant.
     - Time will remove the files after `remove_files_older_than` days ONLY if the files are uploaded to the cloud.
     - Space will remove the files, starting from the oldest, when space exceeds `remove_files_when_space_exceeds` and free up atleast `freeup_atleast` GB ONLY if the files are uploaded to the cloud.
-	- Instant will remove all the files ONLY if the files are uploaded to the cloud.
+    - Instant will remove all the files ONLY if the files are uploaded to the cloud.
 
 ## Internet connection
 Depending on your internet connection, you can optimize when plexdrive download chunks.
 
 Plexdrive
- - chunk-size the higher it goes the faster internet connection you must have
+ - `chunk-size` the size of the chunks downloaded by Plexdrive. For faster connections increase this.
 
 # Donate
 If you want to support the project or just buy me a beer I accept Paypal and bitcoins.
