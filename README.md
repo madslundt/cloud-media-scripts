@@ -72,6 +72,8 @@ Rclone encrypts and uploads from a local folder (`local_decrypt_dir`) to the clo
 
 Rclone creates a config file: `config.json`. This is used to get access to the cloud provider and encryption/decryption keys. This can either be set up via Rclone or by using the templates located in the [rclone directory](rclone/) (just copy the file and name it `rclone.conf`).
 
+Some have reported permission issues with Rclone directory. If that occurs it can be fixed by setting `--uid` in `rclone_mount_options` in [config.json](config.json).
+
 ## UnionFS
 UnionFS is used to mount both cloud and local media to a local folder (`local_media_dir`).
 
@@ -98,7 +100,7 @@ Most of the configuration to set up is done through Rclone. Read their documenta
  - Endpoint to your cloud storage.
 	- Create new remote [**Press N**]
 	- Give it a name (*default in config gd*)
-	- Choose Google Drive [**Press 7**]
+	- Choose Google Drive [**Press 8**]
 	- If you have a client id paste it here or leave it blank
 	- Choose headless machine [**Press N**]
 	- Open the url in your browser and enter the verification code
