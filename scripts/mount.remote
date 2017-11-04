@@ -70,7 +70,7 @@ mount_rclone () {
 		sleep 5
 		while [ -z "$(ls -A ${cloud_encrypt_dir})" ]
 		do
-			echo "[ $(date ${date_format}) ] Cloud not find encrypted mountpoint: ${cloud_encrypt_dir}. Retrying in 10 seconds."
+			echo "[ $(date ${date_format}) ] Could not find encrypted mountpoint: ${cloud_encrypt_dir}. Retrying in 10 seconds."
 			sleep 10
 		done
 
@@ -93,7 +93,7 @@ mount_union () {
 		sleep 5
 		while [ -z "$(ls -A ${cloud_decrypt_dir})" ]
 		do
-			echo "[ $(date ${date_format}) ] Cloud not find encrypted mountpoint: ${cloud_decrypt_dir}. Retrying in 10 seconds."
+			echo "[ $(date ${date_format}) ] Could not find decrypted mountpoint: ${cloud_decrypt_dir}. Retrying in 10 seconds."
 			sleep 10
 		done
 
