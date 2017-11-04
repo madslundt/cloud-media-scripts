@@ -16,6 +16,11 @@ plexdrive_temp_dir="${media_dir}/.local-decrypt/plexdrive"
 # Media directory (FINAL)
 local_media_dir="${media_dir}/media"
 
+###############################################################################
+# Unionfs mount user Id's. Replace $(id with a different ID if you need to override.
+###############################################################################
+uid=$(id -u)
+gid=$(id -g)
 
 # Encrypt media (0 means no encryption)
 encrypt_media=1
@@ -26,7 +31,7 @@ encrypt_media=1
 ###############################################################################
 ufs_bin="/usr/bin/unionfs"
 
-ufs_options="-o cow,allow_other,direct_io,nonempty,auto_cache,sync_read"
+ufs_options="-o cow,allow_other,direct_io,nonempty,auto_cache,sync_read,uid=$uid,gid=$gid"
 
 
 ###############################################################################
