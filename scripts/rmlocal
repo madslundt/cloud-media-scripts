@@ -36,7 +36,7 @@ rm_time () {
 			done
 
 			# Move file to remote destination[s], retaining path
-			echo "[ $(date ${date_format}) ] Moving file -> ${n} to Google Drive."
+			echo "[ $(date ${date_format}) ] Moving file -> ${filename} to Google Drive."
 			"${rclone_bin}" move --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
 		done
 
@@ -70,7 +70,7 @@ rm_instant () {
 			done
 
 			# Move file to remote destination[s], retaining path
-			echo "[ $(date ${date_format}) ] Moving file -> ${n} to Google Drive."
+			echo "[ $(date ${date_format}) ] Moving file -> ${filename} to Google Drive."
 			"${rclone_bin}" move --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
 		done
 
@@ -124,7 +124,7 @@ rm_space () {
 			fileSizeGb=$(($fileSize / 1000 / 1000 / 1000))
 
 			# Move file to remote destination[s], retaining path
-			echo "[ $(date ${date_format}) ] Moving file -> ${n} to Google Drive. Freeing up ${fileSizeGb} GB"
+			echo "[ $(date ${date_format}) ] Moving file -> ${filename} to Google Drive. Freeing up ${fileSizeGb} GB"
 			"${rclone_bin}" move --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
 		done
 
