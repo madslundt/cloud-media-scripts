@@ -15,10 +15,7 @@ if [ -e "${mypwd}/config" ]; then
     exit 02
 fi
 
-git clone "https://github.com/madslundt/cloud-media-scripts.git" cloud-media-scripts-master
-mkdir -p "${mypwd}"
-mv cloud-media-scripts-master/* "${mypwd}"
-rm -rf cloud-media-scripts-master
+git clone "https://github.com/madslundt/cloud-media-scripts.git" "${mypwd}"
 
 sed -i "s|INSERT_CONFIG_FILE|${mypwd}/config|g" "${mypwd}/scripts/"*
 sed -i "s|INSERT_CONFIG_FILE|${mypwd}/config|g" "${mypwd}/setup.sh"
@@ -27,7 +24,6 @@ sed -i "s|bash mount.remote|bash ${mypwd}/scripts/mount.remote|g" "${mypwd}/scri
 sed -i "s|bash umount.remote|bash ${mypwd}/scripts/umount.remote|g" "${mypwd}/scripts/mountcheck"
 sed -i "s|logs/|${mypwd}/logs/|g" "${mypwd}/cron"
 sed -i "s|scripts/|${mypwd}/scripts/|g" "${mypwd}/cron"
-
 
 echo ""
 echo ""
