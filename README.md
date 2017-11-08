@@ -8,13 +8,20 @@ The config right now is configured to have atleast 1 TB for caching and a decent
 ### I've created another repository with this included in a docker image. Check it out [here](https://github.com/madslundt/docker-cloud-media-scripts)
 
 # Easy install
-unzip, curl and bash is needed to run easy install.
+git, curl and bash is needed to run easy install.
+```
+sudo apt-get install git-core curl bash -y
+```
 
-```bash <( curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INSTALL )```
+```
+bash <( curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INSTALL )
+```
 
 By default this will place cloud-media-scripts in the directory `./cloud-media-scripts`. An extra argument can be added to change this
 
-```bash <( curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INSTALL ) [PATH]```
+```
+bash <( curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INSTALL ) [PATH]
+```
 
 This has only been tested on Ubuntu 16.04+. Please create an issue if you have any problems.
 
@@ -28,6 +35,7 @@ This has only been tested on Ubuntu 16.04+. Please create an issue if you have a
   * [Setup cronjobs](#setup-cronjobs)
 * [My setup](#my-setup)
 * [Optimize configuration WIP](#optimize-configuration-wip)
+* [Upgrade](#upgrade)
 * [Donate](#donate)
 
 # How this works?
@@ -187,6 +195,12 @@ Depending on your internet connection, you can optimize when plexdrive download 
 
 Plexdrive
  - `chunk-size` the size of the chunks downloaded by Plexdrive. For faster connections increase this.
+
+# Upgrade
+You can easily upgrade those scripts with the following command
+```
+git pull origin master
+```
 
 # Donate
 If you want to support the project or just buy me a beer I accept Paypal and bitcoins.
