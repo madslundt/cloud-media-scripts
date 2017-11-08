@@ -15,9 +15,7 @@ if [ -e "${mypwd}/config" ]; then
     exit 02
 fi
 
-#git clone "https://github.com/madslundt/cloud-media-scripts.git" "${mypwd}"
-git clone "https://github.com/Antexa/cloud-media-scripts.git" "${mypwd}"
-
+git clone "https://github.com/madslundt/cloud-media-scripts.git" "${mypwd}"
 
 sed -i "s|INSERT_CONFIG_FILE|${mypwd}/config|g" "${mypwd}/scripts/"*
 sed -i "s|INSERT_CONFIG_FILE|${mypwd}/config|g" "${mypwd}/setup.sh"
