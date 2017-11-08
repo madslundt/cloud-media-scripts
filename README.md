@@ -13,6 +13,7 @@ git, curl and bash is needed to run easy install.
 sudo apt-get install git-core curl bash -y
 ```
 
+Now run:
 ```
 bash <( curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INSTALL )
 ```
