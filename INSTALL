@@ -15,9 +15,7 @@ if [ -e "${mypwd}/config" ]; then
     exit 02
 fi
 
-wget "https://github.com/madslundt/cloud-media-scripts/archive/master.zip"
-unzip master.zip
-rm -rf master.zip
+git clone "https://github.com/madslundt/cloud-media-scripts.git" cloud-media-scripts-master
 mkdir -p "${mypwd}"
 mv cloud-media-scripts-master/* "${mypwd}"
 rm -rf cloud-media-scripts-master
