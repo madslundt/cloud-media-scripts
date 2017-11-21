@@ -1,3 +1,6 @@
+#!/bin/bash
+. "INSERT_CONFIG_FILE"
+
 isMountUp() {
     if [ ! mountpouint -q "$cloud_dir" ] && [ ! mountpoint -q "$cloud_decrypt_dir" ] && [ ! -z "$(ls -A ${cloud_decrypt_dir})" ]; then
         return 1
@@ -12,13 +15,7 @@ getSections() {
         exit 02
     fi
 
-    sections=$(curl -s -G -L "${plex_url}/library/sections?X-Plex-Token=${plex_token}" | xpath -e "/MediaContainer/Directory/Location/@id" 2>&1 | sed -re 's/-- $awk 'BEGIN {sq = ""}
-         {a[$1] = NR}
-         END {
-             for (i in a) {
-                 printf "%s%s", d, i; d = OFS};
-        }')
-
+    sections=$(curl -s -G -L "${plex_url}/library/sections?X-Plex-Token=${plex_token}" | xpath -e "/MediaContainer/Directory/@key" 2>&1 | sed -re 's/-- NODE --//g'$
     echo $sections
 }
 
@@ -27,18 +24,17 @@ emptyTrash() {
 
     if [ isMountUp == 1 ]; then
         sections=$(getSections)
-        echo $sections
-
         if [ -z "${sections}" ]; then
             echo "Could not get sections from ${plex_url} with the inserted token. Aborting..."
             exit 02
         fi
 
-        for i in "${sections[@]}"
+        IFS="," read -r -a arr <<< "$sections"
+        for i in "${arr[@]}"
         do
-            echo $i
             if [[ ! -z "${i}" ]]; then
-                curl --header "X-Plex-Token: ${plex_token}" "${plex_url}/library/sections/${i}/emptyTrash"
+                echo "${plex_url}/library/sections/${i}/emptyTrash"
+                curl -s -G -L "${plex_url}/library/sections/${i}/emptyTrash?X-Plex-Token=${plex_token}"
             fi
         done
 
