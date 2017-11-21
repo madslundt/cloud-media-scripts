@@ -1,6 +1,3 @@
-#!/bin/bash
-. "INSERT_CONFIG_FILE"
-
 isMountUp() {
     if [ ! mountpouint -q "$cloud_dir" ] && [ ! mountpoint -q "$cloud_decrypt_dir" ] && [ ! -z "$(ls -A ${cloud_decrypt_dir})" ]; then
         return 1
@@ -13,29 +10,38 @@ getSections() {
     if [ -z "${plex_url}" ]; then
         echo "Fill in plex url and plex token to retrieve sections. Aborting..."
         exit 02
-    do
-    
-    sections=$(curl -s -G -L "${plex_url}/library/sections?X-Plex-Token=${plex_token}" |xpath "/MediaContainer/Directory/Location/@id" 2>&1 | sed -re 's/-- NODE --//g' | sed -re 's/id=\"//g' | sed -re 's/\"//g' | sed '/^\s*$/d' | tail -n+2)
+    fi
 
-    return sections
+    sections=$(curl -s -G -L "${plex_url}/library/sections?X-Plex-Token=${plex_token}" | xpath -e "/MediaContainer/Directory/Location/@id" 2>&1 | sed -re 's/-- $awk 'BEGIN {sq = ""}
+         {a[$1] = NR}
+         END {
+             for (i in a) {
+                 printf "%s%s", d, i; d = OFS};
+        }')
+
+    echo $sections
 }
 
 emptyTrash() {
     bash mountcheck
-    
-    if [ "${isMountUp()}" -eq "1" ]; then
-        sections=getSections
 
-        if [ -z "${sections}" ]: then
+    if [ isMountUp == 1 ]; then
+        sections=$(getSections)
+        echo $sections
+
+        if [ -z "${sections}" ]; then
             echo "Could not get sections from ${plex_url} with the inserted token. Aborting..."
             exit 02
         fi
 
-        for i in "${sections}"
+        for i in "${sections[@]}"
         do
-            curl --header "X-Plex-Token: ${plex_token}" "${plex_url}/library/sections/${i}/emptyTrash"
+            echo $i
+            if [[ ! -z "${i}" ]]; then
+                curl --header "X-Plex-Token: ${plex_token}" "${plex_url}/library/sections/${i}/emptyTrash"
+            fi
         done
-        
+
         exit 0
     else
         echo "Mount is not up after mountcheck. Aborting..."
