@@ -21,6 +21,8 @@ getSections() {
 }
 
 emptyTrash() {
+    bash mountcheck
+    
     if [ "${isMountUp()}" -eq "1" ]; then
         sections=getSections
 
@@ -36,9 +38,8 @@ emptyTrash() {
         
         exit 0
     else
-        echo "Mount is not up. Remounting and trying to empty trash once again..."
-        bash mountcheck
-        emptyTrash
+        echo "Mount is not up after mountcheck. Aborting..."
+        exit 02
     fi
 }
 
