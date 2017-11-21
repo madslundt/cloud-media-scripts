@@ -1,0 +1,45 @@
+#!/bin/bash
+. "INSERT_CONFIG_FILE"
+
+isMountUp() {
+    if [ ! mountpouint -q "$cloud_dir" ] && [ ! mountpoint -q "$cloud_decrypt_dir" ] && [ ! -z "$(ls -A ${cloud_decrypt_dir})" ]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+emptyTrash() {
+    if [ "${isMountUp()}" -eq "1" ]; then
+        sections=getSections
+
+        if [ -z "${sections}" ]: then
+            echo "Could not get sections from ${plex_url} with the inserted token. Aborting..."
+            exit 02
+        fi
+
+        for i in "${sections}"
+        do
+            curl --header "X-Plex-Token: ${plex_token}" "${plex_url}/library/sections/${i}/emptyTrash"
+        done
+        
+        exit 0
+    else
+        echo "Mount is not up. Remounting and trying to empty trash once again..."
+        bash mountcheck
+        emptyTrash
+    fi
+}
+
+getSections() {
+    if [ -z "${plex_url}" ]; then
+        echo "Fill in plex url and plex token to retrieve sections. Aborting..."
+        exit 02
+    do
+    
+    sections=$(curl -s -G -L "${plex_url}/library/sections?X-Plex-Token=${plex_token}" | xpath "/MediaContainer/Directory/Location/@id")
+
+    return sections
+}
+
+emptyTrash
