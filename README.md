@@ -159,7 +159,7 @@ These should be inserted into `crontab -e`.
  - Mount at boot.
  - Upload to cloud daily.
  - Check to remove local content weekly (this only remove files depending on the option 'space', 'time' or 'instant'*).
- - Check every hour if mount folder is running and if not it will unmount and remount (this checks if files exist in mount folder and does not check if rclone or plexdrive service is running)
+ - Check every hour if mount folder is running and if not it will unmount and remount (this checks if files exist in mount folder and does not check if rclone or plexdrive service is running). If mount is running it will empty trash in Plex.
 
 _If you have a small local disk you may change upload and remove local content to do it more often._
 
