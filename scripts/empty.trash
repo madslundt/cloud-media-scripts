@@ -15,7 +15,7 @@ getSections() {
         exit 02
     do
     
-    sections=$(curl -s -G -L "${plex_url}/library/sections?X-Plex-Token=${plex_token}" | xpath "/MediaContainer/Directory/Location/@id")
+    sections=$(curl -s -G -L "${plex_url}/library/sections?X-Plex-Token=${plex_token}" |xpath "/MediaContainer/Directory/Location/@id" 2>&1 | sed -re 's/-- NODE --//g' | sed -re 's/id=\"//g' | sed -re 's/\"//g' | sed '/^\s*$/d' | tail -n+2)
 
     return sections
 }
