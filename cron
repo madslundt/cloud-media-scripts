@@ -1,4 +1,4 @@
 @reboot scripts/mount.remote &>> logs/mount.log
 @daily scripts/cloudupload &>> logs/cloudupload.log
 @weekly scripts/rmlocal &>> logs/rmlocal.log
-@hourly scripts/mountcheck &>> logs/status.log
+@hourly scripts/empty.trash &>> logs/emptytrash.log
