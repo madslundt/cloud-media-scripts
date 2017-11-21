@@ -1,14 +1,6 @@
 #!/bin/bash
 . "INSERT_CONFIG_FILE"
 
-isMountUp() {
-    if [ ! mountpouint -q "$cloud_dir" ] && [ ! mountpoint -q "$cloud_decrypt_dir" ] && [ ! -z "$(ls -A ${cloud_decrypt_dir})" ]; then
-        return 1
-    else
-        return 0
-    fi
-}
-
 getSections() {
     if [ -z "${plex_url}" ]; then
         echo "Fill in plex url and plex token to retrieve sections. Aborting..."
@@ -22,7 +14,12 @@ getSections() {
 emptyTrash() {
     bash mountcheck
 
-    if [ isMountUp == 1 ]; then
+    cloud_dir="${cloud_encrypt_dir}"
+    if [ "$encrypt_media" -eq "0" ]; then
+        cloud_dir="${cloud_decrypt_dir}"
+    fi
+
+    if mountpoint -q "$cloud_dir" && mountpoint -q "$cloud_decrypt_dir" && mountpoint -q "${local_media_dir}"; then
         sections=$(getSections)
         if [ -z "${sections}" ]; then
             echo "Could not get sections from ${plex_url} with the inserted token. Aborting..."
