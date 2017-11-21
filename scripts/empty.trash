@@ -9,6 +9,17 @@ isMountUp() {
     fi
 }
 
+getSections() {
+    if [ -z "${plex_url}" ]; then
+        echo "Fill in plex url and plex token to retrieve sections. Aborting..."
+        exit 02
+    do
+    
+    sections=$(curl -s -G -L "${plex_url}/library/sections?X-Plex-Token=${plex_token}" | xpath "/MediaContainer/Directory/Location/@id")
+
+    return sections
+}
+
 emptyTrash() {
     if [ "${isMountUp()}" -eq "1" ]; then
         sections=getSections
@@ -29,17 +40,6 @@ emptyTrash() {
         bash mountcheck
         emptyTrash
     fi
-}
-
-getSections() {
-    if [ -z "${plex_url}" ]; then
-        echo "Fill in plex url and plex token to retrieve sections. Aborting..."
-        exit 02
-    do
-    
-    sections=$(curl -s -G -L "${plex_url}/library/sections?X-Plex-Token=${plex_token}" | xpath "/MediaContainer/Directory/Location/@id")
-
-    return sections
 }
 
 emptyTrash
