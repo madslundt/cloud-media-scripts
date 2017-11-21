@@ -21,6 +21,7 @@ sudo apt-get install screen -y
 sudo apt-get install unzip -y
 sudo apt-get install fuse -y
 sudo apt-get install golang -y
+sudo apt-get install libxml-xpath-perl
 
 if [ ! -f "${rclone_bin}" ]; then
     if [ ! -d "${rclone_dir}" ]; then
