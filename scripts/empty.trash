@@ -31,7 +31,7 @@ emptyTrash() {
         do
             if [[ ! -z "${i}" ]]; then
                 echo "${plex_url}/library/sections/${i}/emptyTrash"
-                curl -s -G -L "${plex_url}/library/sections/${i}/emptyTrash?X-Plex-Token=${plex_token}"
+                curl -s -X PUT -L "${plex_url}/library/sections/${i}/emptyTrash?X-Plex-Token=${plex_token}"
             fi
         done
 
