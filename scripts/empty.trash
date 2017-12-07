@@ -19,7 +19,7 @@ emptyTrash() {
         cloud_dir="${cloud_decrypt_dir}"
     fi
 
-    if mountpoint -q "$cloud_dir" && mountpoint -q "$cloud_decrypt_dir" && mountpoint -q "${local_media_dir}"; then
+    if mountpoint -q "$cloud_dir" && mountpoint -q "$cloud_decrypt_dir" && mountpoint -q "${local_media_dir}" && [ "$(ls -A ${cloud_decrypt_dir})" ]; then
         sections=$(getSections)
         if [ -z "${sections}" ]; then
             echo "Could not get sections from ${plex_url} with the inserted token. Aborting..."
