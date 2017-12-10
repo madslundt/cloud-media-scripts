@@ -161,7 +161,8 @@ I suggest to wait a minute to start Plex to make sure the mount is up and runnin
  - Checks if mount is up 40 seconds after boot (if not it makes sure to remount).
  - Upload to cloud daily at 03:30 AM (except tuesday).
  - Check to remove local content every tuesday at 03:30 AM (this only remove files depending on the option 'space', 'time' or 'instant').
- - Check hourly if mount is up and running (if not it makes sure to remount) and then, if mount is up, it will to empty Plex trash.
+ - Check hourly that mount is up or else remounting.
+ - Check every 12th hour if mount is up and running (if not it makes sure to remount) and then, if mount is up, it will empty Plex trash.
 
 _If you have a small local disk you may change upload and remove local content to do it more often._
 
