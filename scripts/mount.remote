@@ -68,10 +68,17 @@ mount_rclone () {
 
 	if ! mountpoint -q "$cloud_decrypt_dir"; then
 		sleep 5
+		count=5
 		while [ -z "$(ls -A ${cloud_encrypt_dir})" ]
 		do
+			if [ "$count" == "0" ]; then
+                                bash umount.remote
+                                bash mount.remote
+                                exit 0
+                        fi
 			echo "[ $(date ${date_format}) ] Could not find encrypted mountpoint: ${cloud_encrypt_dir}. Retrying in 10 seconds."
 			sleep 10
+			count=$(($count - 1))
 		done
 
 		echo "[ $(date ${date_format}) ] Mounting decrypted Google Drive with Rclone in mountpoint: ${cloud_decrypt_dir}"
@@ -91,10 +98,17 @@ mount_union () {
 	# Mount plex media directory if not already mounted.
 	if ! mountpoint -q "${local_media_dir}"; then
 		sleep 5
+		count=5
 		while [ -z "$(ls -A ${cloud_decrypt_dir})" ]
 		do
+			if [ "$count" == "0" ]; then
+                                bash umount.remote
+                                bash mount.remote
+                                exit 0
+                        fi
 			echo "[ $(date ${date_format}) ] Could not find decrypted mountpoint: ${cloud_decrypt_dir}. Retrying in 10 seconds."
 			sleep 10
+			count=$(($count - 1))
 		done
 
 		ufs_mounts="${local_decrypt_dir}=RW:${cloud_decrypt_dir}=RO"
