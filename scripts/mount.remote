@@ -72,9 +72,9 @@ mount_rclone () {
 		while [ -z "$(ls -A ${cloud_encrypt_dir})" ]
 		do
 			if [ "$count" == "0" ]; then
-                                bash umount.remote
-                                bash mount.remote
-                                exit 0
+                                echo "[ $(date ${date_format}) ] Could not read mountpoint: ${cloud_encrypt_dir}"
+                                echo "[ $(date ${date_format}) ] Mount failed"
+                                exit 02
                         fi
 			echo "[ $(date ${date_format}) ] Could not find encrypted mountpoint: ${cloud_encrypt_dir}. Retrying in 10 seconds."
 			sleep 10
@@ -102,9 +102,9 @@ mount_union () {
 		while [ -z "$(ls -A ${cloud_decrypt_dir})" ]
 		do
 			if [ "$count" == "0" ]; then
-                                bash umount.remote
-                                bash mount.remote
-                                exit 0
+                                echo "[ $(date ${date_format}) ] Could not read mountpoint: ${cloud_decrypt_dir}"
+                                echo "[ $(date ${date_format}) ] Mount failed"
+                                exit 02
                         fi
 			echo "[ $(date ${date_format}) ] Could not find decrypted mountpoint: ${cloud_decrypt_dir}. Retrying in 10 seconds."
 			sleep 10
