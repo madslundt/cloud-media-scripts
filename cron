@@ -1,4 +1,5 @@
-@reboot scripts/mount.remote &>> logs/mount.log
-30 3 * * 1,3,4,5,6,7 scripts/cloudupload &>> logs/cloudupload.log
-30 3 * * 2 scripts/rmlocal &>> logs/rmlocal.log
-@hourly scripts/empty.trash &>> logs/emptytrash.log
+@reboot sleep 30 && scripts/mount.remote > logs/mount.log
+@reboot sleep 60 && scripts/mountcheck
+30 3 * * 1,3,4,5,6,7 scripts/cloudupload > logs/cloudupload.log
+30 3 * * 2 scripts/rmlocal > logs/rmlocal.log
+@hourly scripts/empty.trash > logs/emptytrash.log
