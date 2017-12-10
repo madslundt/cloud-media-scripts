@@ -17,6 +17,8 @@ fi
 
 git clone "https://github.com/madslundt/cloud-media-scripts.git" "${mypwd}"
 
+mkdir -p "${mypwd}/logs"
+
 sed -i "s|INSERT_CONFIG_FILE|${mypwd}/config|g" "${mypwd}/scripts/"*
 sed -i "s|INSERT_CONFIG_FILE|${mypwd}/config|g" "${mypwd}/setup.sh"
 sed -i "s|INSERT_ROOT_DIR|${mypwd}|g" "${mypwd}/config"
