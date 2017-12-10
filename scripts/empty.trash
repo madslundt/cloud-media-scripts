@@ -20,6 +20,10 @@ emptyTrash() {
     fi
 
     if mountpoint -q "$cloud_dir" && mountpoint -q "$cloud_decrypt_dir" && mountpoint -q "${local_media_dir}" && [ "$(ls -A ${cloud_decrypt_dir})" ]; then
+        echo "Refreshing library"
+        curl -s -G -L "${plex_url}/library/sections/all/refresh?X-Plex-Token=${plex_token}"
+        sleep 60
+        
         sections=$(getSections)
         if [ -z "${sections}" ]; then
             echo "Could not get sections from ${plex_url} with the inserted token. Aborting..."
@@ -30,7 +34,7 @@ emptyTrash() {
         for i in "${arr[@]}"
         do
             if [[ ! -z "${i}" ]]; then
-                echo "${plex_url}/library/sections/${i}/emptyTrash"
+                echo "Empty trash for section ${i}"
                 curl -s -X PUT -L "${plex_url}/library/sections/${i}/emptyTrash?X-Plex-Token=${plex_token}"
             fi
         done
