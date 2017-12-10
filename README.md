@@ -155,6 +155,7 @@ Run PlexDrive with GNU screen: `screen -dmS plexdrive PLEXDRIVE_BIN --config=PLE
 ## Setup cronjobs
 My suggestions for cronjobs is in the file `cron`.
 These should be inserted into `crontab -e`.
+I suggest to wait a minute to start Plex to make sure the mount is up and running.
 
  - Mount 20 seconds after boot.
  - Checks if mount is up 40 seconds after boot (if not it makes sure to remount).
