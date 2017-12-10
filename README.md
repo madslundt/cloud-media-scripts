@@ -156,10 +156,11 @@ Run PlexDrive with GNU screen: `screen -dmS plexdrive PLEXDRIVE_BIN --config=PLE
 My suggestions for cronjobs is in the file `cron`.
 These should be inserted into `crontab -e`.
 
- - Mount at boot.
+ - Mount 20 seconds after boot.
+ - Checks if mount is up 40 seconds after boot (if not it makes sure to remount).
  - Upload to cloud daily at 03:30 AM (except tuesday).
- - Check to remove local content every tuesday at 03:30 AM (this only remove files depending on the option 'space', 'time' or 'instant'*).
- - Check every hour if mount folder is running and if not it will unmount and remount (this checks if files exist in mount folder and does not check if rclone or plexdrive service is running). If mount is running it will empty trash in Plex.
+ - Check to remove local content every tuesday at 03:30 AM (this only remove files depending on the option 'space', 'time' or 'instant').
+ - Check hourly if mount is up and running (if not it makes sure to remount) and then, if mount is up, it will to empty Plex trash.
 
 _If you have a small local disk you may change upload and remove local content to do it more often._
 
