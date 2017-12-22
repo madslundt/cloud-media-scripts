@@ -5,9 +5,10 @@
 ###################################
 ########## DOWNLOADS ##########
 # Rclone
-_rclone_release="rclone-v1.37-linux-amd64"
+_rclone_version="v1.38"
+_rclone_release="rclone-${_rclone_version}-linux-amd64"
 _rclone_zip="${_rclone_release}.zip"
-_rclone_url="https://github.com/ncw/rclone/releases/download/v1.37/${_rclone_zip}"
+_rclone_url="https://github.com/ncw/rclone/releases/download/${_rclone_version}/${_rclone_zip}"
 
 # Plexdrive
 _plexdrive_bin="plexdrive-linux-amd64"
@@ -15,40 +16,53 @@ _plexdrive_url="https://github.com/dweidenfeld/plexdrive/releases/download/4.0.0
 ###################################
 
 sudo apt-get update
-sudo apt-get install unionfs-fuse -y
-sudo apt-get install bc -y
-sudo apt-get install screen -y
-sudo apt-get install unzip -y
-sudo apt-get install fuse -y
-sudo apt-get install golang -y
-sudo apt-get install libxml-xpath-perl -y
 
-if [ ! -f "${rclone_bin}" ]; then
-    if [ ! -d "${rclone_dir}" ]; then
-        mkdir -p "${rclone_dir}"
+echo "Installing dependencies"
+sudo apt-get -qq install unionfs-fuse -y
+sudo apt-get -qq install bc -y
+sudo apt-get -qq install screen -y
+sudo apt-get -qq install unzip -y
+sudo apt-get -qq install fuse -y
+sudo apt-get -qq install golang -y
+sudo apt-get -qq install libxml-xpath-perl -y
+
+printf "\n\nChecking Rclone and Plexdrive"
+
+onlyUpdate=0
+if [ -f "${rclone_bin}" ]; then
+    if ${rclone_bin} --config=${rclone_config} --version | grep -q "${_rclone_version}"; then
+        rerunSetup=""
+        while [ "${rerunSetup,,}" != "n"  ] && [ "${rerunSetup,,}" != "y"  ]
+        do
+            read -e -p "Rclone is already in version ${_rclone_version}. Do you want to run setup anyway? [Y/n]? " -i "y" rerunSetup
+        done
+        
+        if [ "${rerunSetup,,}" == "n"  ]; then
+            echo "Exiting setup"
+            exit 0
+        fi
     fi
-    wget "${_rclone_url}"
-    mkdir "${media_dir}/${_rclone_release}"
-    unzip "${_rclone_zip}" -d "${media_dir}"
-    cp -rf "${media_dir}/${_rclone_release}/"* "${rclone_dir}/"
-    chmod a+x "${rclone_bin}"
-    rm -rf "${_rclone_zip}"
-    rm -rf "${media_dir}/${_rclone_release}"
+    onlyUpdate=1
 fi
 
-if [ ! -f "${plexdrive_bin}" ]; then
-    if [ ! -d "${plexdrive_dir}" ]; then
-        mkdir -p "${plexdrive_dir}"
-    fi
-    wget "${_plexdrive_url}"
-    cp -rf "${_plexdrive_bin}" "${plexdrive_dir}"
-    chmod a+x "${plexdrive_bin}"
-    rm -rf "${_plexdrive_bin}"
-
-
-else
-    printf "Rclone and Plexdrive are already installed.\n\n"
+if [ ! -d "${rclone_dir}" ]; then
+    mkdir -p "${rclone_dir}"
 fi
+wget "${_rclone_url}"
+mkdir "${media_dir}/${_rclone_release}"
+unzip "${_rclone_zip}" -d "${media_dir}"
+cp -rf "${media_dir}/${_rclone_release}/"* "${rclone_dir}/"
+chmod a+x "${rclone_bin}"
+rm -rf "${_rclone_zip}"
+rm -rf "${media_dir}/${_rclone_release}"
+
+if [ ! -d "${plexdrive_dir}" ]; then
+    mkdir -p "${plexdrive_dir}"
+fi
+wget "${_plexdrive_url}"
+cp -rf "${_plexdrive_bin}" "${plexdrive_dir}"
+chmod a+x "${plexdrive_bin}"
+rm -rf "${_plexdrive_bin}"
 
 sudo sed -i "s|#user_allow_other|user_allow_other|g" "/etc/fuse.conf"
 chmod a+x "${media_dir}/scripts/"*
@@ -70,9 +84,13 @@ else
 fi
 
 rcloneSetup=""
+answer="y"
+if [ "${onlyUpdate}" == "1" ]; then
+    answer="n"
+fi
 while [ "${rcloneSetup,,}" != "n"  ] && [ "${rcloneSetup,,}" != "y"  ]
 do
-    read -e -p "${rcloneInstallText} [Y/n]? " -i "y" rcloneSetup
+    read -e -p "${rcloneInstallText} [Y/n]? " -i answer rcloneSetup
 done
 
 
@@ -118,11 +136,19 @@ printf "\n\n"
 mountStart=""
 while [ "${mountStart,,}" != "n"  ] && [ "${mountStart,,}" != "y"  ]
 do
-    read -e -p "Do you want to start mounting now [Y/n]? " -i "y" mountStart
+    if [ "${onlyUpdate}" == "1" ]; then
+        read -e -p "Do you want to remount now [Y/n]? " -i "y" mountStart
+    else
+        read -e -p "Do you want to start mounting now [Y/n]? " -i "y" mountStart
+    fi
 done
 
 if [ "${mountStart,,}" == "y"  ]; then
-    printf "\nThis may take a while because Plexdrive needs to cache your files\n"
+    if [ "${onlyUpdate}" == "1" ]; then
+        bash ${media_dir}/scripts/umount.remote
+    else
+        printf "\nThis may take a while because Plexdrive needs to cache your files\n"
+    fi
     bash ${media_dir}/scripts/mount.remote
 else
     printf "\nStart mount later by running the mount.remote [${media_dir}/scripts/mount.remote]\n"
