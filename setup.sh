@@ -5,7 +5,7 @@
 ###################################
 ########## DOWNLOADS ##########
 # Rclone
-_rclone_version="v1.38"
+_rclone_version="v1.39"
 _rclone_release="rclone-${_rclone_version}-linux-amd64"
 _rclone_zip="${_rclone_release}.zip"
 _rclone_url="https://github.com/ncw/rclone/releases/download/${_rclone_version}/${_rclone_zip}"
