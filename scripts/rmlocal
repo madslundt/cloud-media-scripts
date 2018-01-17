@@ -9,6 +9,9 @@
 
 ##############################################################################
 
+oldSize=0
+movedSize=0
+
 rm_time () {
 	# Generate filelist and iterate through it...
 	find "${local_decrypt_dir}" -type f -mtime +$remove_files_older_than |
@@ -36,8 +39,22 @@ rm_time () {
 			done
 
 			# Move file to remote destination[s], retaining path
-			echo "[ $(date ${date_format}) ] Moving file -> ${filename} to Google Drive."
 			"${rclone_bin}" move --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
+			
+			fileSize=$(du -sb "$n" | awk '{print $1}')
+                        movedSize=$((movedSize + fileSize))
+
+                        sizeInMb=$((movedSize / 1000 / 1000))
+                        diffSize=$((movedSize - oldSize))
+                        if [[ "${sizeInMb}" -gt 1000 ]]; then
+                                if [[ "${diffSize}" -gt "1000000000" ]]; then # greater than 1 GB
+                                        oldSize=$movedSize
+                                        echo "[ $(date ${date_format}) ] $((sizeInMb / 1000)) GB uploaded"
+                                fi
+                        elif [[ "${diffSize}" -gt "100000000" ]]; then # greater than 100 MB
+                                oldSize=$movedSize
+                                echo "[ $(date ${date_format}) ] ${sizeInMb} MB uploaded"
+                        fi
 		done
 
 	find "${local_decrypt_dir}" -mindepth 1 -type d -empty -delete
@@ -70,8 +87,22 @@ rm_instant () {
 			done
 
 			# Move file to remote destination[s], retaining path
-			echo "[ $(date ${date_format}) ] Moving file -> ${filename} to Google Drive."
 			"${rclone_bin}" move --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
+			
+			fileSize=$(du -sb "$n" | awk '{print $1}')
+                        movedSize=$((movedSize + fileSize))
+
+                        sizeInMb=$((movedSize / 1000 / 1000))
+                        diffSize=$((movedSize - oldSize))
+                        if [[ "${sizeInMb}" -gt 1000 ]]; then
+                                if [[ "${diffSize}" -gt "1000000000" ]]; then # greater than 1 GB
+                                        oldSize=$movedSize
+                                        echo "[ $(date ${date_format}) ] $((sizeInMb / 1000)) GB uploaded"
+                                fi
+                        elif [[ "${diffSize}" -gt "100000000" ]]; then # greater than 100 MB
+                                oldSize=$movedSize
+                                echo "[ $(date ${date_format}) ] ${sizeInMb} MB uploaded"
+                        fi
 		done
 
 	find "${local_decrypt_dir}" -mindepth 1 -type d -empty -delete
@@ -124,7 +155,6 @@ rm_space () {
 			fileSizeGb=$(($fileSize / 1000 / 1000 / 1000))
 
 			# Move file to remote destination[s], retaining path
-			echo "[ $(date ${date_format}) ] Moving file -> ${filename} to Google Drive. Freeing up ${fileSizeGb} GB"
 			"${rclone_bin}" move --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
 		done
 
