@@ -68,4 +68,4 @@ find "${local_decrypt_dir}" -type f -print0 | xargs -0 stat --format '%Y :%y %n'
                 fi
 	done
 
-echo "[ $(date ${date_format}) ] ###### Cloud uploaded ended successfully ######"
+echo "[ $(date ${date_format}) ] ###### Cloud upload ended successfully ######"
