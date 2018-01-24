@@ -59,7 +59,7 @@ The local folder (`local_decrypt_dir`) and cloud folder (`cloud_decrypt_dir`) is
 
 Everytime new media is retrieved it should be added to `local_media_dir` or `local_decrypt_dir`. By adding new data to `local_media_dir` it will automatically write it down to `local_decrypt_dir` because of the write permissions.
 
-Sooner or later media is going to be removed from `local_decrypt_dir` depending on the `remove_files_based_on` setting. Media is only removed from `local_decrypt_dir` and still appears in `local_media_dir` because it is still be accessable from the cloud.
+Sooner or later media is going to be removed from `local_decrypt_dir` depending on the `remove_files_based_on` setting. Media is only removed from `local_decrypt_dir` and still appears in `local_media_dir` because it is still accessable from the cloud.
 
 If `remove_files_based_on` is set to **space** it will only move data to the cloud (if local media size has exceeded `remove_files_when_space_exceeds` GB) starting from the oldest accessed file and will only free up atleast `freeup_atleast` GB. If **time** is set it will only move files older than `remove_files_older_than` to the cloud. If **instant** is set it will make sure to move all media to the cloud for then afterwards removing it locally.
 
@@ -160,13 +160,13 @@ I suggest to wait a minute to start Plex to make sure the mount is up and runnin
  - Mount 20 seconds after boot.
  - Checks if mount is up 40 seconds after boot (if not it makes sure to remount).
  - Upload to cloud daily at 03:30 AM.
- - Check to remove local content every tuesday at 03:30 AM (this only remove files depending on the option 'space', 'time' or 'instant').
+ - Check to remove local content every tuesday after upload has finished (this only remove files depending on the option 'space', 'time' or 'instant').
  - Check hourly that mount is up or else remounting.
- - Check every 12th hour if mount is up and running (if not it makes sure to remount) and then, if mount is up, it will empty Plex trash.
+ - Check every 12th hour if mount is up and running (if not it makes sure to remount). If mount is up and running, it will empty Plex trash.
 
 _If you have a small local disk you may change upload and remove local content to do it more often._
 
-*_If 'space' is set it will only remove content, starting from the oldest accessed file, if media size has exceeded `remove_files_when_space_exceeds`, and will only free up atleast `freeup_atleast`. If 'time' is set it will only remove files older than `remove_files_older_than`. If 'instant' is set it will remove all files when running._
+*_If 'space' is set it will only move content to cloud, starting from the oldest accessed file, if media size has exceeded `remove_files_when_space_exceeds`, and will free up atleast `freeup_atleast`. If 'time' is set it will only move files to cloud older than `remove_files_older_than`. If 'instant' is set it will move all files to cloud when running. Only when file has been successfully moved to cloud it will be deleted locally._
 
 *Media is never deleted locally before being uploaded successfully to the cloud.*
 
@@ -176,7 +176,9 @@ OBS: `mountcheck` is used to check if mount is up. I've had some problems where 
 # My setup
 My setup with this is quite simple.
 
-I've an Intel NUC with only 128GB ssd. This is connected to a 4TB external hard drive that contains `local_decrypt_dir` and `plexdrive_temp_dir`.
+I've an Intel NUC with only 128GB ssd. This is connected to a 4TB external hard drive that contains local media recently downloaded (`local_decrypt_dir`) and recently streamed media (plexdrive cache `plexdrive_temp_dir`).
+
+I'm running this with up to 1TB plexdrive cache (`--clear-chunk-max-size=1000G`) and removing files based on space (`remove_files_based_on="space"`) when `local-decrypt-dir` exceeds 2TB (`remove_files_when_space_exceeds=2000`) and frees up atleast 1TB (`freeup_atleast=1000`). 
 
 # Optimize configuration WIP
 ## Space
@@ -190,9 +192,9 @@ Plexdrive
 
 Misc. config
  - remove_files_based_on can either be time, space or instant.
-    - Time will remove the files after `remove_files_older_than` days ONLY if the files are uploaded to the cloud.
-    - Space will remove the files, starting from the oldest, when space exceeds `remove_files_when_space_exceeds` and free up atleast `freeup_atleast` GB ONLY if the files are uploaded to the cloud.
-    - Instant will remove all the files ONLY if the files are uploaded to the cloud.
+    - Time will move the files to the cloud after `remove_files_older_than` days and afterwards remove them locally.
+    - Space will move the files to the cloud, starting from the oldest, when space exceeds `remove_files_when_space_exceeds` and free up atleast `freeup_atleast` GB. Afterwards these files are removed locally.
+    - Instant will move all the files to the cloud and afterwards remove them locally.
 
 ## Internet connection
 Depending on your internet connection, you can optimize when plexdrive download chunks.
