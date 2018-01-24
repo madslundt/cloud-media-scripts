@@ -52,14 +52,16 @@ This gives us a total of 5 directories:
  - Plexdrive temp dir: Containing temp/cache data from Plexdrive. This prevents Plexdrive from redownloading files everytime they are accessed.
  - Local media dir: Containing all data from cloud provider and data stored locally (Mounted with Union-FS).
 
-Cloud data are mounted to a local folder (`cloud_encrypt_dir`). This folder is then decrypted and mounted to a local folder (`cloud_decrypt_dir`).
+Cloud data is mounted to a local folder (`cloud_encrypt_dir`). This folder is then decrypted and mounted to a local folder (`cloud_decrypt_dir`).
 
 A local folder (`local_decrypt_dir`) is created to contain media stored locally.
-The local folder (`local_decrypt_dir`) and cloud folder (`cloud_decrypt_dir`) is then mounted to a third folder (`local_media_dir`) with certain permissions - local folder with Read/Write permissions and cloud folder with Read-only permissions.
+The local folder (`local_decrypt_dir`) and cloud folder (`cloud_decrypt_dir`) are then mounted to a third folder (`local_media_dir`) with certain permissions - local folder with Read/Write permissions and cloud folder with Read-only permissions.
 
-Everytime new media is retrieved it should be added to `local_media_dir` or `local_decrypt_dir`. By adding new data to `local_media_dir` it will automatically write it down to `local_decrypt_dir` because of the write permissions.
+Everytime new media is retrieved it should be added to `local_media_dir` or `local_decrypt_dir`. By adding new data to `local_media_dir` it will automatically write it to `local_decrypt_dir` because of the permissions stated earlier. At this moment the media has not been uploaded to the cloud yet but only appears locally.
 
-Sooner or later media is going to be removed from `local_decrypt_dir` depending on the `remove_files_based_on` setting. Media is only removed from `local_decrypt_dir` and still appears in `local_media_dir` because it is still accessable from the cloud.
+When running cloudupload it makes sure to upload the files from `local_decrypt_dir` to the cloud. This will only upload to the cloud and the file appears both locally and on the cloud. However, in `local_media_dir` it only appears as one file.
+
+Later media is going to be removed locally from `local_decrypt_dir`. This is done by running rmlocal which depends on `remove_files_based_on` setting. `remove_files_based_on` can be set to **space**, **time** or **instant**. This command makes sure to move files to cloud and then afterwards remove them locally. Media is then only removed from `local_decrypt_dir` and still appears in `local_media_dir` because it is still accessable from the cloud.
 
 If `remove_files_based_on` is set to **space** it will only move data to the cloud (if local media size has exceeded `remove_files_when_space_exceeds` GB) starting from the oldest accessed file and will only free up atleast `freeup_atleast` GB. If **time** is set it will only move files older than `remove_files_older_than` to the cloud. If **instant** is set it will make sure to move all media to the cloud for then afterwards removing it locally.
 
