@@ -55,7 +55,7 @@ This gives us a total of 5 directories:
 Cloud data is mounted to a local folder (`cloud_encrypt_dir`). This folder is then decrypted and mounted to a local folder (`cloud_decrypt_dir`).
 
 A local folder (`local_decrypt_dir`) is created to contain media stored locally.
-The local folder (`local_decrypt_dir`) and cloud folder (`cloud_decrypt_dir`) are then mounted to a third folder (`local_media_dir`) with certain permissions - local folder with Read/Write permissions. cloud folder cby default is set to Read-only permissions. If you wish to have the capablity to delete files, please change delete_flag to Y in config.
+The local folder (`local_decrypt_dir`) and cloud folder (`cloud_decrypt_dir`) are then mounted to a third folder (`local_media_dir`) with certain permissions - local folder with Read/Write permissions. The cloud folder by default is set to Read-only permissions. If you wish to have the capablity to delete files, please change delete_flag to Y in config.
 
 Everytime new media is retrieved it should be added to `local_media_dir` or `local_decrypt_dir`. By adding new data to `local_media_dir` it will automatically write it to `local_decrypt_dir` because of the permissions and the UnionFS priority setup. At this moment the media has not been uploaded to the cloud yet but only appears locally.
 
