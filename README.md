@@ -83,7 +83,7 @@ Rclone encrypts and uploads from a local folder (`local_decrypt_dir`) to the clo
 
 Rclone creates a config file: `config.json`. This is used to get access to the cloud provider and encryption/decryption keys. This can either be set up via Rclone or by using the templates located in the [rclone directory](rclone/) (just copy the file and name it `rclone.conf`).
 
-Some have reported permission issues with Rclone directory. If that occurs it can be fixed by setting `--uid` in `rclone_mount_options` in [config.json](config.json).
+Some have reported permission issues with Rclone directory. If that occurs it can be fixed by setting uid/gid variables under the # Mount user Id section in [config](config).
 
 ## UnionFS
 UnionFS is used to mount both cloud and local media to a local folder (`local_media_dir`).
