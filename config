@@ -46,7 +46,7 @@ mongo_host="localhost"
 mongo_user=""
 mongo_password=""
 
-if [ $delete_flag=1 ]; then
+if [ "$delete_flag" == "1" ]; then
     plexdrive_options="--temp=${plexdrive_temp_dir} -o allow_other --clear-chunk-max-size=300G --clear-chunk-age=24h --chunk-size=10M"
 else
     plexdrive_options="--temp=${plexdrive_temp_dir} -o allow_other,read_only --clear-chunk-max-size=300G --clear-chunk-age=24h --chunk-size=10M"
@@ -61,7 +61,7 @@ rclone_bin="${rclone_dir}/rclone"
 rclone_config="${rclone_dir}/rclone.conf"
 rclone_options="--buffer-size 500M --checkers 16"
 
-if [ $delete_flag=1 ]; then
+if [ "$delete_flag" == "1" ]; then
     rclone_mount_options="${rclone_options} --allow-non-empty --allow-other --max-read-ahead 30G"
 else
     rclone_mount_options="${rclone_options} --read-only --allow-non-empty --allow-other --max-read-ahead 30G"
