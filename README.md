@@ -55,7 +55,7 @@ This gives us a total of 5 directories:
 Cloud data is mounted to a local folder (`cloud_encrypt_dir`). This folder is then decrypted and mounted to a local folder (`cloud_decrypt_dir`).
 
 A local folder (`local_decrypt_dir`) is created to contain media stored locally.
-The local folder (`local_decrypt_dir`) and cloud folder (`cloud_decrypt_dir`) are then mounted to a third folder (`local_media_dir`) with certain permissions - local folder with Read/Write permissions. The cloud folder by default is set to Read-only permissions. If you wish to have the capablity to delete files, please change delete_flag to Y in config. This will allow you to delete items in plex and it will remove them from the cloud also.
+The local folder (`local_decrypt_dir`) and cloud folder (`cloud_decrypt_dir`) are then mounted to a third folder (`local_media_dir`) with certain permissions - local folder with Read/Write permissions. The cloud folder by default is set to Read-only permissions. If you wish to have the capablity to delete files, please change delete_flag to 1 in config. This will allow you to delete items in plex and it will remove them from the cloud also.
 
 Everytime new media is retrieved it should be added to `local_media_dir` or `local_decrypt_dir`. By adding new data to `local_media_dir` it will automatically write it to `local_decrypt_dir` because of the permissions and the UnionFS priority setup. At this moment the media has not been uploaded to the cloud yet but only appears locally.
 
@@ -88,7 +88,7 @@ Some have reported permission issues with Rclone directory. If that occurs it ca
 ## UnionFS
 UnionFS is used to mount both cloud and local media to a local folder (`local_media_dir`).
 
- - Cloud media is mounted with Read-only permissions by default, or Read/Write /w the delete_flag set to "Y". This will only allow deletion and not uploads.
+ - Cloud media is mounted with Read-only permissions by default, or Read/Write /w the delete_flag set to 1. This will only allow deletion and not uploads.
  - Local media is mounted with Read/Write permissions.
 
 The reason for these permissions are that when writing to the local folder (`local_media_dir`) it will not try to write it directly to the cloud folder, but instead to the local media (`local_decrypt_dir`). Later this will be encrypted and uploaded to the cloud by Rclone.
