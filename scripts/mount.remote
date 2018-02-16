@@ -111,7 +111,7 @@ mount_union () {
 			count=$(($count - 1))
 		done
 		
-		if [ $delete_flag="Y" ]; then
+		if [ $delete_flag=1 ]; then
 			ufs_mounts="${local_decrypt_dir}=RW:${cloud_decrypt_dir}=RW"
 		else
 			ufs_mounts="${local_decrypt_dir}=RW:${cloud_decrypt_dir}=RO"
