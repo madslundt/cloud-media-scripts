@@ -110,8 +110,12 @@ mount_union () {
 			sleep 10
 			count=$(($count - 1))
 		done
-
-		ufs_mounts="${local_decrypt_dir}=RW:${cloud_decrypt_dir}=RO"
+		
+		if [ "$delete_flag" == "1" ]; then
+			ufs_mounts="${local_decrypt_dir}=RW:${cloud_decrypt_dir}=RW"
+		else
+			ufs_mounts="${local_decrypt_dir}=RW:${cloud_decrypt_dir}=RO"
+		fi
 
 		echo "[ $(date ${date_format}) ] Mounting final library with UnionFS in mountpoint: ${local_media_dir}"
 		"${ufs_bin}" $ufs_options "${ufs_mounts}" "${local_media_dir}"
