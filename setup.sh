@@ -61,10 +61,11 @@ wget "${_rclone_url}"
 mkdir "${media_dir}/${_rclone_release}"
 unzip "${_rclone_zip}" -d "${media_dir}"
 if [ "${rclone_beta}" = "1" ]; then
-    cp -rf "${media_dir}/${_rclone_release}/${_rclone_zip_extracted}/"* "${rclone_dir}/"
-else
-    cp -rf "${media_dir}/${_rclone_release}/"* "${rclone_dir}/"
+    zip_extracted_dir=$(ls "${media_dir}" | grep "${_rclone_zip_extracted}")
+    cp -rf "${media_dir}/${zip_extracted_dir}/"* "${media_dir}/${_rclone_release}"
+    rm -rf "${media_dir}/${zip_extracted_dir}"
 fi
+cp -rf "${media_dir}/${_rclone_release}/"* "${rclone_dir}/"
 chmod a+x "${rclone_bin}"
 rm -rf "${_rclone_zip}"
 rm -rf "${media_dir}/${_rclone_release}"
