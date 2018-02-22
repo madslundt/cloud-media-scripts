@@ -9,6 +9,10 @@ _rclone_version="v1.39"
 _rclone_release="rclone-${_rclone_version}-linux-amd64"
 _rclone_zip="${_rclone_release}.zip"
 _rclone_url="https://github.com/ncw/rclone/releases/download/${_rclone_version}/${_rclone_zip}"
+if [ "${rclone_beta}" = "1" ]; then
+    echo "Using Rclone latest beta"
+    _rclone_url="https://beta.rclone.org/rclone-beta-latest-linux-amd64.zip"
+fi
 
 # Plexdrive
 _plexdrive_bin="plexdrive-linux-amd64"
