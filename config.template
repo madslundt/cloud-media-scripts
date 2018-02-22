@@ -76,6 +76,9 @@ rclone_local_endpoint="local-crypt:"
 
 google_drive_media_directory="" # Empty means media files are in root
 
+upload_limit="0" # This is only used to check within cloudupload script. This number should be in GB and greater than 0 be activated.
+move_limit="0" # This is only used to check within rmlocal script. This number should be in GB and greater than 0 be activated.
+
 
 ###############################################################################
 # Plex (empty trash)

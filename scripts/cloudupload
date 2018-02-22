@@ -36,10 +36,10 @@ find "${local_decrypt_dir}" -type f -print0 | xargs -0 stat --format '%Y :%y %n'
 			(*.fuse*) continue ;;
 			(.DS_STORE) continue ;;
 		esac
-		
+
 		if [ -f "${cloud_decrypt_dir}${filename}" ]; then
-                        continue
-                fi
+            continue
+        fi
 
 		# If file is opened by another process, wait until it isn't.
 		while [ "$(lsof "$n" >/dev/null 2>&1)" ] || \
@@ -49,23 +49,32 @@ find "${local_decrypt_dir}" -type f -print0 | xargs -0 stat --format '%Y :%y %n'
 			sleep 10
 		done
 
+		fileSize=$(du -sb "$n" | awk '{print $1}')
+		addedSize=$((addedSize + fileSize))
+		sizeInMb=$((addedSize / 1000 / 1000))
+
+		if [[ "${upload_limit}" -gt 0 ]]; then
+			if [[ "$((sizeInMb / 1000))" -gt "${upload_limit}" ]]; then
+				echo "[ $(date ${date_format}) ] Aborted upload to not exceed ${upload_limit}GB."
+				echo "[ $(date ${date_format}) ] $((oldSize / 1000 / 1000 / 1000))GB uploaded"
+                break
+			fi
+		fi
+
 		# Copy file to remote destination[s], retaining path
 		"${rclone_bin}" copy --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
-		
-		fileSize=$(du -sb "$n" | awk '{print $1}')
-                addedSize=$((addedSize + fileSize))
 
-                sizeInMb=$((addedSize / 1000 / 1000))
-                diffSize=$((addedSize - oldSize))
-                if [[ "${sizeInMb}" -gt 1000 ]]; then
-                        if [[ "${diffSize}" -gt "1000000000" ]]; then # greater than 1 GB
-                                oldSize=$addedSize
-                                echo "[ $(date ${date_format}) ] $((sizeInMb / 1000)) GB uploaded"
-                        fi
-                elif [[ "${diffSize}" -gt "100000000" ]]; then # greater than 100 MB
+
+        diffSize=$((addedSize - oldSize))
+        if [[ "${sizeInMb}" -gt 1000 ]]; then
+                if [[ "${diffSize}" -gt "1000000000" ]]; then # greater than 1 GB
                         oldSize=$addedSize
-                        echo "[ $(date ${date_format}) ] ${sizeInMb} MB uploaded"
+                        echo "[ $(date ${date_format}) ] $((sizeInMb / 1000)) GB uploaded"
                 fi
+        elif [[ "${diffSize}" -gt "100000000" ]]; then # greater than 100 MB
+                oldSize=$addedSize
+                echo "[ $(date ${date_format}) ] ${sizeInMb} MB uploaded"
+        fi
 	done
 
 echo "[ $(date ${date_format}) ] ###### Cloud upload ended successfully ######"

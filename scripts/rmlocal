@@ -11,6 +11,7 @@
 
 oldSize=0
 movedSize=0
+uploadSize=0
 
 rm_time () {
 	# Generate filelist and iterate through it...
@@ -38,23 +39,35 @@ rm_time () {
 				sleep 10
 			done
 
+			fileSize=$(du -sb "$n" | awk '{print $1}')
+            movedSize=$((movedSize + fileSize))
+            sizeInMb=$((movedSize / 1000 / 1000))
+
+			if [ -f "${cloud_decrypt_dir}${filename}" ]; then
+                uploadSize=$((uploadSize + fileSize))
+			fi
+
+            if [[ "${move_limit}" -gt 0 ]]; then
+                if [[ "$((uploadSize / 1000 / 1000 / 1000))" -gt "${move_limit}" ]]; then
+                    echo "[ $(date ${date_format}) ] Aborted removal to not exceed ${move_limit}GB."
+                    echo "[ $(date ${date_format}) ] $((uploadSize / 1000 / 1000 / 1000))GB uploaded"
+                    break
+                fi
+            fi
+
 			# Move file to remote destination[s], retaining path
 			"${rclone_bin}" move --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
-			
-			fileSize=$(du -sb "$n" | awk '{print $1}')
-                        movedSize=$((movedSize + fileSize))
 
-                        sizeInMb=$((movedSize / 1000 / 1000))
-                        diffSize=$((movedSize - oldSize))
-                        if [[ "${sizeInMb}" -gt 1000 ]]; then
-                                if [[ "${diffSize}" -gt "1000000000" ]]; then # greater than 1 GB
-                                        oldSize=$movedSize
-                                        echo "[ $(date ${date_format}) ] $((sizeInMb / 1000)) GB uploaded"
-                                fi
-                        elif [[ "${diffSize}" -gt "100000000" ]]; then # greater than 100 MB
-                                oldSize=$movedSize
-                                echo "[ $(date ${date_format}) ] ${sizeInMb} MB uploaded"
-                        fi
+            diffSize=$((movedSize - oldSize))
+            if [[ "${sizeInMb}" -gt 1000 ]]; then
+                    if [[ "${diffSize}" -gt "1000000000" ]]; then # greater than 1 GB
+                            oldSize=$movedSize
+                            echo "[ $(date ${date_format}) ] $((sizeInMb / 1000)) GB uploaded"
+                    fi
+            elif [[ "${diffSize}" -gt "100000000" ]]; then # greater than 100 MB
+                    oldSize=$movedSize
+                    echo "[ $(date ${date_format}) ] ${sizeInMb} MB uploaded"
+            fi
 		done
 
 	find "${local_decrypt_dir}" -mindepth 1 -type d -empty -delete
@@ -86,23 +99,35 @@ rm_instant () {
 				sleep 10
 			done
 
+            fileSize=$(du -sb "$n" | awk '{print $1}')
+            movedSize=$((movedSize + fileSize))
+            sizeInMb=$((movedSize / 1000 / 1000))
+
+			if [ -f "${cloud_decrypt_dir}${filename}" ]; then
+                uploadSize=$((uploadSize + fileSize))
+			fi
+
+            if [[ "${move_limit}" -gt 0 ]]; then
+                if [[ "$((uploadSize / 1000 / 1000 / 1000))" -gt "${move_limit}" ]]; then
+                    echo "[ $(date ${date_format}) ] Aborted removal to not exceed ${move_limit}GB."
+                    echo "[ $(date ${date_format}) ] $((uploadSize / 1000 / 1000 / 1000))GB uploaded"
+                    break
+                fi
+            fi
+
 			# Move file to remote destination[s], retaining path
 			"${rclone_bin}" move --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
-			
-			fileSize=$(du -sb "$n" | awk '{print $1}')
-                        movedSize=$((movedSize + fileSize))
 
-                        sizeInMb=$((movedSize / 1000 / 1000))
-                        diffSize=$((movedSize - oldSize))
-                        if [[ "${sizeInMb}" -gt 1000 ]]; then
-                                if [[ "${diffSize}" -gt "1000000000" ]]; then # greater than 1 GB
-                                        oldSize=$movedSize
-                                        echo "[ $(date ${date_format}) ] $((sizeInMb / 1000)) GB uploaded"
-                                fi
-                        elif [[ "${diffSize}" -gt "100000000" ]]; then # greater than 100 MB
-                                oldSize=$movedSize
-                                echo "[ $(date ${date_format}) ] ${sizeInMb} MB uploaded"
-                        fi
+            diffSize=$((movedSize - oldSize))
+            if [[ "${sizeInMb}" -gt 1000 ]]; then
+                    if [[ "${diffSize}" -gt "1000000000" ]]; then # greater than 1 GB
+                            oldSize=$movedSize
+                            echo "[ $(date ${date_format}) ] $((sizeInMb / 1000)) GB uploaded"
+                    fi
+            elif [[ "${diffSize}" -gt "100000000" ]]; then # greater than 100 MB
+                    oldSize=$movedSize
+                    echo "[ $(date ${date_format}) ] ${sizeInMb} MB uploaded"
+            fi
 		done
 
 	find "${local_decrypt_dir}" -mindepth 1 -type d -empty -delete
@@ -148,23 +173,35 @@ rm_space () {
 					sleep 10
 			done
 
+            fileSize=$(du -sb "$n" | awk '{print $1}')
+            movedSize=$((movedSize + fileSize))
+            sizeInMb=$((movedSize / 1000 / 1000))
+
+			if [ -f "${cloud_decrypt_dir}${filename}" ]; then
+                uploadSize=$((uploadSize + fileSize))
+			fi
+
+            if [[ "${move_limit}" -gt 0 ]]; then
+                if [[ "$((uploadSize / 1000 / 1000 / 1000))" -gt "${move_limit}" ]]; then
+                    echo "[ $(date ${date_format}) ] Aborted removal to not exceed ${move_limit}GB."
+                    echo "[ $(date ${date_format}) ] $((uploadSize / 1000 / 1000 / 1000))GB uploaded"
+                    break
+                fi
+            fi
+
 			# Move file to remote destination[s], retaining path
 			"${rclone_bin}" move --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
-			
-			fileSize=$(du -sb "$n" | awk '{print $1}')
-			movedSize="$(($movedSize + $fileSize))"
 
-                        sizeInMb=$((movedSize / 1000 / 1000))
-                        diffSize=$((movedSize - oldSize))
-                        if [[ "${sizeInMb}" -gt 1000 ]]; then
-                                if [[ "${diffSize}" -gt "1000000000" ]]; then # greater than 1 GB
-                                        oldSize=$movedSize
-                                        echo "[ $(date ${date_format}) ] $((sizeInMb / 1000)) GB uploaded"
-                                fi
-                        elif [[ "${diffSize}" -gt "100000000" ]]; then # greater than 100 MB
-                                oldSize=$movedSize
-                                echo "[ $(date ${date_format}) ] ${sizeInMb} MB uploaded"
-                        fi
+            diffSize=$((movedSize - oldSize))
+            if [[ "${sizeInMb}" -gt 1000 ]]; then
+                    if [[ "${diffSize}" -gt "1000000000" ]]; then # greater than 1 GB
+                            oldSize=$movedSize
+                            echo "[ $(date ${date_format}) ] $((sizeInMb / 1000)) GB uploaded"
+                    fi
+            elif [[ "${diffSize}" -gt "100000000" ]]; then # greater than 100 MB
+                    oldSize=$movedSize
+                    echo "[ $(date ${date_format}) ] ${sizeInMb} MB uploaded"
+            fi
 		done
 
 	find "${local_decrypt_dir}" -mindepth 1 -type d -empty -delete
