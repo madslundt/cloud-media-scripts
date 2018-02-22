@@ -26,6 +26,11 @@ bash <( curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INS
 
 This has only been tested on Ubuntu 16.04+. Please create an issue if you have any problems.
 
+# Upgrading
+If you want to make sure you are using the latest version of cloud-media-scripts or needs to update it just go in to your cloud-media-scripts root folder and run the command `git pull`.
+
+*Your config, cloud folders, local folders, rclone config and plexdrive will NOT be overwritten.*
+
 # Content
 * [How this works?](#how-this-works)
   * [Plexdrive](#plexdrive)
@@ -93,7 +98,7 @@ UnionFS is used to mount both cloud and local media to a local folder (`local_me
 
 The reason for these permissions are that when writing to the local folder (`local_media_dir`) it will not try to write it directly to the cloud folder, but instead to the local media (`local_decrypt_dir`). Later this will be encrypted and uploaded to the cloud by Rclone.
 
-## Setup
+
 # Installation without easy install
 1. Change `config` to match your settings.
 2. Change paths to config in all script files.
@@ -180,7 +185,7 @@ My setup with this is quite simple.
 
 I've an Intel NUC with only 128GB ssd. This is connected to a 4TB external hard drive that contains local media recently downloaded (`local_decrypt_dir`) and recently streamed media (plexdrive cache `plexdrive_temp_dir`).
 
-I'm running this with up to 1TB plexdrive cache (`--clear-chunk-max-size=1000G`) and removing files based on space (`remove_files_based_on="space"`) when `local-decrypt-dir` exceeds 2TB (`remove_files_when_space_exceeds=2000`) and frees up atleast 1TB (`freeup_atleast=1000`). 
+I'm running this with up to 1TB plexdrive cache (`--clear-chunk-max-size=1000G`) and removing files based on space (`remove_files_based_on="space"`) when `local-decrypt-dir` exceeds 2TB (`remove_files_when_space_exceeds=2000`) and frees up atleast 1TB (`freeup_atleast=1000`).
 
 # Optimize configuration WIP
 ## Space
