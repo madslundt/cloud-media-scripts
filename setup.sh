@@ -7,12 +7,14 @@
 # Rclone
 _rclone_version="v1.39"
 _rclone_release="rclone-${_rclone_version}-linux-amd64"
+_rclone_zip_extracted="${_rclone_release}"
 _rclone_zip="${_rclone_release}.zip"
 _rclone_url="https://github.com/ncw/rclone/releases/download/${_rclone_version}/${_rclone_zip}"
 if [ "${rclone_beta}" = "1" ]; then
     echo "Using Rclone latest beta"
     _rclone_release="rclone-beta-latest-linux-amd64"
-    _rclone_zip="${_rclone_release}.zip"
+    _rclone_zip_extracted="rclone-v[0-9.]*?.*"
+    _rclone_zip="${rclone-beta-latest-linux-amd64}.zip"
     _rclone_url="https://beta.rclone.org/${_rclone_zip}"
 fi
 
@@ -57,7 +59,7 @@ fi
 wget "${_rclone_url}"
 mkdir "${media_dir}/${_rclone_release}"
 unzip "${_rclone_zip}" -d "${media_dir}"
-cp -rf "${media_dir}/${_rclone_release}/"* "${rclone_dir}/"
+cp -rf "${media_dir}/${_rclone_zip_extracted}/"* "${rclone_dir}/"
 chmod a+x "${rclone_bin}"
 rm -rf "${_rclone_zip}"
 rm -rf "${media_dir}/${_rclone_release}"
