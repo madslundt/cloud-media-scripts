@@ -31,7 +31,7 @@ uid=$(id -u)
 gid=$(id -g)
 
 # Delete flag used to enable deletions from local media dir by enabling RW. Will not write, but will allow delete.
-delete_flag=0 #Set to 1 if you want to allow
+delete_flag=0 # Set to "1" if you want directly read/write access to the cloud mount.
 
 ufs_options="-o cow,allow_other,direct_io,nonempty,auto_cache,sync_read,uid=$uid,gid=$gid"
 
@@ -61,7 +61,7 @@ rclone_bin="${rclone_dir}/rclone"
 rclone_config="${rclone_dir}/rclone.conf"
 rclone_options="--buffer-size 500M --checkers 16"
 
-rclone_beta="0" # Set this to '1' if you want to live dangerous and try out rclone newest beta.
+rclone_beta="0" # Set this to "1" if you want to live dangerous and try out rclone latest beta.
 
 if [ "$delete_flag" == "1" ]; then
     rclone_mount_options="${rclone_options} --allow-non-empty --allow-other --max-read-ahead 30G"
