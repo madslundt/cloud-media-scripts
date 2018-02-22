@@ -9,4 +9,7 @@ if [ -z "$(ls -A ${cloud_decrypt_dir})" ]; then
         echo "[ $(date ${date_format}) ] Mounting..."
         bash mount.remote
         echo "[ $(date ${date_format}) ] Mounted successfully"
+else
+        echo "[ $(date ${date_format}) ] Mount is currently up, not remounting"
+
 fi
