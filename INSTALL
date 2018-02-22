@@ -27,6 +27,9 @@ sed -i "s|bash umount.remote|bash ${mypwd}/scripts/umount.remote|g" "${mypwd}/sc
 sed -i "s|logs/|${mypwd}/logs/|g" "${mypwd}/cron"
 sed -i "s|scripts/|${mypwd}/scripts/|g" "${mypwd}/cron"
 
+chmod a+x "${mypwd}/scripts/"*
+chmod a+x "${mypwd}/setup.sh"
+
 echo ""
 echo ""
 echo "Cloud-media-scripts has been installed successfully!".
