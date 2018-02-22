@@ -27,7 +27,7 @@ bash <( curl -Ls https://github.com/madslundt/cloud-media-scripts/raw/master/INS
 This has only been tested on Ubuntu 16.04+. Please create an issue if you have any problems.
 
 # Upgrading
-If you want to make sure you are using the latest version of cloud-media-scripts or needs to update it just go in to your cloud-media-scripts root folder and run the command `git pull`.
+If you want to make sure you are using the latest version of cloud-media-scripts or needs to update it just go in to your cloud-media-scripts root folder and run the command `git pull`. This still needs to modification.
 
 *Your config, cloud folders, local folders, rclone config and plexdrive will NOT be overwritten.*
 
