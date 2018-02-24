@@ -2,17 +2,41 @@
 
 path=${1:-cloud-media-scripts}
 
-if [[ $path == /* ]]; then
+upgrade="0"
+if [ $(git config --get remote.origin.url | grep "cloud-media-scripts" | grep -v "grep" | wc -l) != "0" ]; then
+    mypwd="$(pwd)"
+    upgrade="1"
+elif [[ $path == /* ]]; then
     mypwd="${path}"
 else
     mypwd="$(pwd)/${path}"
 fi
 
 mypwd="${mypwd%/}"
+tmppwd="${mypwd}"
 
-git clone "https://github.com/madslundt/cloud-media-scripts.git" "${mypwd}"
+if [ "${upgrade}" == "1"  ]; then
+    answer="y"
+    read -e -p "Do you want to upgrade scripts? Your config will NOT be changed or overwritten [Y/n]" -i answer
 
-mkdir -p "${mypwd}/logs"
+    if [ "${answer,,}" == "y"  ]; then
+        tmppwd="${mypwd}/tmp$(date +%s)"
+    else
+        exit 0
+    fi
+fi
+
+git clone "https://github.com/madslundt/cloud-media-scripts.git" "${tmppwd}"
+
+if [ "${upgrade}" == "1"  ]; then
+    cp -rf "${tmppwd}/scripts"* "${mypwd}/scripts"
+    cp -rf "${tmppwd}/config.template" "${mypwd}"
+    cp -rf "${tmppwd}/cron" "${mypwd}"
+    cp -rf "${tmppwd}/setup.sh" "${mypwd}"
+    rm -rf "${tmppwd}"
+else
+    mkdir -p "${mypwd}/logs"
+fi
 
 if [ ! -e "${mypwd}/config" ]; then
     cp "${mypwd}/config.template" "${mypwd}/config"
@@ -29,7 +53,12 @@ sed -i "s|scripts/|${mypwd}/scripts/|g" "${mypwd}/cron"
 chmod a+x "${mypwd}/scripts/"*
 chmod a+x "${mypwd}/setup.sh"
 
+
 echo ""
 echo ""
-echo "Cloud-media-scripts has been installed successfully!".
-echo "Edit config file [${mypwd}/config] and run setup.sh [bash ${mypwd}/setup.sh]"
+if [ "${upgrade}" == "1"  ]; then
+    echo "Cloud-media-scripts has been upgraded successfully!".
+else
+    echo "Cloud-media-scripts has been installed successfully!".
+    echo "Edit config file [${mypwd}/config] and run setup.sh [bash ${mypwd}/setup.sh]"
+fi
