@@ -18,8 +18,8 @@ mypwd="${mypwd%/}"
 tmppwd="${mypwd}"
 
 if [ "${upgrade}" == "1"  ]; then
-    answer="y"
-    read -e -p "Do you want to upgrade scripts? Your config will NOT be changed or overwritten [Y/n]" -i answer
+    answer=""
+    read -e -p "Do you want to upgrade scripts? Your config will NOT be changed or overwritten [Y/n]" -i "y" answer
 
     if [ "${answer,,}" == "y"  ]; then
         tmppwd="${mypwd}/tmp$(date +%s)"
