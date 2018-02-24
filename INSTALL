@@ -1,15 +1,15 @@
 #!/bin/bash
-
 path=${1:-cloud-media-scripts}
-
 upgrade="0"
 if [ $(git config --get remote.origin.url | grep "cloud-media-scripts" | grep -v "grep" | wc -l) != "0" ]; then
     mypwd="$(pwd)"
     upgrade="1"
-elif [[ $path == /* ]]; then
-    mypwd="${path}"
 else
-    mypwd="$(pwd)/${path}"
+    if [[ $path == /* ]]; then
+        mypwd="${path}"
+    else
+        mypwd="$(pwd)/${path}"
+    fi
 fi
 
 mypwd="${mypwd%/}"
@@ -57,8 +57,10 @@ chmod a+x "${mypwd}/setup.sh"
 echo ""
 echo ""
 if [ "${upgrade}" == "1"  ]; then
-    echo "Cloud-media-scripts has been upgraded successfully!".
+    echo "Cloud-media-scripts has been upgraded successfully!"
 else
-    echo "Cloud-media-scripts has been installed successfully!".
+    echo "Cloud-media-scripts has been installed successfully!"
     echo "Edit config file [${mypwd}/config] and run setup.sh [bash ${mypwd}/setup.sh]"
 fi
+
+exit 0
