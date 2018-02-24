@@ -31,7 +31,7 @@ fi
 git clone "https://github.com/madslundt/cloud-media-scripts.git" "${tmppwd}"
 
 if [ "${upgrade}" == "1"  ]; then
-    cp -rf "${tmppwd}/scripts"* "${mypwd}/scripts"
+    cp -rf "${tmppwd}/scripts" "${mypwd}"
     cp -rf "${tmppwd}/config.template" "${mypwd}"
     cp -rf "${tmppwd}/cron" "${mypwd}"
     cp -rf "${tmppwd}/setup.sh" "${mypwd}"
