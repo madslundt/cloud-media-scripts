@@ -104,7 +104,7 @@ if [ "${onlyUpdate}" == "1" ]; then
 fi
 while [ "${rcloneSetup,,}" != "n"  ] && [ "${rcloneSetup,,}" != "y"  ]
 do
-    read -e -p "${rcloneInstallText} [Y/n]? " -i answer rcloneSetup
+    read -e -p "${rcloneInstallText} [Y/n]? " -i "${answer}" rcloneSetup
 done
 
 
