@@ -47,7 +47,7 @@ rm_time () {
                 uploadSize=$((uploadSize + fileSize))
 			fi
 
-            if [[ "${move_limit}" -gt 0 ]]; then
+            if [[ "${move_limit}" -gt "0" ]]; then
                 if [[ "$((uploadSize / 1000 / 1000 / 1000))" -gt "${move_limit}" ]]; then
                     echo "[ $(date ${date_format}) ] Aborted removal to not exceed ${move_limit}GB."
                     echo "[ $(date ${date_format}) ] $((uploadSize / 1000 / 1000 / 1000))GB uploaded"
