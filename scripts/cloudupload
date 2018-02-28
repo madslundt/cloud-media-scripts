@@ -53,7 +53,7 @@ find "${local_decrypt_dir}" -type f -print0 | xargs -0 stat --format '%Y :%y %n'
 		addedSize=$((addedSize + fileSize))
 		sizeInMb=$((addedSize / 1000 / 1000))
 
-		if [[ "${upload_limit}" -gt 0 ]]; then
+		if [[ "${upload_limit}" -gt "0" ]]; then
 			if [[ "$((sizeInMb / 1000))" -gt "${upload_limit}" ]]; then
 				echo "[ $(date ${date_format}) ] Aborted upload to not exceed ${upload_limit}GB."
 				echo "[ $(date ${date_format}) ] $((oldSize / 1000 / 1000 / 1000))GB uploaded"
