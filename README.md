@@ -35,7 +35,7 @@ If you want to make sure you are using the latest version of cloud-media-scripts
 * [How this works?](#how-this-works)
   * [Plexdrive](#plexdrive)
   * [Rclone](#rclone)
-  * [UnionFS](#unionfs)
+  * [FS-Pooling](#fs-pooling)
 * [Installation without easy install](#installation-without-easy-install)
   * [Setup](#setup)
   * [Setup cronjobs](#setup-cronjobs)
@@ -48,7 +48,7 @@ If you want to make sure you are using the latest version of cloud-media-scripts
 Following services are used to sync, encrypt/decrypt and mount media:
  - Plexdrive
  - Rclone
- - UnionFS
+ - UnionFS/MergerFS
 
 This gives us a total of 5 directories:
  - Cloud encrypt dir: Containing encrypted data from the cloud provider (Mounted with Plexdrive)
@@ -62,7 +62,7 @@ Cloud data is mounted to a local folder (`cloud_encrypt_dir`). This folder is th
 A local folder (`local_decrypt_dir`) is created to contain media stored locally.
 The local folder (`local_decrypt_dir`) and cloud folder (`cloud_decrypt_dir`) are then mounted to a third folder (`local_media_dir`) with certain permissions - local folder with Read/Write permissions. The cloud folder is set to Read-only permissions.
 
-Everytime new media is retrieved it should be added to `local_media_dir` or `local_decrypt_dir`. By adding new data to `local_media_dir` it will automatically write it to `local_decrypt_dir` because of the permissions and the UnionFS priority setup. At this moment the media has not been uploaded to the cloud yet but only appears locally.
+Everytime new media is retrieved it should be added to `local_media_dir` or `local_decrypt_dir`. By adding new data to `local_media_dir` it will automatically write it to `local_decrypt_dir` because of the permissions and the pooling priority setup. At this moment the media has not been uploaded to the cloud yet but only appears locally.
 
 When running cloudupload it makes sure to upload the files from `local_decrypt_dir` to the cloud. This will only upload to the cloud and the file appears both locally and on the cloud. However, in `local_media_dir` it only appears as one file.
 
@@ -90,8 +90,12 @@ Rclone creates a config file: `config.json`. This is used to get access to the c
 
 Some have reported permission issues with Rclone directory. If that occurs it can be fixed by setting uid/gid variables under the # Mount user Id section in [config](config).
 
-## UnionFS
-UnionFS is used to mount both cloud and local media to a local folder (`local_media_dir`).
+## FS-Pooling
+To pool the data together in your target media folder, either UnionFS or MergerFS is used to mount both cloud and local media to a local folder (`local_media_dir`).
+
+This option can be set within `config` by changing pool_choice.
+ - 0 = UnionFS, this option is 100% read only.
+ - 1 = MergerFS, this option will set the local media to RO, however, RO still allows deletions /w MergerFS.
 
  - Cloud media is mounted with Read-only permissions.
  - Local media is mounted with Read/Write permissions.
