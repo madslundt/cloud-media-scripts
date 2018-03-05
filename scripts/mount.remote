@@ -113,7 +113,7 @@ mount_union () {
 
 		ufs_mounts="${local_decrypt_dir}=RW:${cloud_decrypt_dir}=RO"
 		#Mfs can delete from cloud even if set to RO.
-		mfs_mounts="${local_decrypt_dir}:${cloud_decrypt_dir}=RO"
+		mfs_mounts="${local_decrypt_dir}:${cloud_decrypt_dir}:RO"
 		
 		if [ "$pool_choice" -eq "0" ]; then
 			echo "[ $(date ${date_format}) ] Mounting final library with UnionFS in mountpoint: ${local_media_dir}"
