@@ -28,7 +28,7 @@ if [ "${upgrade}" == "1"  ]; then
     fi
 fi
 
-git clone "https://github.com/Dulanic/cloud-media-scripts.git" "${tmppwd}"
+git clone "https://github.com/madslundt/cloud-media-scripts.git" "${tmppwd}"
 
 if [ "${upgrade}" == "1"  ]; then
     cp -rf "${tmppwd}/scripts" "${mypwd}"
