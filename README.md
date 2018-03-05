@@ -64,7 +64,7 @@ The local folder (`local_decrypt_dir`) and cloud folder (`cloud_decrypt_dir`) ar
 
 Everytime new media is retrieved it should be added to `local_media_dir` or `local_decrypt_dir`. By adding new data to `local_media_dir` it will automatically write it to `local_decrypt_dir` because of the permissions and the pooling priority setup. At this moment the media has not been uploaded to the cloud yet but only appears locally.
 
-When running cloudupload it makes sure to upload the files from `local_decrypt_dir` to the cloud. This will only upload to the cloud and the file appears both locally and on the cloud. However, in `local_media_dir` it only appears as one file.
+When running cloudupload it makes sure to upload the files from `local_decrypt_dir` to the cloud. This will only upload to the cloud and the file appears both locally and on the cloud. However, in `local_media_dir` it only appears as one file. If your move_ind is set to 1 it will move the file to the cloud instead of copying.
 
 Later media is going to be removed locally from `local_decrypt_dir`. This is done by running rmlocal which depends on `remove_files_based_on` setting. `remove_files_based_on` can be set to **space**, **time** or **instant**. This command makes sure to move files to cloud and then afterwards remove them locally. Media is then only removed from `local_decrypt_dir` and still appears in `local_media_dir` because it is still accessable from the cloud.
 
