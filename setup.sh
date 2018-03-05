@@ -50,7 +50,7 @@ if [ ! -d "${rclone_dir}" ]; then
 fi
 
 if [ "${pool_choice}" = "1" ]; then
-    if [ -f "${mfs_bin}" ]; then
+    if [ ! -f "${mfs_bin}" ]; then
         git clone https://github.com/trapexit/mergerfs.git
         cd mergerfs
         sudo make install-build-pkgs
