@@ -18,13 +18,7 @@ _plexdrive_url="https://github.com/dweidenfeld/plexdrive/releases/download/4.0.0
 sudo apt-get update
 
 echo "Installing dependencies"
-sudo apt-get -qq install unionfs-fuse -y
-sudo apt-get -qq install bc -y
-sudo apt-get -qq install screen -y
-sudo apt-get -qq install unzip -y
-sudo apt-get -qq install fuse -y
-sudo apt-get -qq install golang -y
-sudo apt-get -qq install libxml-xpath-perl -y
+sudo apt-get -qq install unionfs-fuse screen unzip fuse libxml-xpath-perl golang bcg++ pkg-config git git-buildpackage pandoc debhelper libfuse-dev libattr1-dev -y
 
 printf "\n\nChecking Rclone and Plexdrive"
 
