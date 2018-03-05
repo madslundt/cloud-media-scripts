@@ -1,6 +1,19 @@
 #!/bin/bash
 # shellcheck disable=SC2034
 ###############################################################################
+# OPTIONS
+###############################################################################
+# Pool choice , 0 = unionfs, 1 = mergerfs mergerfs allows deletions for radarr/sonarr to prevent duplication on g-drive.
+pool_choice=0
+
+# Encrypt media (0 means no encryption)
+encrypt_media=1
+
+# Mount user Id's. If necessary for acccess, Replace $(id with a different ID if you need to override.MergerFS tends to not need, unionfs sometimes does.
+uid=$(id -u)
+gid=$(id -g)
+
+###############################################################################
 # DIRECTORIES
 ###############################################################################
 media_dir="INSERT_ROOT_DIR"
@@ -16,21 +29,14 @@ plexdrive_temp_dir="${media_dir}/.local-decrypt/plexdrive"
 # Media directory (FINAL)
 local_media_dir="${media_dir}/media"
 
-
-# Encrypt media (0 means no encryption)
-encrypt_media=1
-
-
 ###############################################################################
-# UNION-FS
+# FS-Pooling
 ###############################################################################
 ufs_bin="/usr/bin/unionfs"
-
-# Mount user Id's. Replace $(id with a different ID if you need to override.
-uid=$(id -u)
-gid=$(id -g)
+mfs_bin="/usr/bin/mergerfs"
 
 ufs_options="-o cow,allow_other,direct_io,nonempty,auto_cache,sync_read,uid=$uid,gid=$gid"
+mfs_options="-o defaults,nonempty,allow_other,direct_io,use_ino,uid=$uid,gid=$gid"
 
 ###############################################################################
 # PLEXDRIVE
@@ -58,7 +64,6 @@ rclone_beta="0" # Set this to "1" if you want to live dangerous and try out rclo
 
 rclone_mount_options="${rclone_options} --read-only --allow-non-empty --allow-other --max-read-ahead 30G"
 
-
 # Rclone endpoints
 rclone_cloud_endpoint="gd-crypt:"
 rclone_local_endpoint="local-crypt:"
@@ -68,13 +73,11 @@ google_drive_media_directory="" # Empty means media files are in root
 upload_limit="0" # This is only used to check within cloudupload script. This number should be in GB and greater than 0 be activated.
 move_limit="0" # This is only used to check within rmlocal script. This number should be in GB and greater than 0 be activated.
 
-
 ###############################################################################
 # Plex (empty trash)
 ###############################################################################
 plex_url="http://localhost:32400"
 plex_token=""
-
 
 ###############################################################################
 # MISC. CONFIG

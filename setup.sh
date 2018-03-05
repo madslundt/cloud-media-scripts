@@ -49,6 +49,18 @@ if [ ! -d "${rclone_dir}" ]; then
     mkdir -p "${rclone_dir}"
 fi
 
+if [ "$(pool_choice)" = "1" ]; then
+    if [ -f "${mfs_bin}" ]; then
+        git clone https://github.com/trapexit/mergerfs.git
+        cd mergerfs
+        sudo make install-build-pkgs
+        # build-essential git g++ debhelper libattr1-dev python automake libtool lsb-release
+        make deb
+        sudo dpkg -i ../mergerfs_version_arch.deb
+        rm -r mergerfs*
+    fi
+fi
+
 if [ "${rclone_beta}" = "1" ]; then
     echo "Using Rclone latest beta"
     _rclone_release="rclone-beta-latest-linux-amd64"
