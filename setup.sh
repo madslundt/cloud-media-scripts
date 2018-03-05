@@ -49,7 +49,7 @@ if [ ! -d "${rclone_dir}" ]; then
     mkdir -p "${rclone_dir}"
 fi
 
-if [ "$(pool_choice)" = "1" ]; then
+if [ "${pool_choice}" = "1" ]; then
     if [ -f "${mfs_bin}" ]; then
         git clone https://github.com/trapexit/mergerfs.git
         cd mergerfs
