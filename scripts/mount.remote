@@ -112,10 +112,21 @@ mount_union () {
 		done
 
 		ufs_mounts="${local_decrypt_dir}=RW:${cloud_decrypt_dir}=RO"
+		#Mfs can delete from cloud even if set to RO.
+		mfs_mounts="${local_decrypt_dir}:${cloud_decrypt_dir}=RO"
+		
+		if [ "$pool_choice" -eq "0" ]; then
+			echo "[ $(date ${date_format}) ] Mounting final library with UnionFS in mountpoint: ${local_media_dir}"
+			"${ufs_bin}" $ufs_options "${ufs_mounts}" "${local_media_dir}"
+			echo "[ $(date ${date_format}) ] Mounted successfully with UnionFS"
+		fi
 
-		echo "[ $(date ${date_format}) ] Mounting final library with UnionFS in mountpoint: ${local_media_dir}"
-		"${ufs_bin}" $ufs_options "${ufs_mounts}" "${local_media_dir}"
-		echo "[ $(date ${date_format}) ] Mounted successfully with UnionFS"
+		if [ "$pool_choice" -eq "1" ]; then
+			echo "[ $(date ${date_format}) ] Mounting final library with MergerFS in mountpoint: ${local_media_dir}"
+			"${mfs_bin}" $mfs_options "${mfs_mounts}" "${local_media_dir}"
+			echo "[ $(date ${date_format}) ] Mounted successfully with MergerFS"
+		fi
+		
 	else
 		echo "[ $(date ${date_format}) ] Final library mountpoint: ${local_media_dir} already mounted."
 	fi
