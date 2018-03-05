@@ -49,7 +49,7 @@ mongo_host="localhost"
 mongo_user=""
 mongo_password=""
 
-plexdrive_options="--temp=${plexdrive_temp_dir} -o allow_other,read_only --clear-chunk-max-size=300G --clear-chunk-age=24h --chunk-size=10M"
+plexdrive_options="--temp=${plexdrive_temp_dir} -o allow_other --clear-chunk-max-size=300G --clear-chunk-age=24h --chunk-size=10M"
 
 ###############################################################################
 # RCLONE
