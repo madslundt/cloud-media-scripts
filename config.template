@@ -9,6 +9,12 @@ pool_choice=0
 # Encrypt media (0 means no encryption)
 encrypt_media=1
 
+# Set your folder location within google drive where your media is stored. Empty means media files are in root
+google_drive_media_directory="" 
+
+# Upload/Move flag, if set to move, cloudupload will use move instead of copy to move files immediately instead of after a week.
+move_ind=0
+
 # Mount user Id's. If necessary for acccess, Replace $(id with a different ID if you need to override.MergerFS tends to not need, unionfs sometimes does.
 uid=$(id -u)
 gid=$(id -g)
@@ -49,7 +55,7 @@ mongo_host="localhost"
 mongo_user=""
 mongo_password=""
 
-plexdrive_options="--temp=${plexdrive_temp_dir} -o allow_other,read_only --clear-chunk-max-size=300G --clear-chunk-age=24h --chunk-size=10M"
+plexdrive_options="--temp=${plexdrive_temp_dir} -o allow_other --clear-chunk-max-size=300G --clear-chunk-age=24h --chunk-size=10M"
 
 ###############################################################################
 # RCLONE
@@ -62,13 +68,15 @@ rclone_options="--buffer-size 500M --checkers 16"
 
 rclone_beta="0" # Set this to "1" if you want to live dangerous and try out rclone latest beta.
 
-rclone_mount_options="${rclone_options} --read-only --allow-non-empty --allow-other --max-read-ahead 30G"
+if [${pool_choice}] = "1" ]; then
+  	rclone_mount_options="${rclone_options} --allow-non-empty --allow-other --max-read-ahead 30G"
+else 
+	rclone_mount_options="${rclone_options} --read-only --allow-non-empty --allow-other --max-read-ahead 30G"
+fi
 
 # Rclone endpoints
 rclone_cloud_endpoint="gd-crypt:"
 rclone_local_endpoint="local-crypt:"
-
-google_drive_media_directory="" # Empty means media files are in root
 
 upload_limit="0" # This is only used to check within cloudupload script. This number should be in GB and greater than 0 be activated.
 move_limit="0" # This is only used to check within rmlocal script. This number should be in GB and greater than 0 be activated.
@@ -88,7 +96,6 @@ date_format="+%F@%T"
 #remove_files_based_on="instant"
 #remove_files_based_on="time"
 remove_files_based_on="space"
-
 
 # Remove media files based on 'time'
 remove_files_older_than=60 # In days

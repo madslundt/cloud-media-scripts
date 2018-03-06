@@ -9,6 +9,14 @@
 
 ##############################################################################
 
+# Set Move/Copy based on move_ind
+if [ "${move_ind}" = "1" ]; then
+	copy_cmd = "move"
+else
+	copy_cmd = "copy"	
+fi
+	
+
 # If script is already running; abort.
 if pidof -o %PPID -x "$(basename "$0")"; then
 	echo "[ $(date ${date_format}) ] Upload already in progress. Aborting."
@@ -61,8 +69,8 @@ find "${local_decrypt_dir}" -type f -print0 | xargs -0 stat --format '%Y :%y %n'
 			fi
 		fi
 
-		# Copy file to remote destination[s], retaining path
-		"${rclone_bin}" copy --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
+		# Copy/Move file to remote destination[s], retaining path
+		"${rclone_bin}" "${copy_cmd}" --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}" >/dev/null 2>&1
 
 
         diffSize=$((addedSize - oldSize))

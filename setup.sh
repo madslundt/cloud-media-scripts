@@ -18,14 +18,8 @@ _plexdrive_url="https://github.com/dweidenfeld/plexdrive/releases/download/4.0.0
 sudo apt-get update
 
 echo "Installing dependencies"
-sudo apt-get -qq install unionfs-fuse -y
-sudo apt-get -qq install bc -y
-sudo apt-get -qq install screen -y
-sudo apt-get -qq install unzip -y
-sudo apt-get -qq install fuse -y
-sudo apt-get -qq install golang -y
-sudo apt-get -qq install libxml-xpath-perl -y
-
+sudo apt-get -qq install unionfs-fuse screen unzip fuse libxml-xpath-perl golang bc  -y
+sudo apt-get -qq install g++ pkg-config git git-buildpackage pandoc debhelper libfuse-dev libattr1-dev -y
 printf "\n\nChecking Rclone and Plexdrive"
 
 onlyUpdate=0
@@ -49,8 +43,8 @@ if [ ! -d "${rclone_dir}" ]; then
     mkdir -p "${rclone_dir}"
 fi
 
-if [ "$(pool_choice)" = "1" ]; then
-    if [ -f "${mfs_bin}" ]; then
+if [ "${pool_choice}" = "1" ]; then
+    if [ ! -f "${mfs_bin}" ]; then
         git clone https://github.com/trapexit/mergerfs.git
         cd mergerfs
         sudo make install-build-pkgs
