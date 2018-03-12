@@ -42,6 +42,7 @@ find "${local_decrypt_dir}" -type f -print0 | xargs -0 stat --format '%Y :%y %n'
 			(*_HIDDEN~) continue ;;
 			(*.QTFS) continue ;;
 			(*.fuse*) continue ;;
+			(*.inProgress*) continue ;;
 			(.DS_STORE) continue ;;
 		esac
 
