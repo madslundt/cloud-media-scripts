@@ -68,7 +68,7 @@ rclone_options="--buffer-size 500M --checkers 16"
 
 rclone_beta="0" # Set this to "1" if you want to live dangerous and try out rclone latest beta.
 
-if [${pool_choice}] = "1" ]; then
+if [ "${pool_choice}" = "1" ]; then
   	rclone_mount_options="${rclone_options} --allow-non-empty --allow-other --max-read-ahead 30G"
 else 
 	rclone_mount_options="${rclone_options} --read-only --allow-non-empty --allow-other --max-read-ahead 30G"
