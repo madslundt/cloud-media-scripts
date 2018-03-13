@@ -49,6 +49,7 @@ sed -i "s|INSERT_CONFIG_FILE|${mypwd}/config|g" "${mypwd}/scripts/"*
 sed -i "s|INSERT_CONFIG_FILE|${mypwd}/config|g" "${mypwd}/setup.sh"
 sed -i "s|bash mount.remote|bash ${mypwd}/scripts/mount.remote|g" "${mypwd}/scripts/"*
 sed -i "s|bash umount.remote|bash ${mypwd}/scripts/umount.remote|g" "${mypwd}/scripts/"*
+sed -i "s|bash mountcheck|bash ${mypwd}/scripts/mountcheck|g" "${mypwd}/scripts/"*
 sed -i "s|logs/|${mypwd}/logs/|g" "${mypwd}/cron"
 sed -i "s|scripts/|${mypwd}/scripts/|g" "${mypwd}/cron"
 
