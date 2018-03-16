@@ -11,9 +11,9 @@
 
 # Set Move/Copy based on move_ind
 if [ "${move_ind}" = "1" ]; then
-	copy_cmd = "move"
+	copy_cmd="move"
 else
-	copy_cmd = "copy"	
+	copy_cmd="copy"	
 fi
 	
 
