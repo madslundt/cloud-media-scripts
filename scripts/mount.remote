@@ -21,12 +21,12 @@ check_permissions () {
         # Make sure local directories are owned by user
                 uname2="$(stat --format '%u' "$cloud_decrypt_dir")"
                 if [ $gid != $uname2 ];then
-                        echo "[ $(date ${date_format}) ]" $cloud_decrypt_dir was not readable, changing ownership to "$uid":"$gid"
+                        echo "[ $(date ${date_format}) ]" $cloud_decrypt_dir was owned by $uname2, changing ownership to "$uid":"$gid"
                         sudo  chown -R "$uid":"$gid" $cloud_decrypt_dir
                 fi
                 uname2="$(stat --format '%u' "$local_media_dir")"
                 if [ $gid != $uname2 ];then
-                        echo "[ $(date ${date_format}) ]" $local_media_dir was not RW, changing ownership to "$uid":"$gid"
+                        echo "[ $(date ${date_format}) ]" $local_media_dir was owned by $uname2, changing ownership to "$uid":"$gid"
                         sudo  chown -R "$uid":"$gid" $local_media_dir
                 fi
         fi
