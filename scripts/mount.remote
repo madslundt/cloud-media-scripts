@@ -14,6 +14,24 @@
 ###############################################################################
 # FUNCTIONS
 ###############################################################################
+check_permissions () {
+        if grep -qs $local_media_dir /proc/mounts; then
+                echo "[ $(date ${date_format}) ]" Already mounted, not checking permissions
+        else
+        # Make sure local directories are owned by user
+                uname2="$(stat --format '%u' "$cloud_decrypt_dir")"
+                if [ $gid != $uname2 ];then
+                        echo "[ $(date ${date_format}) ]" $cloud_decrypt_dir was not readable, changing ownership to "$uid":"$gid"
+                        sudo  chown -R "$uid":"$gid" $cloud_decrypt_dir
+                fi
+                uname2="$(stat --format '%u' "$local_media_dir")"
+                if [ $gid != $uname2 ];then
+                        echo "[ $(date ${date_format}) ]" $local_media_dir was not RW, changing ownership to "$uid":"$gid"
+                        sudo  chown -R "$uid":"$gid" $local_media_dir
+                fi
+        fi
+}
+
 mount_plexdrive () {
 	cloud_dir="${cloud_encrypt_dir}"
 	if [ "$encrypt_media" -eq "0" ]; then
@@ -134,6 +152,8 @@ mount_union () {
 
 ###############################################################################
 echo "[ $(date ${date_format}) ] ###### Start Mount ######"
+echo "[ $(date ${date_format}) ] ###### Checking Permissions ######"
+check_permissions
 mount_plexdrive
 if [ "$encrypt_media" != "0" ]; then
 	mount_rclone
