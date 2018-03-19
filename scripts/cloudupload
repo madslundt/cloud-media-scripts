@@ -13,9 +13,8 @@
 if [ "${move_ind}" = "1" ]; then
 	copy_cmd="move"
 else
-	copy_cmd="copy"	
-fi
-	
+	copy_cmd="copy"
+fi	
 
 # If script is already running; abort.
 if pidof -o %PPID -x "$(basename "$0")"; then
