@@ -28,6 +28,14 @@ echo "[ $(date ${date_format}) ] ###### Start cloud upload ######"
 oldSize=0
 addedSize=0
 
+# Check if any files exist, if not exit
+file_ct=$(find "${local_decrypt_dir}" -type f | wc -l)
+
+if [ "$file_ct" = 0 ];then
+        echo "[ $(date ${date_format}) ] Nothing to upload, exiting"
+        exit 3
+else
+
 # Generate filelist and iterate through it...
 find "${local_decrypt_dir}" -type f -print0 | xargs -0 stat --format '%Y :%y %n' | sort -nr | cut -d: -f2- | awk '{$1=$2=$3=""; print $0}' |
 	while read -r n; do
