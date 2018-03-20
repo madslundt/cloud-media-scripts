@@ -13,9 +13,8 @@
 if [ "${move_ind}" = "1" ]; then
 	copy_cmd="move"
 else
-	copy_cmd="copy"	
-fi
-	
+	copy_cmd="copy"
+fi	
 
 # If script is already running; abort.
 if pidof -o %PPID -x "$(basename "$0")"; then
@@ -27,6 +26,14 @@ echo "[ $(date ${date_format}) ] ###### Start cloud upload ######"
 
 oldSize=0
 addedSize=0
+
+# Check if any files exist, if not exit
+file_ct=$(find "${local_decrypt_dir}" -type f | wc -l)
+
+if [ "$file_ct" = 0 ];then
+        echo "[ $(date ${date_format}) ] Nothing to upload, exiting"
+        exit 3
+fi
 
 # Generate filelist and iterate through it...
 find "${local_decrypt_dir}" -type f -print0 | xargs -0 stat --format '%Y :%y %n' | sort -nr | cut -d: -f2- | awk '{$1=$2=$3=""; print $0}' |
