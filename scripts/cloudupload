@@ -33,7 +33,7 @@ file_ct=$(find "${local_decrypt_dir}" -type f | wc -l)
 if [ "$file_ct" = 0 ];then
         echo "[ $(date ${date_format}) ] Nothing to upload, exiting"
         exit 3
-else
+fi
 
 # Generate filelist and iterate through it...
 find "${local_decrypt_dir}" -type f -print0 | xargs -0 stat --format '%Y :%y %n' | sort -nr | cut -d: -f2- | awk '{$1=$2=$3=""; print $0}' |
