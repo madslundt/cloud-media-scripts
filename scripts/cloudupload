@@ -37,7 +37,7 @@ fi
 
 # Generate filelist and iterate through it...
 
-find "${local_decrypt_dir}" -type f -print0 | xargs -0 stat --format '%Y :%y %n' | sort -nr | cut -d: -f2- | awk '{$1=$2=$                                                                   3=""; print $0}' |
+find "${local_decrypt_dir}" -type f -print0 | xargs -0 stat --format '%Y :%y %n' | sort -nr | cut -d: -f2- | awk '{$1=$2=$3=""; print $0}' |
 (
         while read -r n; do
                 # Find the pathname relative to the root of your remote and store filename
@@ -71,14 +71,14 @@ find "${local_decrypt_dir}" -type f -print0 | xargs -0 stat --format '%Y :%y %n'
 
                 if [[ "$cloud_up_limit" -gt "0" ]]; then
                         if [[ "$addedSize" -gt "$cloud_up_limit" ]]; then
-                                echo "[ $(date ${date_format}) ] Aborted upload to not exceed $(numfmt --to=iec $cloud_up_                                                                   limit --suffix=B --format=""%.2f"")."
-                                echo "[ $(date ${date_format}) ] $(numfmt --to=iec $oldSize --suffix=B --format=""%.2f"")                                                                    uploaded"
+                                echo "[ $(date ${date_format}) ] Aborted upload to not exceed $(numfmt --to=iec $cloud_up_limit --suffix=B --format=""%.2f"")."
+                                echo "[ $(date ${date_format}) ] $(numfmt --to=iec $oldSize --suffix=B --format=""%.2f"") uploaded"
                 break
                         fi
                 fi
                 # Copy/Move file to remote destination[s], retaining path
-                "${rclone_bin}" "${copy_cmd}" --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${                                                                   destpath}"
-                echo "[ $(date ${date_format}) ] Uploaded $(numfmt --to=iec $fileSize --suffix=B --format="%.2f") - $basef                                                                   ile"
+                "${rclone_bin}" "${copy_cmd}" --config="${rclone_config}" $rclone_options "$n" "${rclone_cloud_endpoint}${destpath}"
+                echo "[ $(date ${date_format}) ] Uploaded $(numfmt --to=iec $fileSize --suffix=B --format="%.2f") - $basefile"
         diffSize=$((addedSize-oldSize))
         done
 echo "[ $(date ${date_format}) ] Total of $(numfmt --to=iec $addedSize --suffix=B --format="%.2f") uploaded."
